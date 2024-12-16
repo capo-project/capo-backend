@@ -42,5 +42,5 @@ out/
 *.pem
 /src/main/resources/*.json
 src/main/resources/.env
-*.env
-
+/src/main/resources/application-dev.yml
+/src/main/resources/application-local.yml

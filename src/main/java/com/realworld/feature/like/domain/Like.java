@@ -3,7 +3,7 @@ package com.realworld.feature.like.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.realworld.feature.like.controller.Response.LikeProductsResponse;
-import com.realworld.feature.like.entity.LikeJpaEntity;
+import com.realworld.feature.like.entity.ProductLikeJpaEntity;
 import com.realworld.feature.member.domain.Member;
 import com.realworld.feature.product.domain.Product;
 import lombok.Builder;
@@ -21,8 +21,8 @@ public class Like {
 
     private Product product;
 
-    public LikeJpaEntity toEntity() {
-        return LikeJpaEntity.builder()
+    public ProductLikeJpaEntity toEntity() {
+        return ProductLikeJpaEntity.builder()
                 .member(this.member.toEntity())
                 .product(this.product.toEntity())
                 .build();

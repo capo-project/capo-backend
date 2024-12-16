@@ -8,7 +8,7 @@ import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
-@Table(name = "like")
+@Table(name = "product_like")
 @ToString
 @Entity
 @Getter
@@ -17,7 +17,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-public class LikeJpaEntity {
+public class ProductLikeJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

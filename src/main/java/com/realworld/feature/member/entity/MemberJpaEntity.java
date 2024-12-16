@@ -2,7 +2,7 @@ package com.realworld.feature.member.entity;
 
 import com.realworld.feature.auth.Authority;
 import com.realworld.feature.file.entity.FileJpaEntity;
-import com.realworld.feature.like.entity.LikeJpaEntity;
+import com.realworld.feature.like.entity.ProductLikeJpaEntity;
 import com.realworld.feature.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.*;
@@ -63,7 +63,7 @@ public class MemberJpaEntity {
     private String oauthImage;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<LikeJpaEntity> likes;
+    private List<ProductLikeJpaEntity> likes;
 
     public Member toDomain() {
         return Member.builder()

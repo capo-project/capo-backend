@@ -1,6 +1,6 @@
 package com.realworld.feature.product.entity;
 
-import com.realworld.feature.like.entity.LikeJpaEntity;
+import com.realworld.feature.like.entity.ProductLikeJpaEntity;
 import com.realworld.feature.member.entity.MemberJpaEntity;
 import com.realworld.feature.product.domain.Product;
 import com.realworld.global.category.GroupCategory;
@@ -78,7 +78,7 @@ public class ProductJpaEntity {
     private LocalDateTime modifiedAt;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<LikeJpaEntity> likes;
+    private List<ProductLikeJpaEntity> likes;
 
     @Builder
     public ProductJpaEntity(Long productSeq, String userId, String title, int likeCount, MemberJpaEntity member, String content, Long price, GroupCategory category, int views, String thumbnailUrl, List<ProductFileJpaEntity> images, LocalDateTime createAt, LocalDateTime modifiedAt) {

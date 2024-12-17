@@ -79,6 +79,11 @@ dependencies {
 
     // stomp 설정 추가
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+    // ssh 터널링
+    implementation 'com.github.mwiede:jsch:0.2.17'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
     // mongodb 설정 추가
 //    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     // kafka

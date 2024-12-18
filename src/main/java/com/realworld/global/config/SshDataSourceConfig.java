@@ -1,29 +1,44 @@
 package com.realworld.global.config;
 
 import com.realworld.global.config.ssh.SshTunnelingInitializer;
-import lombok.RequiredArgsConstructor;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.validation.annotation.Validated;
 
 import javax.sql.DataSource;
 
 @Slf4j
-@Profile("local")
+@Validated
 @Configuration
-@RequiredArgsConstructor
+@Profile("local")
 public class SshDataSourceConfig {
 
+    private final String databaseUrl;
+    private final Integer databasePort;
+
     private final SshTunnelingInitializer initializer;
+
+    public SshDataSourceConfig(
+            @NotNull @Value("${ssh.database_url}") String databaseUrl,
+            @NotNull @Value("${ssh.database_port}")Integer databasePort,
+            SshTunnelingInitializer initializer
+    ) {
+        this.databaseUrl = databaseUrl;
+        this.databasePort = databasePort;
+        this.initializer = initializer;
+    }
 
     @Bean("dataSource")
     @Primary
     public DataSource dataSource(DataSourceProperties properties) {
-        Integer forwardPort = initializer.buildSshConnection();
+        Integer forwardPort = initializer.buildSshConnection(databaseUrl, databasePort);
         String url = properties.getUrl().replace("[forwardedPort]", Integer.toString(forwardPort));
         log.info("url={}",url);
         return DataSourceBuilder.create()

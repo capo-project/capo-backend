@@ -84,6 +84,9 @@ dependencies {
     implementation 'com.github.mwiede:jsch:0.2.17'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
+    // Spring Data Redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
     // mongodb 설정 추가
 //    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     // kafka

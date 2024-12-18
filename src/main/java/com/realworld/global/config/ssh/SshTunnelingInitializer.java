@@ -16,11 +16,11 @@ import java.util.Properties;
 import static java.lang.System.exit;
 
 @Slf4j
-@Profile("local")
-@Component
-@ConfigurationProperties(prefix = "ssh")
-@Validated
 @Setter
+@Component
+@Validated
+@Profile("local")
+@ConfigurationProperties(prefix = "ssh")
 public class SshTunnelingInitializer {
 
     @NotNull
@@ -35,11 +35,11 @@ public class SshTunnelingInitializer {
     @NotNull
     private String privateKey;
 
-    @NotNull
-    private String databaseUrl;
-
-    @NotNull
-    private int databasePort;
+//    @NotNull
+//    private String databaseUrl;
+//
+//    @NotNull
+//    private int databasePort;
 
     private Session session;
 
@@ -50,7 +50,7 @@ public class SshTunnelingInitializer {
         }
     }
 
-    public Integer buildSshConnection() {
+    public Integer buildSshConnection(String databaseUrl, int databasePort) {
         Integer forwardedPort = null;
 
         try{

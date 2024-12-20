@@ -1,54 +1,71 @@
-name: capo-backend-sonarqube
+name: Backend CI
 
-# 하기 내용에 해당하는 이벤트 발생 시 github action 동작
 on:
-  pull_request: # 모든 브랜치에서 PR이 일어났을 때 github action 동작
+  push:
     branches:
-      - '*'
-    types: [opened, synchronize]
-defaults:
-  run:
-    working-directory: ./backend
+      - dev
+  pull_request:
+    branches:
+      - develop
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-22.04 # 실행 환경 지정
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-  analysis:
-    runs-on: ubuntu-22.04
-    env:
-      SONARQUBE_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
-      SONARQUBE_URL: ${{secrets.SONAR_HOST_URL}}
-      SONARQUBE_TOKEN: ${{secrets.SONAR_TOKEN}}
-      PR_NUMBER: ${{github.event.pull_request.number}}
-    steps:
-      # 소스코드 체크아웃 수행
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
-      # gradlw 파일 권한 변경
-      - name: gradlew permission change
-        run: sudo chmod 755 gradlew
-
-      # Gralde 의 Scanner 발동, 위의 env 에서 선언한 환경변수와 함께 발동
-      - name: Sonaqube Analysis
-        run: ./gradlew test sonarqube
-          -Dsonar.host.url=${{ env.SONARQUBE_URL }}
-          -Dsonar.projectKey=${{ env.SONARQUBE_PROJECT_KEY }}
-          -Dsonar.projectName=${{ env.SONARQUBE_PROJECT_KEY }}-${{ env.PR_NUMBER }}
-          -Dsonar.login=${{ env.SONARQUBE_TOKEN }}
-      # PR 에 Comment 를 달아주는 스크립트 실행
-      - name: Comment Sonarqube URL
-        uses: actions/github-script@v4
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
-          script: |
-            const { SONARQUBE_PROJECT_KEY, SONARQUBE_URL, PR_NUMBER } = process.env
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `📊 ${ SONARQUBE_PROJECT_KEY }-${ PR_NUMBER } 분석 결과 확인하기 [링크](${SONARQUBE_URL})`
-            })
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+  sonarqube:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      - name: Cache SonarQube packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Build and analyze
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+          SONAR_PROJECT_NAME: ${{ secrets.SONAR_PROJECT_NAME }}
+        run: ./gradlew build sonar --info

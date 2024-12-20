@@ -115,3 +115,11 @@ tasks.withType(JavaCompile) {
 clean.doLast {
     file(querydslDir).deleteDir()
 }
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "capo-backend"
+        property "sonar.host.url", "http://13.124.217.23:9000"
+        property "sonar.login", "squ_c4fb1b4048ff7711b6b12c2cc43c45b900b09982"
+    }
+}

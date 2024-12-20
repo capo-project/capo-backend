@@ -69,12 +69,6 @@ jobs:
       
       - name: Comment Sonarqube URL
         uses: actions/github-script@v4
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
-          SONAR_PROJECT_NAME: ${{ secrets.SONAR_PROJECT_NAME }}
-          PR_NUMBER: ${{github.event.pull_request.number}}
         with: 
           script: |
             const sonarHostUrl = process.env.SONAR_HOST_URL;
@@ -84,5 +78,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `📊 ${ SONAR_PROJECT_KEY }-${ PR_NUMBER } 분석 결과 확인하기 [링크] (${SONAR_HOST_URL})`
+              body: `📊 ${ sonarProjectKey }-${ prNumber } 분석 결과 확인하기 [링크] (${sonarHostUrl})`
             });

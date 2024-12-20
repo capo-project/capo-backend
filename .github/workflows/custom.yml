@@ -65,7 +65,11 @@ jobs:
           SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
           SONAR_PROJECT_NAME: ${{ secrets.SONAR_PROJECT_NAME }}
           PR_NUMBER: ${{github.event.pull_request.number}}
-        run: ./gradlew build sonar --info 
+        run: ./gradlew build sonarqube \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
+          -Dsonar.projectName=${{ secrets.SONAR_PROJECT_NAME }}
       
       - name: Comment Sonarqube URL
         uses: actions/github-script@v4

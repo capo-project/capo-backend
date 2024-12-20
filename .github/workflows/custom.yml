@@ -29,6 +29,9 @@ jobs:
 
   sonarqube:
     needs: build
+    permissions:
+      issues: write
+      pull-requests: write
     runs-on: ubuntu-latest
 
     steps:
@@ -71,9 +74,7 @@ jobs:
         uses: actions/github-script@v4
         with: 
           script: |
-            const sonarHostUrl = process.env.SONAR_HOST_URL;
-            const sonarProjectKey = process.env.SONAR_PROJECT_KEY;
-            const prNumber = process.env.PR_NUMBER;
+            const { SONAR_PROJECT_KEY, SONAR_HOST_URL, PR_NUMBER } = process.env;
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,

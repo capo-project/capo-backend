@@ -79,5 +79,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `📊 ${ sonarProjectKey }-${ prNumber } 분석 결과 확인하기 [링크] (${sonarHostUrl})`
+              body: `📊 ${ SONAR_PROJECT_KEY }-${ PR_NUMBER } 분석 결과 확인하기 [링크] (${SONAR_HOST_URL})`
             });

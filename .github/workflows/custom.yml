@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - '*'
-
+    types: [opened, synchronize]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -69,11 +69,18 @@ jobs:
       
       - name: Comment Sonarqube URL
         uses: actions/github-script@v4
-        with: |
-          const { SONAR_TOKEN, SONAR_HOST_URL, SONAR_PROJECT_KEY, SONAR_PROJECT_NAME, PR_NUMBER } = process.env
-          github.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: `📊 ${ SONAR_PROJECT_KEY }-${ PR_NUMBER } 분석 결과 확인하기 [링크] (${SONAR_HOST_URL})`
+        with: 
+          script: |
+            const sonarToken = process.env.SONAR_TOKEN;
+            const sonarHostUrl = process.env.SONAR_HOST_URL;
+            const sonarProjectKey = process.env.SONAR_PROJECT_KEY;
+            const sonarProjectName = process.env.SONAR_PROJECT_NAME;
+            const prNumber = process.env.PR_NUMBER;
+
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `📊 ${ sonarProjectName }-${ prNumber } 분석 결과 확인하기 [링크] (${sonarHostUrl})`
+            });
           

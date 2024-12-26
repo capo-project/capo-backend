@@ -34,10 +34,10 @@ public class SecurityConfig {
     private final CustomOAuth2UserService oAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
     private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
-    String[] excludeDevURI = new String[]{"/api/v1/login", "/api/v1/member", "/api/v1/duplication-check/user-id/**", "/api/v1/auth/email", "/api/v1/auth/email/**", "/error", "/api/v1/reissue", "/api/v1/user/find-userId/**", "/api/v1/user/find-password/**", "/api/v1/", "/api/login/oauth2/code/kakao", "/login", "/auth/success", "/**", "/login/oauth2/code/naver", "/favicon.ico", "/api/prometheus", "api/actuator/**"};
-    String[] excludeLocalURI = new String[]{"/v1/login", "/v1/member", "/v1/duplication-check/user-id/**", "/v1/auth/email", "/v1/auth/email/**", "/error", "/v1/reissue", "/v1/user/find-userId/**", "/v1/user/find-password/**", "/login/oauth2/code/kakao", "/login", "/auth/success", "/**", "/login/oauth2/code/naver","/favicon.ico", "api/actuator/**"};
-    String[] getExcludeDevURI = new String[]{"/api/v1/cards", "/api/v1/cards/**", "/api/v1/file/**"};
-    String[] getExcludeLocalURI = new String[]{"/api/v1/cards", "/api/v1/cards/**", "/api/v1/file/**"};
+    String[] excludeDevURI = new String[]{"/api/v1/login", "/api/v1/member", "/api/v1/duplication-check/user-id/**", "/api/v1/auth/email", "/api/v1/auth/email/**", "/error", "/api/v1/reissue", "/api/v1/user/find-userId/**", "/api/v1/user/find-password/**", "/api/v1/", "/api/login/oauth2/code/kakao", "/login", "/auth/success", "/**", "/login/oauth2/code/naver", "/favicon.ico", "/api/prometheus", "/api/actuator/**" };
+    String[] excludeLocalURI = new String[]{"/v1/login", "/v1/member", "/v1/duplication-check/user-id/**", "/v1/auth/email", "/v1/auth/email/**", "/error", "/v1/reissue", "/v1/user/find-userId/**", "/v1/user/find-password/**", "/login/oauth2/code/kakao", "/login", "/auth/success", "/**", "/login/oauth2/code/naver","/favicon.ico", "/api/actuator/**" };
+    String[] getExcludeDevURI = new String[]{"/api/v1/cards", "/api/v1/cards/**", "/api/v1/file/**", "/api/actuator/**" };
+    String[] getExcludeLocalURI = new String[]{"/api/v1/cards", "/api/v1/cards/**", "/api/v1/file/**", "/api/actuator/**" };
 
     // 비밀번호 암호화
     @Bean

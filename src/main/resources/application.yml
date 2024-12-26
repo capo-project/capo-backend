@@ -1,5 +1,7 @@
 server:
   port: 8080
+  servlet:
+    context-path: /api
 spring:
   jpa:
     show-sql: true
@@ -10,3 +12,12 @@ spring:
     group:
       local: "local, datasource, jpa, mail, logging, jasypt"
       dev: "dev, datasource, jpa, mail, logging, jasypt"
+
+management:
+  health:
+    mail:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, health, metrics, info

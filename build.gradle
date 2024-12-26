@@ -88,6 +88,9 @@ dependencies {
     // Spring Data Redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
     // mongodb 설정 추가
 //    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     // kafka

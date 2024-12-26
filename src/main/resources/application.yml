@@ -20,4 +20,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: prometheus, health, metrics, info
+        include: prometheus, health, info
+  metrics:
+    tags:
+      application: ${spring.application.name}

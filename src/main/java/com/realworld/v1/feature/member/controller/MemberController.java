@@ -1,7 +1,7 @@
 package com.realworld.v1.feature.member.controller;
 
-import com.realworld.v1.feature.member.controller.request.FindPasswordRequest;
 import com.realworld.v1.feature.auth.mail.AuthMailService;
+import com.realworld.v1.feature.member.controller.request.FindPasswordRequest;
 import com.realworld.v1.feature.member.controller.request.UpdateEmailRequest;
 import com.realworld.v1.feature.member.controller.request.UpdatePasswordRequest;
 import com.realworld.v1.feature.member.controller.request.WithdrawMemberRequest;
@@ -21,7 +21,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/member")
+@RequestMapping("/v1/member")
 @RequiredArgsConstructor
 @Slf4j
 public class MemberController {

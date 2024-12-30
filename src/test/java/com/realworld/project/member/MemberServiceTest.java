@@ -1,11 +1,11 @@
 package com.realworld.project.member;
 
 
-import com.realworld.feature.member.domain.Member;
-import com.realworld.feature.member.service.MemberCommandServiceImpl;
-import com.realworld.feature.member.service.MemberQueryService;
-import com.realworld.global.code.ErrorCode;
-import com.realworld.global.config.exception.CustomMemberExceptionHandler;
+import com.realworld.v1.feature.member.domain.Member;
+import com.realworld.v1.feature.member.service.MemberCommandServiceImpl;
+import com.realworld.v1.feature.member.service.MemberQueryService;
+import com.realworld.v1.global.code.ErrorCode;
+import com.realworld.v1.global.config.exception.CustomMemberExceptionHandler;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -91,6 +91,7 @@ dependencies {
     implementation 'io.micrometer:micrometer-registry-prometheus'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
     // mongodb 설정 추가
 //    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     // kafka

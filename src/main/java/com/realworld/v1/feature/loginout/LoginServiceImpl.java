@@ -1,13 +1,13 @@
-package com.realworld.feature.loginout;
+package com.realworld.v1.feature.loginout;
 
-import com.realworld.feature.member.domain.Member;
-import com.realworld.feature.member.service.MemberQueryService;
-import com.realworld.feature.token.domain.Token;
-import com.realworld.feature.token.service.TokenCommandService;
-import com.realworld.global.code.ErrorCode;
-import com.realworld.global.config.exception.CustomLoginExceptionHandler;
-import com.realworld.global.config.jwt.JwtTokenProvider;
-import com.realworld.global.utils.CommonUtil;
+import com.realworld.v1.feature.member.domain.Member;
+import com.realworld.v1.feature.member.service.MemberQueryService;
+import com.realworld.v1.feature.token.domain.Token;
+import com.realworld.v1.feature.token.service.TokenCommandService;
+import com.realworld.v1.global.code.ErrorCode;
+import com.realworld.v1.global.config.exception.CustomLoginExceptionHandler;
+import com.realworld.v1.global.config.jwt.JwtTokenProvider;
+import com.realworld.v1.global.utils.CommonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

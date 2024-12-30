@@ -1,6 +1,6 @@
-package com.realworld.feature.auth.mail;
+package com.realworld.v1.feature.auth.mail;
 
-import com.realworld.feature.auth.mail.entity.AuthMailJpaEntity;
+import com.realworld.v1.feature.auth.mail.entity.AuthMailJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

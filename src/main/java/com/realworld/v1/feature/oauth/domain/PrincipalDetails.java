@@ -1,6 +1,6 @@
-package com.realworld.feature.oauth.domain;
+package com.realworld.v1.feature.oauth.domain;
 
-import com.realworld.feature.member.domain.Member;
+import com.realworld.v1.feature.member.domain.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

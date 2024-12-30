@@ -1,17 +1,17 @@
-package com.realworld.feature.product.repository;
+package com.realworld.v1.feature.product.repository;
 
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.realworld.feature.like.entity.QProductLikeJpaEntity;
-import com.realworld.feature.member.entity.QMemberJpaEntity;
-import com.realworld.feature.product.domain.Product;
-import com.realworld.feature.product.entity.ProductJpaEntity;
-import com.realworld.feature.product.entity.QProductJpaEntity;
-import com.realworld.global.category.GroupCategory;
-import com.realworld.global.code.ErrorCode;
-import com.realworld.global.config.exception.CustomProductExceptionHandler;
+import com.realworld.v1.feature.like.entity.QProductLikeJpaEntity;
+import com.realworld.v1.feature.member.entity.QMemberJpaEntity;
+import com.realworld.v1.feature.product.domain.Product;
+import com.realworld.v1.feature.product.entity.ProductJpaEntity;
+import com.realworld.v1.feature.product.entity.QProductJpaEntity;
+import com.realworld.v1.global.category.GroupCategory;
+import com.realworld.v1.global.code.ErrorCode;
+import com.realworld.v1.global.config.exception.CustomProductExceptionHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

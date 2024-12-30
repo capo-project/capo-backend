@@ -1,9 +1,9 @@
-package com.realworld.feature.like.service;
+package com.realworld.v1.feature.like.service;
 
-import com.realworld.feature.like.domain.Like;
-import com.realworld.feature.like.repository.LikeRepository;
-import com.realworld.feature.member.domain.Member;
-import com.realworld.feature.product.domain.Product;
+import com.realworld.v1.feature.like.domain.Like;
+import com.realworld.v1.feature.like.repository.LikeRepository;
+import com.realworld.v1.feature.member.domain.Member;
+import com.realworld.v1.feature.product.domain.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

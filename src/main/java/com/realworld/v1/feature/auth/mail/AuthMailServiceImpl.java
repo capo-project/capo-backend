@@ -1,19 +1,18 @@
-package com.realworld.feature.auth.mail;
+package com.realworld.v1.feature.auth.mail;
 
-import com.realworld.feature.auth.mail.domain.AuthMail;
-import com.realworld.feature.auth.mail.entity.AuthMailJpaEntity;
-import com.realworld.global.code.ErrorCode;
-import com.realworld.global.config.exception.CustomMailExceptionHandler;
-import com.realworld.infra.mail.MailSender;
+import com.realworld.v1.feature.auth.mail.domain.AuthMail;
+import com.realworld.v1.feature.auth.mail.entity.AuthMailJpaEntity;
+import com.realworld.v1.global.code.ErrorCode;
+import com.realworld.v1.global.config.exception.CustomMailExceptionHandler;
+import com.realworld.v1.infra.mail.MailSender;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
-import static com.realworld.global.code.ErrorCode.EMAIL_REQUEST_ERROR;
+import static com.realworld.v1.global.code.ErrorCode.EMAIL_REQUEST_ERROR;
 
 @Slf4j
 @Service

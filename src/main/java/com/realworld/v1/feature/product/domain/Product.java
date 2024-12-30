@@ -1,16 +1,14 @@
-package com.realworld.feature.product.domain;
-
+package com.realworld.v1.feature.product.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.realworld.feature.member.domain.Member;
-import com.realworld.feature.product.entity.ProductJpaEntity;
-import com.realworld.global.category.GroupCategory;
+import com.realworld.v1.feature.member.domain.Member;
+import com.realworld.v1.feature.product.entity.ProductJpaEntity;
+import com.realworld.v1.global.category.GroupCategory;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;

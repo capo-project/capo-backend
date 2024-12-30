@@ -1,6 +1,6 @@
-package com.realworld.feature.file.repository;
+package com.realworld.v1.feature.file.repository;
 
-import com.realworld.feature.file.entity.FileJpaEntity;
+import com.realworld.v1.feature.file.entity.FileJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

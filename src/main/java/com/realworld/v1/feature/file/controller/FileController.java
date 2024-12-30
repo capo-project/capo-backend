@@ -1,11 +1,11 @@
-package com.realworld.feature.file.controller;
+package com.realworld.v1.feature.file.controller;
 
-import com.realworld.feature.file.controller.Response.GetFileResponse;
-import com.realworld.feature.file.domain.File;
-import com.realworld.feature.file.service.StorageService;
-import com.realworld.global.code.SuccessCode;
-import com.realworld.global.response.ApiResponse;
-import com.realworld.global.utils.FileUtil;
+import com.realworld.v1.feature.file.controller.Response.GetFileResponse;
+import com.realworld.v1.feature.file.domain.File;
+import com.realworld.v1.feature.file.service.StorageService;
+import com.realworld.v1.global.code.SuccessCode;
+import com.realworld.v1.global.response.ApiResponse;
+import com.realworld.v1.global.utils.FileUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,6 @@ public class FileController {
 
         List<FileResponse> fileResponseList = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
-
 
             File file = FileUtil.fileSetting(multipartFile);
 
@@ -74,4 +73,5 @@ public class FileController {
 
         return ResponseEntity.ok(fileDeleteResponse);
     }
+
 }

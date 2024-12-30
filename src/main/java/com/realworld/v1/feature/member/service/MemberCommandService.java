@@ -1,6 +1,7 @@
-package com.realworld.feature.member.service;
+package com.realworld.v1.feature.member.service;
 
-import com.realworld.feature.member.domain.Member;
+
+import com.realworld.v1.feature.member.domain.Member;
 
 public interface MemberCommandService {
     Member saveMember(Member memberDto);

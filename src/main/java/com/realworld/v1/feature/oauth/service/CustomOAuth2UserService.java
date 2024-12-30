@@ -1,11 +1,11 @@
-package com.realworld.feature.oauth.service;
+package com.realworld.v1.feature.oauth.service;
 
-import com.realworld.feature.member.domain.Member;
-import com.realworld.feature.member.entity.MemberJpaEntity;
-import com.realworld.feature.member.repository.MemberRepository;
-import com.realworld.feature.oauth.domain.CustomOAuth2User;
-import com.realworld.feature.oauth.domain.OAuthAttributes;
-import com.realworld.global.category.SocialType;
+import com.realworld.v1.feature.member.domain.Member;
+import com.realworld.v1.feature.member.entity.MemberJpaEntity;
+import com.realworld.v1.feature.member.repository.MemberRepository;
+import com.realworld.v1.feature.oauth.domain.CustomOAuth2User;
+import com.realworld.v1.feature.oauth.domain.OAuthAttributes;
+import com.realworld.v1.global.category.SocialType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,12 +16,9 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-
 import java.util.Collections;
 import java.util.Map;
 
-import static com.realworld.global.category.SocialType.KAKAO;
-import static com.realworld.global.category.SocialType.NAVER;
 
 @Slf4j
 @Service

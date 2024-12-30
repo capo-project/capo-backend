@@ -1,11 +1,11 @@
-package com.realworld.feature.file.domain;
+package com.realworld.v1.feature.file.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.realworld.feature.file.controller.FileResponse;
-import com.realworld.feature.file.entity.FileJpaEntity;
-import com.realworld.feature.image.ThumbnailImageGenerator;
+import com.realworld.v1.feature.file.controller.FileResponse;
+import com.realworld.v1.feature.file.entity.FileJpaEntity;
+import com.realworld.v1.feature.image.ThumbnailImageGenerator;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;

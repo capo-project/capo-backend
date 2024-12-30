@@ -1,10 +1,10 @@
-package com.realworld.feature.like.controller.Response;
+package com.realworld.v1.feature.like.controller.Response;
 
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.realworld.feature.member.domain.Member;
-import com.realworld.feature.product.domain.Product;
+import com.realworld.v1.feature.member.domain.Member;
+import com.realworld.v1.feature.product.domain.Product;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,18 +1,17 @@
-package com.realworld.feature.token.service;
+package com.realworld.v1.feature.token.service;
 
-import com.realworld.feature.token.domain.Token;
-import com.realworld.feature.token.controller.request.ReissueRequest;
-import com.realworld.global.code.ErrorCode;
-import com.realworld.global.config.exception.CustomJwtExceptionHandler;
-import com.realworld.global.config.jwt.JwtTokenProvider;
+import com.realworld.v1.feature.token.controller.request.ReissueRequest;
+import com.realworld.v1.feature.token.domain.Token;
+import com.realworld.v1.feature.token.entity.TokenJpaEntity;
+import com.realworld.v1.feature.token.repository.TokenRepository;
+import com.realworld.v1.global.code.ErrorCode;
+import com.realworld.v1.global.config.exception.CustomJwtExceptionHandler;
+import com.realworld.v1.global.config.jwt.JwtTokenProvider;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Repository;
-
-import com.realworld.feature.token.entity.TokenJpaEntity;
-import com.realworld.feature.token.repository.TokenRepository;
 
 import java.util.Optional;
 

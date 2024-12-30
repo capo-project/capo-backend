@@ -1,4 +1,4 @@
-package com.realworld.feature.image;
+package com.realworld.v1.feature.image;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;

@@ -1,4 +1,4 @@
-package com.realworld.feature.member.controller.request;
+package com.realworld.v1.feature.member.controller.request;
 
 import lombok.Getter;
 import lombok.Setter;

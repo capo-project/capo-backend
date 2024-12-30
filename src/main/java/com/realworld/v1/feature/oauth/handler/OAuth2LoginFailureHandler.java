@@ -1,4 +1,4 @@
-package com.realworld.feature.oauth.handler;
+package com.realworld.v1.feature.oauth.handler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

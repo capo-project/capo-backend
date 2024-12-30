@@ -1,11 +1,12 @@
-package com.realworld.feature.file.service;
+package com.realworld.v1.feature.file.service;
 
-import com.realworld.feature.file.domain.File;
-import com.realworld.feature.file.entity.FileJpaEntity;
-import com.realworld.feature.file.exception.FileExceptionHandler;
-import com.realworld.feature.file.repository.FileRepository;
-import com.realworld.feature.image.ThumbnailImageGenerator;
-import com.realworld.global.code.ErrorCode;
+
+import com.realworld.v1.feature.file.domain.File;
+import com.realworld.v1.feature.file.entity.FileJpaEntity;
+import com.realworld.v1.feature.file.exception.FileExceptionHandler;
+import com.realworld.v1.feature.file.repository.FileRepository;
+import com.realworld.v1.feature.image.ThumbnailImageGenerator;
+import com.realworld.v1.global.code.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;

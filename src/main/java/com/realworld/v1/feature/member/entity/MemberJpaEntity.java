@@ -1,9 +1,9 @@
-package com.realworld.feature.member.entity;
+package com.realworld.v1.feature.member.entity;
 
-import com.realworld.feature.auth.Authority;
-import com.realworld.feature.file.entity.FileJpaEntity;
-import com.realworld.feature.like.entity.ProductLikeJpaEntity;
-import com.realworld.feature.member.domain.Member;
+import com.realworld.v1.feature.auth.Authority;
+import com.realworld.v1.feature.file.entity.FileJpaEntity;
+import com.realworld.v1.feature.like.entity.ProductLikeJpaEntity;
+import com.realworld.v1.feature.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;

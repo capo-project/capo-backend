@@ -1,8 +1,8 @@
-package com.realworld.feature.member.repository;
+package com.realworld.v1.feature.member.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.realworld.feature.member.entity.MemberJpaEntity;
-import com.realworld.feature.member.entity.QMemberJpaEntity;
+import com.realworld.v1.feature.member.entity.MemberJpaEntity;
+import com.realworld.v1.feature.member.entity.QMemberJpaEntity;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

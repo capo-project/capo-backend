@@ -1,7 +1,7 @@
-package com.realworld.feature.temporarily_product.service;
+package com.realworld.v1.feature.temporarily_product.service;
 
-import com.realworld.feature.temporarily_product.domain.TemporarilyProduct;
-import com.realworld.feature.temporarily_product.repository.TemporarilyProductRepository;
+import com.realworld.v1.feature.temporarily_product.domain.TemporarilyProduct;
+import com.realworld.v1.feature.temporarily_product.repository.TemporarilyProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,7 @@
-package com.realworld.feature.token.repository;
+package com.realworld.v1.feature.token.repository;
 
-import com.realworld.feature.token.entity.TokenJpaEntity;
+
+import com.realworld.v1.feature.token.entity.TokenJpaEntity;
 
 public interface TokenRepositoryCustom {
     long updateToken(TokenJpaEntity tokenJpaEntity);

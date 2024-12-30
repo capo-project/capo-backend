@@ -1,6 +1,6 @@
 package com.realworld.v1.global.config.jwt;
 
-import com.realworld.feature.token.domain.Token;
+import com.realworld.v1.feature.token.domain.Token;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

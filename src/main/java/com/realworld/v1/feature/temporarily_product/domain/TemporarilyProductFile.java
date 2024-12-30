@@ -1,7 +1,7 @@
-package com.realworld.feature.temporarily_product.domain;
+package com.realworld.v1.feature.temporarily_product.domain;
 
-import com.realworld.feature.product.domain.ProductFile;
-import com.realworld.feature.temporarily_product.entity.TemporarilyProductFileJpaEntity;
+import com.realworld.v1.feature.product.domain.ProductFile;
+import com.realworld.v1.feature.temporarily_product.entity.TemporarilyProductFileJpaEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;

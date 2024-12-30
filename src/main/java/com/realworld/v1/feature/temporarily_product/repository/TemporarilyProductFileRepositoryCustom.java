@@ -1,6 +1,7 @@
-package com.realworld.feature.temporarily_product.repository;
+package com.realworld.v1.feature.temporarily_product.repository;
 
-import com.realworld.feature.temporarily_product.domain.TemporarilyProductFile;
+
+import com.realworld.v1.feature.temporarily_product.domain.TemporarilyProductFile;
 
 import java.util.UUID;
 

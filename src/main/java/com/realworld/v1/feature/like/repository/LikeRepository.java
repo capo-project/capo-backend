@@ -1,8 +1,9 @@
-package com.realworld.feature.like.repository;
+package com.realworld.v1.feature.like.repository;
 
-import com.realworld.feature.like.entity.ProductLikeJpaEntity;
-import com.realworld.feature.member.entity.MemberJpaEntity;
-import com.realworld.feature.product.entity.ProductJpaEntity;
+
+import com.realworld.v1.feature.like.entity.ProductLikeJpaEntity;
+import com.realworld.v1.feature.member.entity.MemberJpaEntity;
+import com.realworld.v1.feature.product.entity.ProductJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LikeRepository extends JpaRepository<ProductLikeJpaEntity, Long>, LikeRepositoryCustom {

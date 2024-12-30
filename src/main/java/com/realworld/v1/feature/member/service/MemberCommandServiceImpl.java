@@ -1,17 +1,16 @@
-package com.realworld.feature.member.service;
+package com.realworld.v1.feature.member.service;
 
-
-import com.realworld.feature.auth.Authority;
-import com.realworld.feature.member.domain.Member;
-import com.realworld.feature.member.entity.BackUpMemberJpaEntity;
-import com.realworld.feature.member.entity.MemberJpaEntity;
-import com.realworld.feature.member.repository.BackUpMemberRepository;
-import com.realworld.feature.member.repository.MemberRepository;
-import com.realworld.global.code.ErrorCode;
-import com.realworld.global.code.ResultErrorMsgCode;
-import com.realworld.global.config.exception.CustomLoginExceptionHandler;
-import com.realworld.global.config.exception.CustomMemberExceptionHandler;
-import com.realworld.global.utils.CommonUtil;
+import com.realworld.v1.feature.auth.Authority;
+import com.realworld.v1.feature.member.domain.Member;
+import com.realworld.v1.feature.member.entity.BackUpMemberJpaEntity;
+import com.realworld.v1.feature.member.entity.MemberJpaEntity;
+import com.realworld.v1.feature.member.repository.BackUpMemberRepository;
+import com.realworld.v1.feature.member.repository.MemberRepository;
+import com.realworld.v1.global.code.ErrorCode;
+import com.realworld.v1.global.code.ResultErrorMsgCode;
+import com.realworld.v1.global.config.exception.CustomLoginExceptionHandler;
+import com.realworld.v1.global.config.exception.CustomMemberExceptionHandler;
+import com.realworld.v1.global.utils.CommonUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

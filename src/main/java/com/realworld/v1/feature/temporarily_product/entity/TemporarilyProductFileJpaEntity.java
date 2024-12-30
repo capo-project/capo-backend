@@ -1,6 +1,6 @@
-package com.realworld.feature.temporarily_product.entity;
+package com.realworld.v1.feature.temporarily_product.entity;
 
-import com.realworld.feature.temporarily_product.domain.TemporarilyProductFile;
+import com.realworld.v1.feature.temporarily_product.domain.TemporarilyProductFile;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

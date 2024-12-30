@@ -1,8 +1,8 @@
-package com.realworld.feature.temporarily_product.domain;
+package com.realworld.v1.feature.temporarily_product.domain;
 
-import com.realworld.feature.member.domain.Member;
-import com.realworld.feature.temporarily_product.entity.TemporarilyProductJpaEntity;
-import com.realworld.global.category.GroupCategory;
+import com.realworld.v1.feature.member.domain.Member;
+import com.realworld.v1.feature.temporarily_product.entity.TemporarilyProductJpaEntity;
+import com.realworld.v1.global.category.GroupCategory;
 import lombok.Builder;
 import lombok.Getter;
 

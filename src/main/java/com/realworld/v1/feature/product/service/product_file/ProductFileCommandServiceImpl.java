@@ -1,9 +1,9 @@
-package com.realworld.feature.product.service.product_file;
+package com.realworld.v1.feature.product.service.product_file;
 
-import com.realworld.feature.file.service.StorageService;
-import com.realworld.feature.product.domain.Product;
-import com.realworld.feature.product.domain.ProductFile;
-import com.realworld.feature.product.repository.ProductFileRepository;
+import com.realworld.v1.feature.file.service.StorageService;
+import com.realworld.v1.feature.product.domain.Product;
+import com.realworld.v1.feature.product.domain.ProductFile;
+import com.realworld.v1.feature.product.repository.ProductFileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

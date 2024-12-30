@@ -1,4 +1,4 @@
-package com.realworld.feature.member.controller.response;
+package com.realworld.v1.feature.member.controller.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

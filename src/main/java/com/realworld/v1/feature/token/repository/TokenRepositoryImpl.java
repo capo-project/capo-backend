@@ -1,9 +1,8 @@
-package com.realworld.feature.token.repository;
+package com.realworld.v1.feature.token.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.realworld.feature.token.entity.QTokenJpaEntity;
-import com.realworld.feature.token.entity.TokenJpaEntity;
-
+import com.realworld.v1.feature.token.entity.QTokenJpaEntity;
+import com.realworld.v1.feature.token.entity.TokenJpaEntity;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

@@ -1,6 +1,6 @@
-package com.realworld.feature.product.entity;
+package com.realworld.v1.feature.product.entity;
 
-import com.realworld.feature.product.domain.ProductFile;
+import com.realworld.v1.feature.product.domain.ProductFile;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

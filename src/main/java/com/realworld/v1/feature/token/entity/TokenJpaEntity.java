@@ -1,7 +1,6 @@
-package com.realworld.feature.token.entity;
+package com.realworld.v1.feature.token.entity;
 
-import com.realworld.feature.token.domain.Token;
-
+import com.realworld.v1.feature.token.domain.Token;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

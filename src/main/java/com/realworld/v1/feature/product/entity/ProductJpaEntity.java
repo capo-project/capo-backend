@@ -1,9 +1,9 @@
-package com.realworld.feature.product.entity;
+package com.realworld.v1.feature.product.entity;
 
-import com.realworld.feature.like.entity.ProductLikeJpaEntity;
-import com.realworld.feature.member.entity.MemberJpaEntity;
-import com.realworld.feature.product.domain.Product;
-import com.realworld.global.category.GroupCategory;
+import com.realworld.v1.feature.like.entity.ProductLikeJpaEntity;
+import com.realworld.v1.feature.member.entity.MemberJpaEntity;
+import com.realworld.v1.feature.product.domain.Product;
+import com.realworld.v1.global.category.GroupCategory;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,11 +1,11 @@
-package com.realworld.feature.like.domain;
+package com.realworld.v1.feature.like.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.realworld.feature.like.controller.Response.LikeProductsResponse;
-import com.realworld.feature.like.entity.ProductLikeJpaEntity;
-import com.realworld.feature.member.domain.Member;
-import com.realworld.feature.product.domain.Product;
+import com.realworld.v1.feature.like.controller.Response.LikeProductsResponse;
+import com.realworld.v1.feature.like.entity.ProductLikeJpaEntity;
+import com.realworld.v1.feature.member.domain.Member;
+import com.realworld.v1.feature.product.domain.Product;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;

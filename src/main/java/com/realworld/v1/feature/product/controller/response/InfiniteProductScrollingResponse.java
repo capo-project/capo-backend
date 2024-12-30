@@ -1,21 +1,21 @@
-package com.realworld.feature.product.controller.response;
+package com.realworld.v1.feature.product.controller.response;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.realworld.feature.product.domain.Product;
-import com.realworld.global.code.ErrorCode;
-import com.realworld.global.config.exception.CustomProductExceptionHandler;
+import com.realworld.v1.feature.product.domain.Product;
+import com.realworld.v1.global.code.ErrorCode;
+import com.realworld.v1.global.config.exception.CustomProductExceptionHandler;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+
 
 @Slf4j
 @ToString
@@ -38,12 +38,8 @@ public class InfiniteProductScrollingResponse {
     }
 
     public void infiniteLastSeq() {
-        Optional<Product> product = products.stream().max(new Comparator<Product>() {
-            @Override
-            public int compare(Product o1, Product o2) {
-                return o2.getProductSeq().compareTo(o1.getProductSeq());
-            }
-        });
+        Optional<Product> product = products.stream().max((o1, o2) -> o2.getProductSeq().compareTo(o1.getProductSeq()));
         this.nextCursor = product.orElseThrow(() -> new CustomProductExceptionHandler(ErrorCode.NOT_EXISTS_PRODUCT)).getProductSeq();
     }
+
 }

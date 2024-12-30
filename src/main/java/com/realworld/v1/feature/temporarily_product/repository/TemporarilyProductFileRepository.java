@@ -1,6 +1,6 @@
-package com.realworld.feature.temporarily_product.repository;
+package com.realworld.v1.feature.temporarily_product.repository;
 
-import com.realworld.feature.temporarily_product.entity.TemporarilyProductFileJpaEntity;
+import com.realworld.v1.feature.temporarily_product.entity.TemporarilyProductFileJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

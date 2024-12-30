@@ -1,12 +1,12 @@
-package com.realworld.feature.like.service;
+package com.realworld.v1.feature.like.service;
 
-import com.realworld.feature.like.domain.Like;
-import com.realworld.feature.like.repository.LikeRepository;
-import com.realworld.feature.member.domain.Member;
-import com.realworld.feature.product.entity.ProductJpaEntity;
-import com.realworld.feature.product.repository.ProductRepository;
-import com.realworld.global.code.ErrorCode;
-import com.realworld.global.config.exception.CustomProductExceptionHandler;
+import com.realworld.v1.feature.like.domain.Like;
+import com.realworld.v1.feature.like.repository.LikeRepository;
+import com.realworld.v1.feature.member.domain.Member;
+import com.realworld.v1.feature.product.entity.ProductJpaEntity;
+import com.realworld.v1.feature.product.repository.ProductRepository;
+import com.realworld.v1.global.code.ErrorCode;
+import com.realworld.v1.global.config.exception.CustomProductExceptionHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

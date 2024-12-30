@@ -1,6 +1,6 @@
-package com.realworld.feature.auth.mail.entity;
+package com.realworld.v1.feature.auth.mail.entity;
 
-import com.realworld.feature.auth.mail.domain.AuthMail;
+import com.realworld.v1.feature.auth.mail.domain.AuthMail;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

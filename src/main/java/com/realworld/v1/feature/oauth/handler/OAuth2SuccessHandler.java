@@ -1,9 +1,9 @@
-package com.realworld.feature.oauth.handler;
+package com.realworld.v1.feature.oauth.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.realworld.feature.token.domain.Token;
-import com.realworld.feature.token.service.TokenCommandService;
-import com.realworld.global.config.jwt.JwtTokenProvider;
+import com.realworld.v1.feature.token.domain.Token;
+import com.realworld.v1.feature.token.service.TokenCommandService;
+import com.realworld.v1.global.config.jwt.JwtTokenProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

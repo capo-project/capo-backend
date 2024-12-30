@@ -1,6 +1,6 @@
-package com.realworld.feature.like.repository;
+package com.realworld.v1.feature.like.repository;
 
-import com.realworld.feature.like.domain.Like;
+import com.realworld.v1.feature.like.domain.Like;
 
 import java.util.List;
 

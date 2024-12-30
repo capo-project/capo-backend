@@ -1,15 +1,15 @@
-package com.realworld.feature.profile.controller;
+package com.realworld.v1.feature.profile.controller;
 
-import com.realworld.feature.file.domain.File;
-import com.realworld.feature.file.service.StorageService;
-import com.realworld.feature.member.domain.Member;
 import com.realworld.feature.profile.Response.UpdateProfileImageResponse;
 import com.realworld.feature.profile.Response.UpdateProfileResponse;
 import com.realworld.feature.profile.controller.request.UpdateProfileRequest;
-import com.realworld.feature.profile.service.ProfileCommandService;
-import com.realworld.global.code.SuccessCode;
-import com.realworld.global.response.ApiResponse;
-import com.realworld.global.utils.FileUtil;
+import com.realworld.v1.feature.file.domain.File;
+import com.realworld.v1.feature.file.service.StorageService;
+import com.realworld.v1.feature.member.domain.Member;
+import com.realworld.v1.feature.profile.service.ProfileCommandService;
+import com.realworld.v1.global.code.SuccessCode;
+import com.realworld.v1.global.response.ApiResponse;
+import com.realworld.v1.global.utils.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

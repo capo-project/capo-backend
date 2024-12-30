@@ -1,12 +1,12 @@
-package com.realworld.feature.oauth.domain;
+package com.realworld.v1.feature.oauth.domain;
 
 
-import com.realworld.feature.auth.Authority;
-import com.realworld.feature.member.domain.Member;
-import com.realworld.feature.oauth.domain.user.GoogleOAuth2UserInfo;
-import com.realworld.feature.oauth.domain.user.KakaoOAuth2UserInfo;
-import com.realworld.feature.oauth.domain.user.OAuth2UserInfo;
-import com.realworld.global.category.SocialType;
+import com.realworld.v1.feature.auth.Authority;
+import com.realworld.v1.feature.member.domain.Member;
+import com.realworld.v1.feature.oauth.domain.user.GoogleOAuth2UserInfo;
+import com.realworld.v1.feature.oauth.domain.user.KakaoOAuth2UserInfo;
+import com.realworld.v1.feature.oauth.domain.user.OAuth2UserInfo;
+import com.realworld.v1.global.category.SocialType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

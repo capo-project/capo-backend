@@ -1,8 +1,8 @@
-package com.realworld.feature.auth;
+package com.realworld.v1.feature.auth;
 
-import com.realworld.feature.member.domain.Member;
-import com.realworld.feature.member.repository.MemberRepository;
-import com.realworld.global.utils.CommonUtil;
+import com.realworld.v1.feature.member.domain.Member;
+import com.realworld.v1.feature.member.repository.MemberRepository;
+import com.realworld.v1.global.utils.CommonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;

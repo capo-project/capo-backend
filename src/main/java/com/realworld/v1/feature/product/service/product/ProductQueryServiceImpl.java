@@ -1,8 +1,8 @@
-package com.realworld.feature.product.service.product;
+package com.realworld.v1.feature.product.service.product;
 
-import com.realworld.feature.product.domain.Product;
-import com.realworld.feature.product.repository.ProductRepository;
-import com.realworld.global.category.GroupCategory;
+import com.realworld.v1.feature.product.domain.Product;
+import com.realworld.v1.feature.product.repository.ProductRepository;
+import com.realworld.v1.global.category.GroupCategory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;

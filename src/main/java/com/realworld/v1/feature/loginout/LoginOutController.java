@@ -1,11 +1,11 @@
-package com.realworld.feature.loginout;
+package com.realworld.v1.feature.loginout;
 
-import com.realworld.feature.member.domain.Member;
-import com.realworld.feature.token.controller.response.TokenResponse;
-import com.realworld.feature.token.domain.Token;
-import com.realworld.feature.token.service.TokenCommandService;
-import com.realworld.global.code.SuccessCode;
-import com.realworld.global.response.ApiResponse;
+import com.realworld.v1.feature.member.domain.Member;
+import com.realworld.v1.feature.token.controller.response.TokenResponse;
+import com.realworld.v1.feature.token.domain.Token;
+import com.realworld.v1.feature.token.service.TokenCommandService;
+import com.realworld.v1.global.code.SuccessCode;
+import com.realworld.v1.global.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

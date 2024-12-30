@@ -1,4 +1,4 @@
-package com.realworld.feature.auth.mail;
+package com.realworld.v1.feature.auth.mail;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

@@ -1,8 +1,8 @@
-package com.realworld.feature.profile.service;
+package com.realworld.v1.feature.profile.service;
 
-import com.realworld.feature.file.domain.File;
-import com.realworld.feature.member.domain.Member;
 import com.realworld.feature.profile.controller.request.UpdateProfileRequest;
+import com.realworld.v1.feature.file.domain.File;
+import com.realworld.v1.feature.member.domain.Member;
 
 public interface ProfileCommandService {
     Member updateProfile(UpdateProfileRequest request, String userId);

@@ -1,13 +1,13 @@
-package com.realworld.feature.signup;
+package com.realworld.v1.feature.signup;
 
-import com.realworld.feature.file.service.StorageService;
 import com.realworld.feature.member.controller.request.RegisterMemberRequest;
-import com.realworld.feature.member.controller.response.MemberResponse;
-import com.realworld.feature.member.domain.Member;
-import com.realworld.feature.member.service.MemberCommandService;
-import com.realworld.feature.member.service.MemberQueryService;
-import com.realworld.global.code.SuccessCode;
-import com.realworld.global.response.ApiResponse;
+import com.realworld.v1.feature.file.service.StorageService;
+import com.realworld.v1.feature.member.controller.response.MemberResponse;
+import com.realworld.v1.feature.member.domain.Member;
+import com.realworld.v1.feature.member.service.MemberCommandService;
+import com.realworld.v1.feature.member.service.MemberQueryService;
+import com.realworld.v1.global.code.SuccessCode;
+import com.realworld.v1.global.response.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -64,7 +64,6 @@ public class SignUpController {
                 .build();
 
         Member savedMember = memberCommandService.saveMember(member);
-
 
         MemberResponse response = MemberResponse.builder()
                 .userId(savedMember.getUserId())

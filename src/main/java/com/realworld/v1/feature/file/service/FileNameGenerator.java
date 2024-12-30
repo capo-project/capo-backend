@@ -1,6 +1,6 @@
-package com.realworld.feature.file.service;
+package com.realworld.v1.feature.file.service;
 
-import com.realworld.global.utils.UUIDGenerator;
+import com.realworld.v1.global.utils.UUIDGenerator;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,4 +21,5 @@ public class FileNameGenerator {
     public UUID createFileId() {
         return UUIDGenerator.createUUIDV2();
     }
+
 }

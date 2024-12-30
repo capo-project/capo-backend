@@ -1,4 +1,4 @@
-package com.realworld.feature.image;
+package com.realworld.v1.feature.image;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

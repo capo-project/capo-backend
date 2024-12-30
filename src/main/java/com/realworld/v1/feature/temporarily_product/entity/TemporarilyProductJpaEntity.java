@@ -1,8 +1,8 @@
-package com.realworld.feature.temporarily_product.entity;
+package com.realworld.v1.feature.temporarily_product.entity;
 
-import com.realworld.feature.member.entity.MemberJpaEntity;
-import com.realworld.feature.temporarily_product.domain.TemporarilyProduct;
-import com.realworld.global.category.GroupCategory;
+import com.realworld.v1.feature.member.entity.MemberJpaEntity;
+import com.realworld.v1.feature.temporarily_product.domain.TemporarilyProduct;
+import com.realworld.v1.global.category.GroupCategory;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;

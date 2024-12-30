@@ -1,6 +1,7 @@
-package com.realworld.feature.file.service;
+package com.realworld.v1.feature.file.service;
 
-import com.realworld.feature.file.domain.File;
+
+import com.realworld.v1.feature.file.domain.File;
 
 import java.io.InputStream;
 

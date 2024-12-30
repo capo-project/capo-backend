@@ -1,4 +1,4 @@
-package com.realworld.feature.oauth.domain.user;
+package com.realworld.v1.feature.oauth.domain.user;
 
 import lombok.extern.slf4j.Slf4j;
 

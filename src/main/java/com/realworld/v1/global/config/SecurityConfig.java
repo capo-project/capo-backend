@@ -1,9 +1,9 @@
 package com.realworld.v1.global.config;
 
 
-import com.realworld.feature.oauth.handler.OAuth2LoginFailureHandler;
-import com.realworld.feature.oauth.handler.OAuth2SuccessHandler;
-import com.realworld.feature.oauth.service.CustomOAuth2UserService;
+import com.realworld.v1.feature.oauth.handler.OAuth2LoginFailureHandler;
+import com.realworld.v1.feature.oauth.handler.OAuth2SuccessHandler;
+import com.realworld.v1.feature.oauth.service.CustomOAuth2UserService;
 import com.realworld.v1.global.config.jwt.JwtAccessDeniedHandler;
 import com.realworld.v1.global.config.jwt.JwtAuthenticationEntryPoint;
 import com.realworld.v1.global.config.jwt.JwtSecurityConfig;

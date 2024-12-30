@@ -1,6 +1,6 @@
-package com.realworld.feature.file.exception;
+package com.realworld.v1.feature.file.exception;
 
-import com.realworld.global.code.ErrorCode;
+import com.realworld.v1.global.code.ErrorCode;
 import lombok.Builder;
 import lombok.Getter;
 

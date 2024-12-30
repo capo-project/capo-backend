@@ -1,10 +1,10 @@
-package com.realworld.feature.token.domain;
+package com.realworld.v1.feature.token.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.realworld.feature.token.entity.TokenJpaEntity;
 
+import com.realworld.v1.feature.token.entity.TokenJpaEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,11 +1,11 @@
-package com.realworld.feature.token.controller;
+package com.realworld.v1.feature.token.controller;
 
-import com.realworld.feature.token.controller.request.ReissueRequest;
-import com.realworld.feature.token.controller.response.ReissueTokenResponse;
-import com.realworld.feature.token.domain.Token;
-import com.realworld.feature.token.service.TokenCommandService;
-import com.realworld.global.code.SuccessCode;
-import com.realworld.global.response.ApiResponse;
+import com.realworld.v1.feature.token.controller.request.ReissueRequest;
+import com.realworld.v1.feature.token.controller.response.ReissueTokenResponse;
+import com.realworld.v1.feature.token.domain.Token;
+import com.realworld.v1.feature.token.service.TokenCommandService;
+import com.realworld.v1.global.code.SuccessCode;
+import com.realworld.v1.global.response.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
-package com.realworld.feature.product.service.product_file;
+package com.realworld.v1.feature.product.service.product_file;
 
-import com.realworld.feature.product.domain.Product;
-import com.realworld.feature.product.domain.ProductFile;
+import com.realworld.v1.feature.product.domain.Product;
+import com.realworld.v1.feature.product.domain.ProductFile;
 
 public interface ProductFileCommandService {
     ProductFile save(String imageId, Product product);

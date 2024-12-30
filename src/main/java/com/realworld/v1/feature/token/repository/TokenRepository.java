@@ -1,8 +1,8 @@
-package com.realworld.feature.token.repository;
+package com.realworld.v1.feature.token.repository;
 
+
+import com.realworld.v1.feature.token.entity.TokenJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.realworld.feature.token.entity.TokenJpaEntity;
 
 import java.util.Optional;
 

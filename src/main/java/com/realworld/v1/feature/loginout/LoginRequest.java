@@ -1,4 +1,4 @@
-package com.realworld.feature.loginout;
+package com.realworld.v1.feature.loginout;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

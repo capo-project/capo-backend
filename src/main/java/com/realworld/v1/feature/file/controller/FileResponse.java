@@ -1,4 +1,4 @@
-package com.realworld.feature.file.controller;
+package com.realworld.v1.feature.file.controller;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

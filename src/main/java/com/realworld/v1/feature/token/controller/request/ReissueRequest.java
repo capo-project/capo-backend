@@ -1,4 +1,4 @@
-package com.realworld.feature.token.controller.request;
+package com.realworld.v1.feature.token.controller.request;
 
 import lombok.Builder;
 import lombok.Getter;

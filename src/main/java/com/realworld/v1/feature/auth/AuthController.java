@@ -1,12 +1,12 @@
-package com.realworld.feature.auth;
+package com.realworld.v1.feature.auth;
 
-import com.realworld.feature.auth.mail.AuthMailRequest;
-import com.realworld.feature.auth.mail.AuthMailService;
-import com.realworld.feature.member.service.MemberQueryService;
-import com.realworld.global.code.ErrorCode;
-import com.realworld.global.code.SuccessCode;
-import com.realworld.global.config.exception.CustomMailExceptionHandler;
-import com.realworld.global.response.ApiResponse;
+import com.realworld.v1.feature.auth.mail.AuthMailRequest;
+import com.realworld.v1.feature.auth.mail.AuthMailService;
+import com.realworld.v1.feature.member.service.MemberQueryService;
+import com.realworld.v1.global.code.ErrorCode;
+import com.realworld.v1.global.code.SuccessCode;
+import com.realworld.v1.global.config.exception.CustomMailExceptionHandler;
+import com.realworld.v1.global.response.ApiResponse;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

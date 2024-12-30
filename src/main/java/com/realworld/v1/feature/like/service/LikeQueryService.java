@@ -1,8 +1,8 @@
-package com.realworld.feature.like.service;
+package com.realworld.v1.feature.like.service;
 
 
-import com.realworld.feature.like.domain.Like;
-import com.realworld.feature.member.domain.Member;
+import com.realworld.v1.feature.like.domain.Like;
+import com.realworld.v1.feature.member.domain.Member;
 
 import java.util.List;
 

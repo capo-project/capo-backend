@@ -1,12 +1,12 @@
-package com.realworld.feature.member.entity;
+package com.realworld.v1.feature.member.entity;
 
-import com.realworld.feature.member.domain.Member;
+import com.realworld.v1.feature.auth.Authority;
+import com.realworld.v1.feature.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import com.realworld.feature.auth.Authority;
 import java.time.LocalDateTime;
 
 @Table(name="backup_user")

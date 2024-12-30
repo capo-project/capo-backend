@@ -1,9 +1,9 @@
-package com.realworld.feature.member.domain;
+package com.realworld.v1.feature.member.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.realworld.feature.auth.Authority;
-import com.realworld.feature.file.domain.File;
-import com.realworld.feature.member.entity.MemberJpaEntity;
+import com.realworld.v1.feature.auth.Authority;
+import com.realworld.v1.feature.file.domain.File;
+import com.realworld.v1.feature.member.entity.MemberJpaEntity;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 

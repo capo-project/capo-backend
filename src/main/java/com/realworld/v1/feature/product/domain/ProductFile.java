@@ -1,8 +1,8 @@
-package com.realworld.feature.product.domain;
+package com.realworld.v1.feature.product.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.realworld.feature.product.entity.ProductFileJpaEntity;
+import com.realworld.v1.feature.product.entity.ProductFileJpaEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

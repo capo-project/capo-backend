@@ -1,10 +1,10 @@
-package com.realworld.feature.member.service;
+package com.realworld.v1.feature.member.service;
 
-import com.realworld.feature.member.domain.Member;
-import com.realworld.feature.member.entity.MemberJpaEntity;
-import com.realworld.feature.member.repository.MemberRepository;
-import com.realworld.global.code.ErrorCode;
-import com.realworld.global.config.exception.CustomMemberExceptionHandler;
+import com.realworld.v1.feature.member.domain.Member;
+import com.realworld.v1.feature.member.entity.MemberJpaEntity;
+import com.realworld.v1.feature.member.repository.MemberRepository;
+import com.realworld.v1.global.code.ErrorCode;
+import com.realworld.v1.global.config.exception.CustomMemberExceptionHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

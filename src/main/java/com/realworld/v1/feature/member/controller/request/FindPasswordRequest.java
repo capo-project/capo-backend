@@ -1,4 +1,4 @@
-package com.realworld.feature.member.controller.request;
+package com.realworld.v1.feature.member.controller.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Pattern;

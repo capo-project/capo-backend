@@ -1,10 +1,10 @@
-package com.realworld.feature.product.service.product;
+package com.realworld.v1.feature.product.service.product;
 
 
-import com.realworld.feature.product.controller.request.ConvertProductGenerationRequest;
-import com.realworld.feature.product.controller.request.ProductGenerationRequest;
-import com.realworld.feature.product.controller.request.ProductUpdateRequest;
-import com.realworld.feature.product.domain.Product;
+import com.realworld.v1.feature.product.controller.request.ConvertProductGenerationRequest;
+import com.realworld.v1.feature.product.controller.request.ProductGenerationRequest;
+import com.realworld.v1.feature.product.controller.request.ProductUpdateRequest;
+import com.realworld.v1.feature.product.domain.Product;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.List;

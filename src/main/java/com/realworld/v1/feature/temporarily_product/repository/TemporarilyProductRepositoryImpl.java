@@ -1,13 +1,13 @@
-package com.realworld.feature.temporarily_product.repository;
+package com.realworld.v1.feature.temporarily_product.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.realworld.feature.member.entity.QMemberJpaEntity;
-import com.realworld.feature.temporarily_product.domain.TemporarilyProduct;
-import com.realworld.feature.temporarily_product.entity.QTemporarilyProductFileJpaEntity;
-import com.realworld.feature.temporarily_product.entity.QTemporarilyProductJpaEntity;
-import com.realworld.feature.temporarily_product.entity.TemporarilyProductJpaEntity;
-import com.realworld.global.code.ErrorCode;
-import com.realworld.global.config.exception.CustomProductExceptionHandler;
+import com.realworld.v1.feature.member.entity.QMemberJpaEntity;
+import com.realworld.v1.feature.temporarily_product.domain.TemporarilyProduct;
+import com.realworld.v1.feature.temporarily_product.entity.QTemporarilyProductFileJpaEntity;
+import com.realworld.v1.feature.temporarily_product.entity.QTemporarilyProductJpaEntity;
+import com.realworld.v1.feature.temporarily_product.entity.TemporarilyProductJpaEntity;
+import com.realworld.v1.global.code.ErrorCode;
+import com.realworld.v1.global.config.exception.CustomProductExceptionHandler;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

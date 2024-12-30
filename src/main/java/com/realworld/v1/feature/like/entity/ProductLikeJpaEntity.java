@@ -1,8 +1,8 @@
-package com.realworld.feature.like.entity;
+package com.realworld.v1.feature.like.entity;
 
-import com.realworld.feature.like.domain.Like;
-import com.realworld.feature.member.entity.MemberJpaEntity;
-import com.realworld.feature.product.entity.ProductJpaEntity;
+import com.realworld.v1.feature.like.domain.Like;
+import com.realworld.v1.feature.member.entity.MemberJpaEntity;
+import com.realworld.v1.feature.product.entity.ProductJpaEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

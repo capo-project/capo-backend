@@ -1,8 +1,8 @@
-package com.realworld.feature.temporarily_product.controller.request;
+package com.realworld.v1.feature.temporarily_product.controller.request;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.realworld.global.category.GroupCategory;
+import com.realworld.v1.global.category.GroupCategory;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;

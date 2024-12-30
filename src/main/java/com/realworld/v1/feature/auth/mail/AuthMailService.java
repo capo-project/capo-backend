@@ -1,4 +1,4 @@
-package com.realworld.feature.auth.mail;
+package com.realworld.v1.feature.auth.mail;
 
 import jakarta.mail.MessagingException;
 

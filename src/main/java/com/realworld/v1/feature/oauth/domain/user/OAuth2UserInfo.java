@@ -1,4 +1,4 @@
-package com.realworld.feature.oauth.domain.user;
+package com.realworld.v1.feature.oauth.domain.user;
 
 import java.util.Map;
 

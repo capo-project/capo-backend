@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @RestController
-@RequestMapping("/api/v1/member")
+@RequestMapping("/v1/member")
 @RequiredArgsConstructor
 @Slf4j
 public class ProfileController {

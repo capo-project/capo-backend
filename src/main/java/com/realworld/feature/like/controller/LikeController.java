@@ -23,7 +23,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/like")
+@RequestMapping("/v1/like")
 @RequiredArgsConstructor
 public class LikeController {
 

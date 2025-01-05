@@ -1,0 +1,12 @@
+package com.realworld.v1.feature.temporarily_product.repository;
+
+import com.realworld.v1.feature.temporarily_product.entity.TemporarilyProductFileJpaEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.UUID;
+
+@Repository
+public interface TemporarilyProductFileRepository extends JpaRepository<TemporarilyProductFileJpaEntity, UUID>, TemporarilyProductFileRepositoryCustom {
+
+}

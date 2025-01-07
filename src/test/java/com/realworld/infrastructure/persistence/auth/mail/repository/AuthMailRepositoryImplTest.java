@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @SpringBootTest
-@ActiveProfiles("local")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AuthMailRepositoryImplTest {
 

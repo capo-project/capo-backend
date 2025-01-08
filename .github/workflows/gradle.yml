@@ -24,7 +24,12 @@ jobs:
         cd ./src/main/resources
         touch ./application-dev.yml
         echo "${{ secrets.APPLICATION_DEV }}" > ./application-dev.yml
-        
+    - name: make application-test.yml
+      run: |
+        cd ./src/test/resources
+        touch ./application-test.yml
+        echo "${{ secrets.APPLICATION_TEST }}" > ./application-test.yml  
+    
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
       

@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
@@ -19,7 +18,6 @@ import static java.lang.System.exit;
 @Setter
 @Component
 @Validated
-@Profile("local")
 @ConfigurationProperties(prefix = "ssh")
 public class SshTunnelingInitializer {
 

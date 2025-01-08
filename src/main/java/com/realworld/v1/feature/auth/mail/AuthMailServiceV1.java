@@ -4,7 +4,7 @@ import jakarta.mail.MessagingException;
 
 import java.io.UnsupportedEncodingException;
 
-public interface AuthMailService {
+public interface AuthMailServiceV1 {
     void sendAuthNumber(String userEmail) throws MessagingException, UnsupportedEncodingException;
 
     void checkEmailCode(String userEmail, String authNumber);

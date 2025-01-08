@@ -1,6 +1,6 @@
 package com.realworld.v1.feature.member.controller;
 
-import com.realworld.v1.feature.auth.mail.AuthMailService;
+import com.realworld.v1.feature.auth.mail.AuthMailServiceV1;
 import com.realworld.v1.feature.member.controller.request.FindPasswordRequest;
 import com.realworld.v1.feature.member.controller.request.UpdateEmailRequest;
 import com.realworld.v1.feature.member.controller.request.UpdatePasswordRequest;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
     private final MemberCommandService memberCommandService;
     private final MemberQueryService memberQueryService;
-    private final AuthMailService authMailService;
+    private final AuthMailServiceV1 authMailServiceV1;
 
 
     /**
@@ -103,7 +103,7 @@ public class MemberController {
         }
 
         // 이메일 인증을 체크한다.
-        authMailService.checkEmailCode(request.getUserEmail(), request.getAuthNumber());
+        authMailServiceV1.checkEmailCode(request.getUserEmail(), request.getAuthNumber());
 
         Member member = Member.builder()
                 .userId(user.getUsername())
@@ -124,7 +124,7 @@ public class MemberController {
     @PatchMapping("/find-password")
     public ResponseEntity<ApiResponse<?>> findPassword(@RequestBody FindPasswordRequest request) {
         // 이메일 인증. 이메일로 비밀번호 찾음.
-        authMailService.checkEmailCode(request.getUserEmail(), request.getAuthNumber());
+        authMailServiceV1.checkEmailCode(request.getUserEmail(), request.getAuthNumber());
 
         Member member = Member.builder()
                 .userEmail(request.getUserEmail())
@@ -150,7 +150,7 @@ public class MemberController {
     public ResponseEntity<ApiResponse<String>> findUserId(@RequestParam("user_email") String userEmail,
                                                           @PathVariable("auth_number") String authNumber) {
         // 이메일 인증으로 아이디 찾기
-        authMailService.checkEmailCode(userEmail, authNumber);
+        authMailServiceV1.checkEmailCode(userEmail, authNumber);
 
         Member member = memberQueryService.findByUserEmail(userEmail).orElseThrow();
 

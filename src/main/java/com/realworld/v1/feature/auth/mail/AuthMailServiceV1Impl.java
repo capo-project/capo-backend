@@ -4,12 +4,10 @@ import com.realworld.v1.feature.auth.mail.domain.AuthMail;
 import com.realworld.v1.feature.auth.mail.entity.AuthMailJpaEntity;
 import com.realworld.v1.global.code.ErrorCode;
 import com.realworld.v1.global.config.exception.CustomMailExceptionHandler;
-import com.realworld.v1.infra.mail.MailSender;
-import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import java.io.UnsupportedEncodingException;
+
 import java.util.Random;
 
 import static com.realworld.v1.global.code.ErrorCode.EMAIL_REQUEST_ERROR;
@@ -17,28 +15,28 @@ import static com.realworld.v1.global.code.ErrorCode.EMAIL_REQUEST_ERROR;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AuthMailServiceImpl implements AuthMailService {
+public class AuthMailServiceV1Impl implements AuthMailServiceV1 {
 
-    private final AuthMailRepository authMailRepository;
-    private final MailSender smtpMailSender;
+    private final AuthMailRepositoryV1 authMailRepositoryV1;
+//    private final MailSender smtpMailSender;
 
     @Override
-    public void sendAuthNumber(String userEmail) throws MessagingException, UnsupportedEncodingException {
+    public void sendAuthNumber(String userEmail) {
         String authKey = createKey();
 
-        smtpMailSender.send(userEmail, authKey);
+//        smtpMailSender.send(userEmail, authKey);
 
         AuthMail authMail = AuthMail.builder()
                 .userEmail(userEmail)
                 .authNumber(authKey)
                 .build();
 
-        authMailRepository.save(authMail.toEntity());
+        authMailRepositoryV1.save(authMail.toEntity());
     }
 
     @Override
     public void checkEmailCode(String userEmail, String authNumber) {
-        AuthMailJpaEntity target = authMailRepository.findByUserEmail(userEmail).orElseThrow(() ->
+        AuthMailJpaEntity target = authMailRepositoryV1.findByUserEmail(userEmail).orElseThrow(() ->
                 new CustomMailExceptionHandler(EMAIL_REQUEST_ERROR));
 
         AuthMail authMail = target.toDomain();

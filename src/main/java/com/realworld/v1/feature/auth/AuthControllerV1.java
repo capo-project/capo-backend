@@ -1,7 +1,7 @@
 package com.realworld.v1.feature.auth;
 
 import com.realworld.v1.feature.auth.mail.AuthMailRequest;
-import com.realworld.v1.feature.auth.mail.AuthMailService;
+import com.realworld.v1.feature.auth.mail.AuthMailServiceV1;
 import com.realworld.v1.feature.member.service.MemberQueryService;
 import com.realworld.v1.global.code.ErrorCode;
 import com.realworld.v1.global.code.SuccessCode;
@@ -20,16 +20,16 @@ import java.io.UnsupportedEncodingException;
 @RestController
 @RequestMapping("/v1/auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthControllerV1 {
 
-    private final AuthMailService authMailService;
+    private final AuthMailServiceV1 authMailServiceV1;
     private final MemberQueryService getMemberUseCase;
 
     @PostMapping("/email")
     public ResponseEntity<ApiResponse<?>> emailAuth(@RequestBody AuthMailRequest request)
             throws MessagingException, UnsupportedEncodingException {
 
-        authMailService.sendAuthNumber(request.getUserEmail());
+        authMailServiceV1.sendAuthNumber(request.getUserEmail());
 
         ApiResponse<?> authEmailApiResponse = new ApiResponse<>(null,
                 SuccessCode.INSERT_SUCCESS.getStatus(), SuccessCode.INSERT_SUCCESS.getMessage());
@@ -46,7 +46,7 @@ public class AuthController {
             throw new CustomMailExceptionHandler(ErrorCode.EMAIL_DUPLICATION_ERROR);
         }
 
-        authMailService.checkEmailCode(userEmail, authNumber);
+        authMailServiceV1.checkEmailCode(userEmail, authNumber);
 
         ApiResponse<?> authEmailApiResponse = new ApiResponse<>(null,
                 200, "이메일 인증에 성공하였습니다.");

@@ -1,6 +1,6 @@
 package com.realworld.v1.global.utils;
 
-import com.realworld.v1.feature.file.domain.File;
+import com.realworld.v1.feature.file.domain.FileV1;
 import com.realworld.v1.feature.file.service.FileNameGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -16,7 +16,7 @@ import java.net.URLConnection;
 @Component
 public class FileUtil {
 
-    public static File fileSetting(MultipartFile multipartFile) throws IOException {
+    public static FileV1 fileSetting(MultipartFile multipartFile) throws IOException {
         String contentType = URLConnection.guessContentTypeFromStream(new BufferedInputStream(multipartFile.getInputStream()));
         if (contentType == null) {
             contentType = multipartFile.getContentType();
@@ -27,7 +27,7 @@ public class FileUtil {
 
         String fileExtension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
 
-        return File.builder()
+        return FileV1.builder()
                 .name(fileName)
                 .size(multipartFile.getSize())
                 .extension(fileExtension)

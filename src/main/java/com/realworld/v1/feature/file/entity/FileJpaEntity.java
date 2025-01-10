@@ -1,6 +1,6 @@
 package com.realworld.v1.feature.file.entity;
 
-import com.realworld.v1.feature.file.domain.File;
+import com.realworld.v1.feature.file.domain.FileV1;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -40,8 +40,8 @@ public class FileJpaEntity {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
-    public File toDomain() {
-        return File.builder()
+    public FileV1 toDomain() {
+        return FileV1.builder()
                 .path(this.path)
                 .id(this.id)
                 .size(this.size)

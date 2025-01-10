@@ -10,7 +10,7 @@ import lombok.ToString;
 @Builder
 @ToString
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class FileResponse {
+public class FileResponseV1 {
     private String id;
 
     private String originalFileName;

@@ -8,6 +8,11 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum ExceptionResponseCode {
 
+    /**
+     * File Exception
+     */
+    FILE_IMAGE_RESIZE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 크기를 조정하는 중 문제가 발생했습니다. 다시 시도해주세요.", 500),
+
     // 비밀번호 변경에 실패한 경우
     FAIL_PASSWORD_CHANGE(HttpStatus.BAD_REQUEST, "패스워드 변경에 실패하였습니다.", 400),
 

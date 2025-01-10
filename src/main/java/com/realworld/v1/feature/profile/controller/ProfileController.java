@@ -3,7 +3,7 @@ package com.realworld.v1.feature.profile.controller;
 import com.realworld.feature.profile.Response.UpdateProfileImageResponse;
 import com.realworld.feature.profile.Response.UpdateProfileResponse;
 import com.realworld.feature.profile.controller.request.UpdateProfileRequest;
-import com.realworld.v1.feature.file.domain.File;
+import com.realworld.v1.feature.file.domain.FileV1;
 import com.realworld.v1.feature.file.service.StorageService;
 import com.realworld.v1.feature.member.domain.Member;
 import com.realworld.v1.feature.profile.service.ProfileCommandService;
@@ -51,18 +51,18 @@ public class ProfileController {
     @PatchMapping("/file")
     public ResponseEntity<ApiResponse<UpdateProfileImageResponse>> profileImageUpdate(@AuthenticationPrincipal User user, MultipartFile multipartFile) throws IOException {
 
-        File file = FileUtil.fileSetting(multipartFile);
+        FileV1 fileV1 = FileUtil.fileSetting(multipartFile);
 
-        File savedFile = null;
+        FileV1 savedFileV1 = null;
         try (InputStream inputStream = multipartFile.getInputStream()) {
-            savedFile = cloudStorageService.upload(inputStream, user.getUsername(), file);
+            savedFileV1 = cloudStorageService.upload(inputStream, user.getUsername(), fileV1);
 
         }
 
-        Member member = profileCommandService.updateProfileImage(user.getUsername(), savedFile);
+        Member member = profileCommandService.updateProfileImage(user.getUsername(), savedFileV1);
 
         UpdateProfileImageResponse response = UpdateProfileImageResponse.builder()
-                .fileId(member.getFile().getId())
+                .fileId(member.getFileV1().getId())
                 .build();
 
         ApiResponse<UpdateProfileImageResponse> apiResponse = new ApiResponse<>(response, SuccessCode.UPDATE_SUCCESS.getStatus(), SuccessCode.UPDATE_SUCCESS.getMessage());

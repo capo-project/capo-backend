@@ -1,6 +1,6 @@
 package com.realworld.v1.feature.temporarily_product.controller;
 
-import com.realworld.v1.feature.file.domain.File;
+import com.realworld.v1.feature.file.domain.FileV1;
 import com.realworld.v1.feature.file.service.FileQueryService;
 import com.realworld.v1.feature.temporarily_product.controller.request.TemporarilyProductGenerationRequest;
 import com.realworld.v1.feature.temporarily_product.controller.request.TemporarilyProductUpdateRequest;
@@ -94,7 +94,7 @@ public class TemporarilyProductController {
 
         deleteImageIds.forEach(imageId -> temporarilyProductFileCommandService.delete(user.getUsername(), imageId));
 
-        List<File> images = new ArrayList<>();
+        List<FileV1> images = new ArrayList<>();
         TemporarilyProduct details = temporarilyProductQueryService.temporarilyProductDetails(product.getProductSeq());
         details.getImages().forEach(image -> images.add(fileQueryService.getFile(image.getId())));
 
@@ -132,7 +132,7 @@ public class TemporarilyProductController {
     public ResponseEntity<ApiResponse<TemporarilyProductDetailsResponse>> details(@PathVariable(value = "temporarily_product_seq") Long seq) {
         TemporarilyProduct product = temporarilyProductQueryService.temporarilyProductDetails(seq);
 
-        List<File> images = new ArrayList<>();
+        List<FileV1> images = new ArrayList<>();
         product.getImages().forEach(imageId -> images.add(fileQueryService.getFile(imageId.getId())));
 
         TemporarilyProductDetailsResponse response = TemporarilyProductDetailsResponse.builder()

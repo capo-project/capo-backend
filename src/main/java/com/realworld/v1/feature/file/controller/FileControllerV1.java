@@ -1,7 +1,7 @@
 package com.realworld.v1.feature.file.controller;
 
 import com.realworld.v1.feature.file.controller.Response.GetFileResponse;
-import com.realworld.v1.feature.file.domain.File;
+import com.realworld.v1.feature.file.domain.FileV1;
 import com.realworld.v1.feature.file.service.StorageService;
 import com.realworld.v1.global.code.SuccessCode;
 import com.realworld.v1.global.response.ApiResponse;
@@ -25,25 +25,25 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/file")
 @RequiredArgsConstructor
-public class FileController {
+public class FileControllerV1 {
 
     private final StorageService cloudStorageService;
 
     @PostMapping("")
-    public ResponseEntity<ApiResponse<List<FileResponse>>> uploadFiles(@AuthenticationPrincipal User user, @RequestParam(name = "file") MultipartFile[] multipartFiles) throws IOException {
+    public ResponseEntity<ApiResponse<List<FileResponseV1>>> uploadFiles(@AuthenticationPrincipal User user, @RequestParam(name = "file") MultipartFile[] multipartFiles) throws IOException {
 
-        List<FileResponse> fileResponseList = new ArrayList<>();
+        List<FileResponseV1> fileResponseList = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
 
-            File file = FileUtil.fileSetting(multipartFile);
+            FileV1 fileV1 = FileUtil.fileSetting(multipartFile);
 
             try (InputStream inputStream = multipartFile.getInputStream()) {
-                File savedFile = cloudStorageService.upload(inputStream, user.getUsername(), file);
-                fileResponseList.add(savedFile.toResponse());
+                FileV1 savedFileV1 = cloudStorageService.upload(inputStream, user.getUsername(), fileV1);
+                fileResponseList.add(savedFileV1.toResponse());
             }
         }
 
-        ApiResponse<List<FileResponse>> fileUploadResponse = new ApiResponse<>(fileResponseList,
+        ApiResponse<List<FileResponseV1>> fileUploadResponse = new ApiResponse<>(fileResponseList,
                 SuccessCode.INSERT_SUCCESS.getStatus(), SuccessCode.INSERT_SUCCESS.getMessage());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(fileUploadResponse);

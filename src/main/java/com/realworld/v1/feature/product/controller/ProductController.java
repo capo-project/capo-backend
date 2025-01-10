@@ -2,7 +2,7 @@ package com.realworld.v1.feature.product.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.realworld.v1.feature.file.domain.File;
+import com.realworld.v1.feature.file.domain.FileV1;
 import com.realworld.v1.feature.file.service.FileQueryService;
 import com.realworld.v1.feature.product.controller.request.ConvertProductGenerationRequest;
 import com.realworld.v1.feature.product.controller.request.ProductGenerationRequest;
@@ -121,7 +121,7 @@ public class ProductController {
         List<String> deleteImageIds = product.getImages().stream().map(ProductFile::getId).map(UUID::toString).filter(imageId -> !request.getImages().contains(imageId)).toList();
         deleteImageIds.forEach(imageId -> productFileCommandService.delete(user.getUsername(), imageId));
 
-        List<File> images = new ArrayList<>();
+        List<FileV1> images = new ArrayList<>();
         Product details = productQueryService.getDetailsProduct(product.getProductSeq());
         details.getImages().forEach(image -> images.add(fileQueryService.getFile(image.getId())));
 

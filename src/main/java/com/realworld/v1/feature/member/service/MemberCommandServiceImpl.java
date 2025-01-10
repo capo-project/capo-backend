@@ -41,7 +41,7 @@ public class MemberCommandServiceImpl implements MemberCommandService {
                 .phoneNumber(member.getPhoneNumber())
                 .userEmail(member.getUserEmail())
                 .nickname(CommonUtil.createNickname())
-                .file(member.getFile())
+                .fileV1(member.getFileV1())
                 .delYn("N")
                 .authority(Authority.ROLE_USER)
                 .build();

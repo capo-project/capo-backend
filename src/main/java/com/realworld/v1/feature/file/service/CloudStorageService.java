@@ -7,7 +7,7 @@ import com.realworld.v1.feature.file.exception.FileExceptionHandler;
 import com.realworld.v1.feature.file.repository.FileRepository;
 import com.realworld.v1.feature.image.ThumbnailImageGenerator;
 import com.realworld.v1.global.code.ErrorCode;
-import com.realworld.v1.infra.aws.AwsService;
+import com.realworld.v1.infra.aws.AwsServiceV1;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
@@ -29,7 +29,7 @@ public class CloudStorageService implements StorageService {
     private final FileNameGenerator fileNameGenerator;
     private final ThumbnailImageGenerator thumbnailImageGenerator;
     private final FileRepository fileRepository;
-    private final AwsService awsService;
+    private final AwsServiceV1 awsServiceV1;
 
     @Override
     public FileV1 upload(InputStream inputStream, String userId, FileV1 fileV1) {
@@ -47,7 +47,7 @@ public class CloudStorageService implements StorageService {
                         ImageIO.write(thumbBufferedImage, ThumbnailImageGenerator.THUMBNAIL_IMAGE_EXTENSION, thumbOs);
 
                         try (ByteArrayInputStream thumbIns = new ByteArrayInputStream(thumbOs.toByteArray())) {
-                            awsService.uploadS3Bucket(thumbIns,
+                            awsServiceV1.uploadS3Bucket(thumbIns,
                                     ThumbnailImageGenerator.THUMBNAIL_PREFIX + fileV1.getId(),
                                     thumbOs.size(),
                                     "image/" + ThumbnailImageGenerator.THUMBNAIL_IMAGE_EXTENSION);
@@ -64,13 +64,13 @@ public class CloudStorageService implements StorageService {
                     ImageIO.write(inputImage, fileV1.getExtension(), os);
 
                     try (ByteArrayInputStream ins = new ByteArrayInputStream(os.toByteArray())) {
-                        String filePath = awsService.uploadS3Bucket(ins, String.valueOf(fileV1.getId()),
+                        String filePath = awsServiceV1.uploadS3Bucket(ins, String.valueOf(fileV1.getId()),
                                 os.size(), fileV1.getContentType());
                         fileV1.updatePath(filePath);
                     }
                 }
             } else {
-                String filePath = awsService.uploadS3Bucket(inputStream, String.valueOf(fileV1.getId()), fileV1.getSize(), fileV1.getContentType());
+                String filePath = awsServiceV1.uploadS3Bucket(inputStream, String.valueOf(fileV1.getId()), fileV1.getSize(), fileV1.getContentType());
                 fileV1.updatePath(filePath);
                 fileV1.updateHasThumbnail(false);
             }
@@ -86,7 +86,7 @@ public class CloudStorageService implements StorageService {
 
     @Override
     public String getFile(String id) {
-        return awsService.getFile(id);
+        return awsServiceV1.getFile(id);
     }
 
     @Override
@@ -103,10 +103,10 @@ public class CloudStorageService implements StorageService {
                     .hasThumbnail(fileJpaEntity.get().isHasThumbnail())
                     .build();
 
-            awsService.deleteS3Bucket(fileId);
+            awsServiceV1.deleteS3Bucket(fileId);
 
             if (fileV1.isHasThumbnail()) {
-                awsService.deleteS3Bucket(ThumbnailImageGenerator.THUMBNAIL_PREFIX + fileId);
+                awsServiceV1.deleteS3Bucket(ThumbnailImageGenerator.THUMBNAIL_PREFIX + fileId);
             }
 
             fileRepository.delete(fileJpaEntity.get());

@@ -3,6 +3,9 @@ package com.realworld.v1.global.config.exception;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.realworld.common.exception.CustomFileExceptionHandler;
+import com.realworld.common.exception.CustomImageExceptionHandler;
+import com.realworld.common.response.ExceptionResponse;
 import com.realworld.v1.global.code.ErrorCode;
 import com.realworld.v1.global.code.ResultErrorMsgCode;
 import com.realworld.v1.global.response.ErrorResponse;
@@ -211,5 +214,28 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(CustomFileExceptionHandler.class)
+    private ResponseEntity<ExceptionResponse<Object>> handleFileCustomException(CustomFileExceptionHandler ex) {
+        log.error("File Exception", ex);
+        ExceptionResponse<Object> response = ExceptionResponse.builder()
+                .httpStatus(ex.getResponseCode().getHttpStatus())
+                .resultCode(ex.getResponseCode().getResultCode())
+                .resultMsg(ex.getMessage())
+                .build();
+
+        return new ResponseEntity<>(response, ex.getResponseCode().getHttpStatus());
+    }
+
+    @ExceptionHandler(CustomImageExceptionHandler.class)
+    private ResponseEntity<ExceptionResponse<Object>> handleImageCustomException(CustomFileExceptionHandler ex) {
+        log.error("File Exception", ex);
+        ExceptionResponse<Object> response = ExceptionResponse.builder()
+                .httpStatus(ex.getResponseCode().getHttpStatus())
+                .resultCode(ex.getResponseCode().getResultCode())
+                .resultMsg(ex.getMessage())
+                .build();
+
+        return new ResponseEntity<>(response, ex.getResponseCode().getHttpStatus());
+    }
 
 }

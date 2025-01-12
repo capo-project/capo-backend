@@ -1,6 +1,5 @@
 package com.realworld.feature.file;
 
-import com.realworld.common.type.file.FileMetaData;
 import lombok.Builder;
 import lombok.Getter;
 

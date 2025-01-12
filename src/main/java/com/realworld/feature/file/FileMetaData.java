@@ -1,6 +1,7 @@
-package com.realworld.common.type.file;
+package com.realworld.feature.file;
 
 import com.realworld.common.holder.uuid.UUIDHolder;
+import com.realworld.common.type.file.FileFormat;
 import com.realworld.infrastructure.image.ResizedImage;
 import lombok.Builder;
 import lombok.Getter;

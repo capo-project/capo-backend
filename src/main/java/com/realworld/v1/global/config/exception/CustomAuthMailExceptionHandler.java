@@ -5,17 +5,17 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class CustomMailExceptionHandler extends  RuntimeException{
+public class CustomAuthMailExceptionHandler extends  RuntimeException{
     private final ErrorCode errorCode;
 
     @Builder
-    public CustomMailExceptionHandler(String message, ErrorCode errorCode){
+    public CustomAuthMailExceptionHandler(String message, ErrorCode errorCode){
         super(message);
         this.errorCode = errorCode;
     }
 
     @Builder
-    public CustomMailExceptionHandler(ErrorCode errorCode){
+    public CustomAuthMailExceptionHandler(ErrorCode errorCode){
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }

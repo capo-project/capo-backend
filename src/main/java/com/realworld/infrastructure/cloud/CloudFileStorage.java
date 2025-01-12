@@ -1,7 +1,7 @@
 package com.realworld.infrastructure.cloud;
 
 import com.realworld.application.file.port.FileStorage;
-import com.realworld.application.file.dto.FileMetaData;
+import com.realworld.common.type.file.FileMetaData;
 import com.realworld.infrastructure.cloud.aws.AwsS3Handler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,8 +20,8 @@ public class CloudFileStorage implements FileStorage {
     }
 
     @Override
-    public String move(String sourcePath, String targetDirectory) {
-        return awsS3Handler.move(sourcePath, targetDirectory);
+    public String move(String sourcePath, String destinationPath) {
+        return awsS3Handler.move(sourcePath, destinationPath);
     }
 
     @Override

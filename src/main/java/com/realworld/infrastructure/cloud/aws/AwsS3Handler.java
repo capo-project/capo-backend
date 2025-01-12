@@ -1,6 +1,6 @@
 package com.realworld.infrastructure.cloud.aws;
 
-import com.realworld.application.file.dto.FileMetaData;
+import com.realworld.common.type.file.FileMetaData;
 
 import java.io.InputStream;
 

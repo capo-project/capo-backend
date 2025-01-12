@@ -11,7 +11,7 @@ import com.realworld.v1.feature.member.service.MemberCommandService;
 import com.realworld.v1.feature.member.service.MemberQueryService;
 import com.realworld.v1.global.code.ErrorCode;
 import com.realworld.v1.global.code.SuccessCode;
-import com.realworld.v1.global.config.exception.CustomMailExceptionHandler;
+import com.realworld.v1.global.config.exception.CustomAuthMailExceptionHandler;
 import com.realworld.v1.global.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -99,7 +99,7 @@ public class MemberControllerV1 {
     public ResponseEntity<ApiResponse<?>> emailUpdate(@AuthenticationPrincipal User user, @RequestBody UpdateEmailRequest request) {
         boolean exists = memberQueryService.existsByUserEmail(request.getUserEmail());
         if (exists) {
-            throw new CustomMailExceptionHandler(ErrorCode.EMAIL_AUTH_NUMBER_ERROR);
+            throw new CustomAuthMailExceptionHandler(ErrorCode.AUTH_EMAIL_AUTH_NUMBER_ERROR);
         }
 
         // 이메일 인증을 체크한다.

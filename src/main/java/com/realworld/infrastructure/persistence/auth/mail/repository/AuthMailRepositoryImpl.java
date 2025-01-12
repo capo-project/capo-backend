@@ -14,12 +14,12 @@ public class AuthMailRepositoryImpl implements AuthMailRepository {
     private final AuthMailRedisRepository repository;
 
     @Override
-    public void save(AuthMail authMail) {
+    public void save(final AuthMail authMail) {
         repository.save(authMail);
     }
 
     @Override
-    public Optional<AuthMail> findByUserEmail(String userEmail) {
+    public Optional<AuthMail> findByUserEmail(final String userEmail) {
         return repository.findById(userEmail);
     }
 }

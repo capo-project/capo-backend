@@ -3,14 +3,14 @@ package com.realworld.v1.feature.auth.mail;
 import com.realworld.v1.feature.auth.mail.domain.AuthMail;
 import com.realworld.v1.feature.auth.mail.entity.AuthMailJpaEntity;
 import com.realworld.v1.global.code.ErrorCode;
-import com.realworld.v1.global.config.exception.CustomMailExceptionHandler;
+import com.realworld.v1.global.config.exception.CustomAuthMailExceptionHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
-import static com.realworld.v1.global.code.ErrorCode.EMAIL_REQUEST_ERROR;
+import static com.realworld.v1.global.code.ErrorCode.AUTH_EMAIL_REQUEST_ERROR;
 
 @Slf4j
 @Service
@@ -37,15 +37,15 @@ public class AuthMailServiceV1Impl implements AuthMailServiceV1 {
     @Override
     public void checkEmailCode(String userEmail, String authNumber) {
         AuthMailJpaEntity target = authMailRepositoryV1.findByUserEmail(userEmail).orElseThrow(() ->
-                new CustomMailExceptionHandler(EMAIL_REQUEST_ERROR));
+                new CustomAuthMailExceptionHandler(AUTH_EMAIL_REQUEST_ERROR));
 
         AuthMail authMail = target.toDomain();
 
         boolean isEqualAuthNumber = authMail.isEqualAuthNumber(authNumber);
-        if (!isEqualAuthNumber) throw new CustomMailExceptionHandler(ErrorCode.BAD_REQUEST_ERROR);
+        if (!isEqualAuthNumber) throw new CustomAuthMailExceptionHandler(ErrorCode.BAD_REQUEST_ERROR);
 
         boolean isExpiredAuthMail = authMail.isExpiredAuthMail(target.getRegDt());
-        if (isExpiredAuthMail) throw new CustomMailExceptionHandler(ErrorCode.EMAIL_EXPIRED_ERROR);
+        if (isExpiredAuthMail) throw new CustomAuthMailExceptionHandler(ErrorCode.AUTH_EMAIL_EXPIRED_ERROR);
     }
 
     private String createKey() {

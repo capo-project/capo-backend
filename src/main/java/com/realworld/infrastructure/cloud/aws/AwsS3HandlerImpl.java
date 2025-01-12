@@ -4,7 +4,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.realworld.application.file.dto.FileMetaData;
+import com.realworld.common.type.file.FileMetaData;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -34,7 +34,7 @@ public class AwsS3HandlerImpl implements AwsS3Handler {
 
     @Override
     public String save(FileMetaData metaData, InputStream stream) {
-        String bucketPath = bucketName + File.separator + metaData.getTargetDirectory();
+        String bucketPath = bucketName + File.separator + metaData.getDirectory();
 
         s3Client.putObject(
                 new PutObjectRequest(
@@ -45,7 +45,7 @@ public class AwsS3HandlerImpl implements AwsS3Handler {
                 ).withCannedAcl(CannedAccessControlList.Private)
         );
 
-        return cloudFrontBasePath + metaData.getTargetDirectory() + File.separator + metaData.getName();
+        return cloudFrontBasePath + metaData.getDirectory() + File.separator + metaData.getName();
     }
 
     private ObjectMetadata getObjectMetadata(String contentType, long size) {

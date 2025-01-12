@@ -1,7 +1,7 @@
 /*
 package com.realworld.infrastructure.cloud.aws;
 
-import com.realworld.application.file.dto.FileMetaData;
+import com.realworld.common.type.file.FileMetaData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -27,7 +27,7 @@ import java.util.List;
         description = "이미지 파일 업로드, 리사이즈, 이동 및 삭제를 위한 API"
 )
 @RestController
-@RequestMapping("/files/images")
+@RequestMapping("/files")
 @RequiredArgsConstructor
 public class FileImageController {
 
@@ -40,7 +40,7 @@ public class FileImageController {
             ExceptionResponseCode.FILE_IMAGE_RESIZE_ERROR
     })
     @PostMapping(
-            value = "/resize",
+            value = "/upload/images/resize",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     public ResponseEntity<SuccessResponse<FileResponses>> uploadResizedImage(@ModelAttribute FileUploadRequest request) {
@@ -73,8 +73,8 @@ public class FileImageController {
             ExceptionResponseCode.FILE_PROCESSING_ERROR,
             ExceptionResponseCode.FILE_IMAGE_RESIZE_ERROR
     })
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<SuccessResponse<FileResponses>> upload(@ModelAttribute FileUploadRequest request) {
+    @PostMapping(value = "/upload/images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<SuccessResponse<FileResponses>> uploadImage(@ModelAttribute FileUploadRequest request) {
         List<FileResponse> fileResponses = Arrays.stream(request.getMultipartFiles())
                 .map(file -> FileResponse.from(
                         fileImageService.saveImage(

@@ -176,10 +176,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(CustomMailExceptionHandler.class)
-    protected ResponseEntity<ErrorResponse> handleMailCustomException(CustomMailExceptionHandler ex) {
+    @ExceptionHandler(CustomAuthMailExceptionHandler.class)
+    protected ResponseEntity<ErrorResponse> handleMailCustomException(CustomAuthMailExceptionHandler ex) {
         log.error("Exception", ex);
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.EMAIL_REQUEST_ERROR, ex.getMessage());
+        final ErrorResponse response = ErrorResponse.of(ErrorCode.AUTH_EMAIL_REQUEST_ERROR, ex.getMessage());
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }

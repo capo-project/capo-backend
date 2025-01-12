@@ -1,8 +1,8 @@
 package com.realworld.application.auth.mail.service;
 
 import com.realworld.application.auth.mail.port.AuthMailRepository;
-import com.realworld.common.holder.date.DateTimeHolderImpl;
 import com.realworld.common.holder.auth.key.MailKeyGeneratorHolderImpl;
+import com.realworld.common.holder.date.DateTimeHolderImpl;
 import com.realworld.feature.auth.mail.entity.AuthMail;
 import com.realworld.infrastructure.mail.MailSender;
 import com.realworld.v1.global.code.ErrorCode;
@@ -21,16 +21,16 @@ public class AuthMailServiceImpl implements AuthMailService {
     private final MailSender mailSender;
 
     @Override
-    public void send(AuthMailRequest request) {
-        AuthMail authMail = AuthMail.createMail(request.getUserEmail(), new MailKeyGeneratorHolderImpl(), new DateTimeHolderImpl());
+    public void send(final AuthMailRequest request) {
+        final AuthMail authMail = AuthMail.createMail(request.userEmail(), new MailKeyGeneratorHolderImpl(), new DateTimeHolderImpl());
         authMail.send(mailSender);
 
         authMailRepository.save(authMail);
     }
 
     @Override
-    public void check(String userEmail, String authNumber) {
-        AuthMail authMail = authMailRepository.findByUserEmail(userEmail).orElseThrow(() -> new CustomMemberExceptionHandler(ErrorCode.EMAIL_REQUEST_ERROR));
+    public void check(final String userEmail, final String authNumber) {
+        final AuthMail authMail = authMailRepository.findByUserEmail(userEmail).orElseThrow(() -> new CustomMemberExceptionHandler(ErrorCode.AUTH_EMAIL_REQUEST_ERROR));
 
         authMail.authCheck(authNumber);
     }

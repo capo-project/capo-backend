@@ -2,14 +2,14 @@ package com.realworld.feature.auth.mail.domain.mail;
 
 import com.realworld.feature.auth.mail.entity.AuthMail;
 import com.realworld.feature.auth.mail.mock.mail.MockMailData;
-import com.realworld.v1.global.config.exception.CustomMailExceptionHandler;
+import com.realworld.v1.global.config.exception.CustomAuthMailExceptionHandler;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class AuthMailTest {
+class AuthMailTest {
 
     @Test
     void 메일_인증번호_생성_성공_테스트() {
@@ -37,7 +37,7 @@ public class AuthMailTest {
         AuthMail authMail = AuthMail.createMail(MockMailData.userEmailMockData1, () -> "otirj109", () -> LocalDateTime.of(2025, 1, 2, 12, 8, 0));
 
         assertThatThrownBy(() -> authMail.authCheck("otirj109dd"))
-                .isInstanceOf(CustomMailExceptionHandler.class);
+                .isInstanceOf(CustomAuthMailExceptionHandler.class);
     }
 
     @Test

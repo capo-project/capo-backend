@@ -5,7 +5,7 @@ import com.realworld.v1.feature.auth.mail.AuthMailServiceV1;
 import com.realworld.v1.feature.member.service.MemberQueryService;
 import com.realworld.v1.global.code.ErrorCode;
 import com.realworld.v1.global.code.SuccessCode;
-import com.realworld.v1.global.config.exception.CustomMailExceptionHandler;
+import com.realworld.v1.global.config.exception.CustomAuthMailExceptionHandler;
 import com.realworld.v1.global.response.ApiResponse;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +43,7 @@ public class AuthControllerV1 {
         boolean isDuplicatedEmail = getMemberUseCase.existsByUserEmail(userEmail);
 
         if (isDuplicatedEmail) {
-            throw new CustomMailExceptionHandler(ErrorCode.EMAIL_DUPLICATION_ERROR);
+            throw new CustomAuthMailExceptionHandler(ErrorCode.AUTH_EMAIL_DUPLICATION_ERROR);
         }
 
         authMailServiceV1.checkEmailCode(userEmail, authNumber);

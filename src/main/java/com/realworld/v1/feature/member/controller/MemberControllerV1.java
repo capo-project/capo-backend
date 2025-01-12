@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/member")
 @RequiredArgsConstructor
 @Slf4j
-public class MemberController {
+public class MemberControllerV1 {
     private final MemberCommandService memberCommandService;
     private final MemberQueryService memberQueryService;
     private final AuthMailServiceV1 authMailServiceV1;
@@ -99,7 +99,7 @@ public class MemberController {
     public ResponseEntity<ApiResponse<?>> emailUpdate(@AuthenticationPrincipal User user, @RequestBody UpdateEmailRequest request) {
         boolean exists = memberQueryService.existsByUserEmail(request.getUserEmail());
         if (exists) {
-            throw new CustomMailExceptionHandler(ErrorCode.EMAIL_DUPLICATION_ERROR);
+            throw new CustomMailExceptionHandler(ErrorCode.EMAIL_AUTH_NUMBER_ERROR);
         }
 
         // 이메일 인증을 체크한다.

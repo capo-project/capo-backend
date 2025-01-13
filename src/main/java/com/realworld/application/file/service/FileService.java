@@ -3,7 +3,7 @@ package com.realworld.application.file.service;
 import com.realworld.feature.file.File;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface FileImageService {
+public interface FileService {
 
     File saveResizedImage(String destinationDirectory, MultipartFile file, int width, int height);
 

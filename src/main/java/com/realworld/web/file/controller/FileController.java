@@ -1,6 +1,6 @@
 package com.realworld.web.file.controller;
 
-import com.realworld.application.file.service.FileImageService;
+import com.realworld.application.file.service.FileService;
 import com.realworld.common.response.SuccessResponse;
 import com.realworld.common.response.code.ExceptionResponseCode;
 import com.realworld.common.response.code.SuccessResponseCode;
@@ -31,7 +31,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FileController {
 
-    private final FileImageService fileImageService;
+    private final FileService fileService;
 
     @SuccessResponseAnnotation(SuccessResponseCode.SUCCESS)
     @ExceptionResponseAnnotations({
@@ -43,10 +43,10 @@ public class FileController {
             value = "/upload/images/resize",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
-    public ResponseEntity<SuccessResponse<FileResponses>> uploadResizedImage(@ModelAttribute FileUploadRequest request) {
+    public ResponseEntity<SuccessResponse<FileResponses>> uploadResizedImage(@ModelAttribute final FileUploadRequest request) {
         List<FileResponse> fileResponses = Arrays.stream(request.getMultipartFiles())
                 .map(file -> FileResponse.from(
-                        fileImageService.saveResizedImage(
+                        fileService.saveResizedImage(
                                 request.getDestinationDirectory(),
                                 file,
                                 request.getWidth(),
@@ -74,10 +74,10 @@ public class FileController {
             ExceptionResponseCode.FILE_IMAGE_RESIZE_ERROR
     })
     @PostMapping(value = "/upload/images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<SuccessResponse<FileResponses>> uploadImage(@ModelAttribute FileUploadRequest request) {
+    public ResponseEntity<SuccessResponse<FileResponses>> uploadImage(@ModelAttribute final FileUploadRequest request) {
         List<FileResponse> fileResponses = Arrays.stream(request.getMultipartFiles())
                 .map(file -> FileResponse.from(
-                        fileImageService.saveImage(
+                        fileService.saveImage(
                                 request.getDestinationDirectory(),
                                 file
                         )
@@ -98,9 +98,9 @@ public class FileController {
 
     @SuccessResponseAnnotation(SuccessResponseCode.SUCCESS)
     @PatchMapping("/move")
-    public ResponseEntity<SuccessResponse<FileUrlResponses>> move(@RequestBody FileMoveRequest request) {
+    public ResponseEntity<SuccessResponse<FileUrlResponses>> move(@RequestBody final FileMoveRequest request) {
         List<String> movedUrls = request.getUrls().stream()
-                .map(url -> fileImageService.move(url, request.getDirectory()))
+                .map(url -> fileService.move(url, request.getDirectory()))
                 .toList();
 
         FileUrlResponses responses = FileUrlResponses.of(movedUrls);
@@ -116,8 +116,8 @@ public class FileController {
     }
 
     @DeleteMapping
-    public ResponseEntity<SuccessResponse<FileResponse>> delete(@RequestParam("files") FileDeleteRequest request) {
-        request.getUrls().forEach(fileImageService::delete);
+    public ResponseEntity<SuccessResponse<FileResponse>> delete(@RequestParam("files") final FileDeleteRequest request) {
+        request.getUrls().forEach(fileService::delete);
         return ResponseEntity.ok(new SuccessResponse<>(null, 200, HttpStatus.OK, "파일 삭제 성공"));
     }
 

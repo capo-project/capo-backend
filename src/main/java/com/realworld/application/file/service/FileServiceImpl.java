@@ -20,7 +20,7 @@ import java.io.InputStream;
 
 @Service
 @RequiredArgsConstructor
-public class FileImageServiceImpl implements FileImageService {
+public class FileServiceImpl implements FileService {
 
     private static final String TEMPORARY_DIRECTORY = "temporary";
 

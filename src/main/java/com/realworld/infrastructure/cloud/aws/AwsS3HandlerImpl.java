@@ -35,17 +35,19 @@ public class AwsS3HandlerImpl implements AwsS3Handler {
     @Override
     public String save(FileMetaData metaData, InputStream stream) {
         String bucketPath = bucketName + File.separator + metaData.getDirectory();
+        String fileName = metaData.getDetails().getName();
+        ObjectMetadata metadata = getObjectMetadata(metaData.getDetails().getContentType(), metaData.getDetails().getSize());
 
         s3Client.putObject(
                 new PutObjectRequest(
                         bucketPath,
-                        metaData.getName(),
+                        fileName,
                         stream,
-                        getObjectMetadata(metaData.getContentType(), metaData.getSize())
+                        metadata
                 ).withCannedAcl(CannedAccessControlList.Private)
         );
 
-        return cloudFrontBasePath + metaData.getDirectory() + File.separator + metaData.getName();
+        return cloudFrontBasePath + metaData.getDirectory() + File.separator + metaData.getDetails().getName();
     }
 
     private ObjectMetadata getObjectMetadata(String contentType, long size) {

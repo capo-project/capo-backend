@@ -23,13 +23,13 @@ import java.util.Arrays;
 import java.util.List;
 
 @Tag(
-        name = "파일 관리",
-        description = "이미지 파일 업로드, 리사이즈, 이동 및 삭제를 위한 API"
+        name = "파일 관리 API",
+        description = "파일 리사이즈 및 업로드, 이동, 삭제를 위한 API"
 )
 @RestController
 @RequestMapping("/files")
 @RequiredArgsConstructor
-public class FileImageController {
+public class FileController {
 
     private final FileImageService fileImageService;
 

@@ -15,6 +15,8 @@ public enum ExceptionResponseCode {
 
     FILE_IMAGE_RESIZE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 크기를 조정하는 중 문제가 발생했습니다. 다시 시도해주세요.", 500),
 
+    FILE_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "파일이 존재하지 않습니다.", 404),
+
     UNSUPPORTED_FILE_IMAGE_TYPE_ERROR(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "지원되지 않는 파일 형식입니다. 제공된 형식 : %s. 올바른 이미지를 업로드해주세요.", 415),
 
     // 비밀번호 변경에 실패한 경우

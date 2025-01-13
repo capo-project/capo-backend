@@ -4,6 +4,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.realworld.common.exception.CustomFileExceptionHandler;
+import com.realworld.common.response.code.ExceptionResponseCode;
 import com.realworld.feature.file.FileMetaData;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Value;
@@ -71,7 +73,7 @@ public class AwsS3HandlerImpl implements AwsS3Handler {
         String targetFullPath = bucketName + File.separator + targetDirectory;
 
         if (!isFileExist(sourceFullPath, fileName)) {
-            // Rest API Exception 발생 !!!
+            throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_NOT_FOUND_ERROR);
         }
 
         s3Client.copyObject(sourceFullPath, fileName, targetFullPath, fileName);
@@ -88,7 +90,7 @@ public class AwsS3HandlerImpl implements AwsS3Handler {
         if (isFileExist(targetFullPath, fileName)) {
             s3Client.deleteObject(targetFullPath, fileName);
         } else {
-            // Rest API Exception 발생!
+            throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_NOT_FOUND_ERROR);
         }
     }
 

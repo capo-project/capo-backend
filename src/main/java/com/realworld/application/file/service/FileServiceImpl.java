@@ -22,8 +22,6 @@ import java.io.InputStream;
 @RequiredArgsConstructor
 public class FileServiceImpl implements FileService {
 
-    private static final String TEMPORARY_DIRECTORY = "temporary";
-
     private final ImageResizer imageResizer;
     private final FileStorage fileStorage;
 
@@ -34,14 +32,8 @@ public class FileServiceImpl implements FileService {
         try (InputStream inputStream = file.getInputStream();
              ResizedImage resizedImage = imageResizer.resize(width, height, ImageIO.read(inputStream))
         ) {
-            FileMetaData metaData = FileMetaData.create(
-                    determineDestinationDirectory(destinationDirectory),
-                    new UUIDHolderImpl(),
-                    resizedImage
-            );
-
+            FileMetaData metaData = FileMetaData.create(destinationDirectory, new UUIDHolderImpl(), resizedImage);
             String url = fileStorage.save(metaData, resizedImage.getInputStream());
-
             return File.create(metaData, url);
         } catch (IOException e) {
             throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_PROCESSING_ERROR);
@@ -55,14 +47,8 @@ public class FileServiceImpl implements FileService {
         validateImageFileType(file);
 
         try (InputStream inputStream = file.getInputStream()) {
-            FileMetaData metaData = FileMetaData.create(
-                    determineDestinationDirectory(destinationDirectory),
-                    file,
-                    new UUIDHolderImpl()
-            );
-
+            FileMetaData metaData = FileMetaData.create(destinationDirectory, file, new UUIDHolderImpl());
             String url = fileStorage.save(metaData, inputStream);
-
             return File.create(metaData, url);
         } catch (IOException e) {
             throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_PROCESSING_ERROR);
@@ -71,13 +57,9 @@ public class FileServiceImpl implements FileService {
 
     private void validateImageFileType(MultipartFile file) {
         String contentType = file.getContentType();
-        if (contentType == null || !FileFormat.IMAGE.getPrefix().contains(contentType)) {
+        if (contentType == null || !contentType.startsWith(FileFormat.IMAGE.getPrefix())) {
             throw new CustomFileExceptionHandler(ExceptionResponseCode.UNSUPPORTED_FILE_IMAGE_TYPE_ERROR);
         }
-    }
-
-    private String determineDestinationDirectory(String destinationDirectory) {
-        return destinationDirectory != null ? destinationDirectory : TEMPORARY_DIRECTORY;
     }
 
     @Override

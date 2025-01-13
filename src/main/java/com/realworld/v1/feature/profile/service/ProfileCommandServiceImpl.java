@@ -1,7 +1,7 @@
 package com.realworld.v1.feature.profile.service;
 
 import com.realworld.feature.profile.controller.request.UpdateProfileRequest;
-import com.realworld.v1.feature.file.domain.File;
+import com.realworld.v1.feature.file.domain.FileV1;
 import com.realworld.v1.feature.file.service.CloudStorageService;
 import com.realworld.v1.feature.member.domain.Member;
 import com.realworld.v1.feature.member.entity.MemberJpaEntity;
@@ -34,11 +34,11 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
 
     @Transactional
     @Override
-    public Member updateProfileImage(String userId, File file) {
+    public Member updateProfileImage(String userId, FileV1 fileV1) {
         MemberJpaEntity member = repository.findById(userId).orElseThrow(() -> new CustomMemberExceptionHandler(ErrorCode.NOT_EXISTS_USERID));
 
         cloudStorageService.delete(userId, String.valueOf(member.getFile().getId())); // 해당 버킷 파일 삭제
-        member.setFile(file.toEntity()); // 파일 변경
+        member.setFile(fileV1.toEntity()); // 파일 변경
 
         return member.toDomain();
     }

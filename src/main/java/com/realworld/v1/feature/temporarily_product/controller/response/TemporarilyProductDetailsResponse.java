@@ -3,7 +3,7 @@ package com.realworld.v1.feature.temporarily_product.controller.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.realworld.v1.feature.file.domain.File;
+import com.realworld.v1.feature.file.domain.FileV1;
 import com.realworld.v1.feature.member.domain.Member;
 import com.realworld.v1.global.category.GroupCategory;
 import lombok.Builder;
@@ -37,6 +37,6 @@ public class TemporarilyProductDetailsResponse {
 
     private LocalDateTime modifiedAt;
 
-    private List<File> images;
+    private List<FileV1> images;
 
 }

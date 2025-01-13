@@ -71,7 +71,7 @@ public class MemberJpaEntity {
                 .userId(getUserId())
                 .userEmail(getUserEmail())
                 .phoneNumber(getPhoneNumber())
-                .file(Objects.isNull(getFile()) ? null : getFile().toDomain())
+                .fileV1(Objects.isNull(getFile()) ? null : getFile().toDomain())
                 .nickname(getNickname())
                 .content(getContent())
                 .createDt(getCreateDt())

@@ -1,7 +1,7 @@
 package com.realworld.v1.feature.file.service;
 
 
-import com.realworld.v1.feature.file.domain.File;
+import com.realworld.v1.feature.file.domain.FileV1;
 import com.realworld.v1.feature.file.entity.FileJpaEntity;
 import com.realworld.v1.feature.file.exception.FileExceptionHandler;
 import com.realworld.v1.feature.file.repository.FileRepository;
@@ -33,19 +33,19 @@ public class LocalStorageService implements StorageService {
     private String filePath;
 
     @Override
-    public File upload(InputStream inputStream, String userId, File file) {
-        file.updateId(fileNameGenerator.createFileId());
+    public FileV1 upload(InputStream inputStream, String userId, FileV1 fileV1) {
+        fileV1.updateId(fileNameGenerator.createFileId());
 
-        String savedFileName = file.getId() + FilenameUtils.EXTENSION_SEPARATOR_STR + file.getExtension();
-        file.updatePath(filePath + java.io.File.separator + savedFileName);
+        String savedFileName = fileV1.getId() + FilenameUtils.EXTENSION_SEPARATOR_STR + fileV1.getExtension();
+        fileV1.updatePath(filePath + java.io.File.separator + savedFileName);
 
         try {
-            if (file.getContentType().contains("image")) {
+            if (fileV1.getContentType().contains("image")) {
                 BufferedImage inputImage = ImageIO.read(inputStream);
 
                 try {
                     BufferedImage thumbBufferedImage = thumbnailImageGenerator.thumbnailBufferedImage(inputImage);
-                    String thumbnailFileName = thumbnailImageGenerator.createThumbnailFileName(file.getId().toString());
+                    String thumbnailFileName = thumbnailImageGenerator.createThumbnailFileName(fileV1.getId().toString());
 
                     java.io.File thumbnailFile = new java.io.File(filePath, thumbnailFileName);
                     ImageIO.write(thumbBufferedImage, ThumbnailImageGenerator.THUMBNAIL_IMAGE_EXTENSION, thumbnailFile);
@@ -53,11 +53,11 @@ public class LocalStorageService implements StorageService {
                     log.error("ERROR!!! create thumbnail image", e);
                 }
 
-                file.updateHasThumbnail(true);
-                ImageIO.write(inputImage, file.getExtension(), new java.io.File(filePath, savedFileName));
+                fileV1.updateHasThumbnail(true);
+                ImageIO.write(inputImage, fileV1.getExtension(), new java.io.File(filePath, savedFileName));
             } else {
                 FileUtils.copyInputStreamToFile(inputStream, new java.io.File(filePath, savedFileName));
-                file.updateHasThumbnail(false);
+                fileV1.updateHasThumbnail(false);
             }
         } catch (Exception e) {
             log.error("ERROR!!! upload file", e);
@@ -65,9 +65,9 @@ public class LocalStorageService implements StorageService {
             throw new FileExceptionHandler("파일 업로드 중 오류가 발생했습니다.", ErrorCode.BAD_REQUEST_ERROR);
         }
 
-        fileRepository.save(file.toEntity());
+        fileRepository.save(fileV1.toEntity());
 
-        return file;
+        return fileV1;
     }
 
     @Override

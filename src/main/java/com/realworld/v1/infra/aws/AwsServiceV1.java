@@ -14,7 +14,7 @@ import java.io.InputStream;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class AwsService {
+public class AwsServiceV1 {
     private final AmazonS3 amazonS3;
 
     @Value("${cloud.aws.s3.bucket}")

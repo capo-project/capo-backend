@@ -2,7 +2,7 @@ package com.realworld.v1.feature.member.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.realworld.v1.feature.auth.Authority;
-import com.realworld.v1.feature.file.domain.File;
+import com.realworld.v1.feature.file.domain.FileV1;
 import com.realworld.v1.feature.member.entity.MemberJpaEntity;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +41,7 @@ public class Member {
 
     private String nickname;
 
-    private File file;
+    private FileV1 fileV1;
 
     private String oauthImage;
 
@@ -55,7 +55,7 @@ public class Member {
                 .createDt(getCreateDt())
                 .regDt(getRegDt())
                 .delYn(getDelYn())
-                .file(Objects.isNull(getFile()) ? null : getFile().toEntity())
+                .file(Objects.isNull(getFileV1()) ? null : getFileV1().toEntity())
                 .oauthImage(getOauthImage())
                 .authority(getAuthority())
                 .build();

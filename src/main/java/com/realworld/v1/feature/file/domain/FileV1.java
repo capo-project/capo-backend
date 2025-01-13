@@ -3,7 +3,7 @@ package com.realworld.v1.feature.file.domain;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.realworld.v1.feature.file.controller.FileResponse;
+import com.realworld.v1.feature.file.controller.FileResponseV1;
 import com.realworld.v1.feature.file.entity.FileJpaEntity;
 import com.realworld.v1.feature.image.ThumbnailImageGenerator;
 import lombok.Builder;
@@ -18,7 +18,7 @@ import java.util.UUID;
 @ToString
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class File {
+public class FileV1 {
 
     private UUID id;
 
@@ -72,8 +72,8 @@ public class File {
                 .build();
     }
 
-    public FileResponse toResponse() {
-        return FileResponse.builder()
+    public FileResponseV1 toResponse() {
+        return FileResponseV1.builder()
                 .id(String.valueOf(getId()))
                 .originalFileName(getName() + FilenameUtils.EXTENSION_SEPARATOR_STR + getExtension())
                 .contentType(getContentType())

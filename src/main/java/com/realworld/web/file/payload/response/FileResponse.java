@@ -45,9 +45,9 @@ public class FileResponse {
 
     public static FileResponse from(File file) {
         return FileResponse.builder()
-                .name(file.getName())
-                .contentType(file.getContentType())
-                .size(file.getSize())
+                .name(file.getDetails().getName())
+                .contentType(file.getDetails().getContentType())
+                .size(file.getDetails().getSize())
                 .url(file.getUrl())
                 .build();
     }

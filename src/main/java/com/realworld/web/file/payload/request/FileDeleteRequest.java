@@ -19,7 +19,7 @@ public class FileDeleteRequest {
 
     @Schema(
             description = "삭제할 파일의 URL 목록",
-            example = "['http://example.com/file1.jpg', 'http://example.com/file2.png']"
+            example = "[\"https://example.com/file1.jpg\", \"https://example.com/file2.png\"]"
     )
     @NotEmpty(message = "urls는 필수 입력값이며, 최소 하나 이상의 URL을 포함해야 합니다.")
     private final List<String> urls;

@@ -1,7 +1,10 @@
 package com.realworld.feature.file;
 
-import lombok.Builder;
+import com.realworld.common.exception.CustomFileExceptionHandler;
+import com.realworld.common.response.code.ExceptionResponseCode;
 import lombok.Getter;
+
+import java.util.Objects;
 
 @Getter
 public class File {
@@ -9,17 +12,20 @@ public class File {
     private final FileDetails details;
     private final String url;
 
-    @Builder
     private File(FileDetails details, String url) {
         this.details = details;
         this.url = url;
+        notNullParameters(details, url);
     }
 
-    public static File create(FileMetaData metaData, String url) {
-        return File.builder()
-                .details(metaData.getDetails())
-                .url(url)
-                .build();
+    private void notNullParameters(FileDetails details, String url) {
+        if (Objects.isNull(details) || Objects.isNull(url)) {
+            throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_PROCESSING_ERROR);
+        }
+    }
+
+    public static File create(FileDetails details, String url) {
+        return new File(details, url);
     }
 
 }

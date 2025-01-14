@@ -5,7 +5,7 @@ import com.realworld.v1.feature.token.domain.Token;
 import com.realworld.v1.feature.token.entity.TokenJpaEntity;
 import com.realworld.v1.feature.token.repository.TokenRepository;
 import com.realworld.v1.global.code.ErrorCode;
-import com.realworld.v1.global.config.exception.CustomJwtExceptionHandler;
+import com.realworld.v1.global.config.exception.CustomJwtExceptionHandlerV1;
 import com.realworld.v1.global.config.jwt.JwtTokenProvider;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class TokenCommandServiceImpl implements TokenCommandService {
     @Override
     public Token reissue(ReissueRequest request) {
         if(!jwtTokenProvider.validateToken(request.getRefreshToken())){
-            throw new CustomJwtExceptionHandler(ErrorCode.JWT_TOKEN_REQUEST_ERROR);
+            throw new CustomJwtExceptionHandlerV1(ErrorCode.JWT_TOKEN_REQUEST_ERROR);
         }
 
         Authentication authentication = jwtTokenProvider.getAuthentication(request.getAccessToken());

@@ -1,6 +1,6 @@
 package com.realworld.v1.feature.temporarily_product.entity;
 
-import com.realworld.v1.feature.member.entity.MemberJpaEntity;
+import com.realworld.v1.feature.member.entity.MemberJpaEntityV1;
 import com.realworld.v1.feature.temporarily_product.domain.TemporarilyProduct;
 import com.realworld.v1.global.category.GroupCategory;
 import jakarta.persistence.*;
@@ -38,7 +38,7 @@ public class TemporarilyProductJpaEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
-    private MemberJpaEntity member;
+    private MemberJpaEntityV1 member;
 
     @OneToMany(mappedBy = "product")
     private List<TemporarilyProductFileJpaEntity> images = new ArrayList<>();

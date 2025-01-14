@@ -1,11 +1,11 @@
 package com.realworld.v1.feature.member.repository;
 
 
-import com.realworld.v1.feature.member.entity.MemberJpaEntity;
+import com.realworld.v1.feature.member.entity.MemberJpaEntityV1;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MemberRepository extends JpaRepository<MemberJpaEntity, String>, MemberRepositoryCustom {
-    MemberJpaEntity findByUserId(String userId);
+public interface MemberRepository extends JpaRepository<MemberJpaEntityV1, String>, MemberRepositoryCustom {
+    MemberJpaEntityV1 findByUserId(String userId);
 
     boolean existsByUserEmail(String userEmail);
 

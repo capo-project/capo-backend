@@ -1,13 +1,13 @@
 package com.realworld.v1.feature.temporarily_product.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.realworld.v1.feature.member.entity.QMemberJpaEntity;
+import com.realworld.v1.feature.member.entity.QMemberJpaEntityV1;
 import com.realworld.v1.feature.temporarily_product.domain.TemporarilyProduct;
 import com.realworld.v1.feature.temporarily_product.entity.QTemporarilyProductFileJpaEntity;
 import com.realworld.v1.feature.temporarily_product.entity.QTemporarilyProductJpaEntity;
 import com.realworld.v1.feature.temporarily_product.entity.TemporarilyProductJpaEntity;
 import com.realworld.v1.global.code.ErrorCode;
-import com.realworld.v1.global.config.exception.CustomProductExceptionHandler;
+import com.realworld.v1.global.config.exception.CustomProductExceptionHandlerV1;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class TemporarilyProductRepositoryImpl implements TemporarilyProductRepos
     private final JPAQueryFactory queryFactory;
     private final QTemporarilyProductJpaEntity temporarilyProduct = QTemporarilyProductJpaEntity.temporarilyProductJpaEntity;
     private final QTemporarilyProductFileJpaEntity temporarilyProductFile = QTemporarilyProductFileJpaEntity.temporarilyProductFileJpaEntity;
-    private final QMemberJpaEntity member = QMemberJpaEntity.memberJpaEntity;
+    private final QMemberJpaEntityV1 member = QMemberJpaEntityV1.memberJpaEntityV1;
 
     @Override
     public TemporarilyProduct temporarilyProductDetails(Long seq) {
@@ -29,7 +29,7 @@ public class TemporarilyProductRepositoryImpl implements TemporarilyProductRepos
                 .where(temporarilyProduct.productSeq.eq(seq)).fetchOne();
 
         if (details == null) {
-            throw new CustomProductExceptionHandler(ErrorCode.NOT_EXISTS_TEMPORARILY_PRODUCT);
+            throw new CustomProductExceptionHandlerV1(ErrorCode.NOT_EXISTS_TEMPORARILY_PRODUCT);
         }
         return details.searchToDomain();
     }

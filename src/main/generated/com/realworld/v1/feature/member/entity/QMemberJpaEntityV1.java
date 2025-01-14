@@ -11,16 +11,16 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QMemberJpaEntity is a Querydsl query type for MemberJpaEntity
+ * QMemberJpaEntityV1 is a Querydsl query type for MemberJpaEntityV1
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QMemberJpaEntity extends EntityPathBase<MemberJpaEntity> {
+public class QMemberJpaEntityV1 extends EntityPathBase<MemberJpaEntityV1> {
 
-    private static final long serialVersionUID = -990444759L;
+    private static final long serialVersionUID = 1665329028L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QMemberJpaEntity memberJpaEntity = new QMemberJpaEntity("memberJpaEntity");
+    public static final QMemberJpaEntityV1 memberJpaEntityV1 = new QMemberJpaEntityV1("memberJpaEntityV1");
 
     public final EnumPath<com.realworld.v1.feature.auth.Authority> authority = createEnum("authority", com.realworld.v1.feature.auth.Authority.class);
 
@@ -48,23 +48,23 @@ public class QMemberJpaEntity extends EntityPathBase<MemberJpaEntity> {
 
     public final StringPath userId = createString("userId");
 
-    public QMemberJpaEntity(String variable) {
-        this(MemberJpaEntity.class, forVariable(variable), INITS);
+    public QMemberJpaEntityV1(String variable) {
+        this(MemberJpaEntityV1.class, forVariable(variable), INITS);
     }
 
-    public QMemberJpaEntity(Path<? extends MemberJpaEntity> path) {
+    public QMemberJpaEntityV1(Path<? extends MemberJpaEntityV1> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QMemberJpaEntity(PathMetadata metadata) {
+    public QMemberJpaEntityV1(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QMemberJpaEntity(PathMetadata metadata, PathInits inits) {
-        this(MemberJpaEntity.class, metadata, inits);
+    public QMemberJpaEntityV1(PathMetadata metadata, PathInits inits) {
+        this(MemberJpaEntityV1.class, metadata, inits);
     }
 
-    public QMemberJpaEntity(Class<? extends MemberJpaEntity> type, PathMetadata metadata, PathInits inits) {
+    public QMemberJpaEntityV1(Class<? extends MemberJpaEntityV1> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.file = inits.isInitialized("file") ? new com.realworld.v1.feature.file.entity.QFileJpaEntity(forProperty("file")) : null;
     }

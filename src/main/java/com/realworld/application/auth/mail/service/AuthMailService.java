@@ -5,8 +5,8 @@ import com.realworld.web.auth.mail.payload.request.AuthMailRequest;
 
 public interface AuthMailService {
 
-    void send(final AuthMailRequest request);
+    void send(AuthMailRequest request);
 
-    void check(final String userEmail, final String authNumber);
+    void check(String userEmail, String authNumber);
 
 }

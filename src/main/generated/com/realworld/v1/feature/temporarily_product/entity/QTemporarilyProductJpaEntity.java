@@ -32,7 +32,7 @@ public class QTemporarilyProductJpaEntity extends EntityPathBase<TemporarilyProd
 
     public final ListPath<TemporarilyProductFileJpaEntity, QTemporarilyProductFileJpaEntity> images = this.<TemporarilyProductFileJpaEntity, QTemporarilyProductFileJpaEntity>createList("images", TemporarilyProductFileJpaEntity.class, QTemporarilyProductFileJpaEntity.class, PathInits.DIRECT2);
 
-    public final com.realworld.v1.feature.member.entity.QMemberJpaEntity member;
+    public final com.realworld.v1.feature.member.entity.QMemberJpaEntityV1 member;
 
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = createDateTime("modifiedAt", java.time.LocalDateTime.class);
 
@@ -64,7 +64,7 @@ public class QTemporarilyProductJpaEntity extends EntityPathBase<TemporarilyProd
 
     public QTemporarilyProductJpaEntity(Class<? extends TemporarilyProductJpaEntity> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.member = inits.isInitialized("member") ? new com.realworld.v1.feature.member.entity.QMemberJpaEntity(forProperty("member"), inits.get("member")) : null;
+        this.member = inits.isInitialized("member") ? new com.realworld.v1.feature.member.entity.QMemberJpaEntityV1(forProperty("member"), inits.get("member")) : null;
     }
 
 }

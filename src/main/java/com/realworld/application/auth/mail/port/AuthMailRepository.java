@@ -6,8 +6,8 @@ import java.util.Optional;
 
 public interface AuthMailRepository {
 
-    void save(final AuthMail authMail);
+    void save(AuthMail authMail);
 
-    Optional<AuthMail> findByUserEmail(final String userEmail);
+    Optional<AuthMail> findByUserEmail(String userEmail);
 
 }

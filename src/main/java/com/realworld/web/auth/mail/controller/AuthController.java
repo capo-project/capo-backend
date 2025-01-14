@@ -32,7 +32,7 @@ public class AuthController {
         description = "이메일 인증 메일 보내기 API"
     )
     @SuccessResponseAnnotation(SuccessResponseCode.CREATED)
-    @ExceptionResponseAnnotations({ExceptionResponseCode.EMAIL_REQUEST_ERROR, ExceptionResponseCode.EMAIL_DUPLICATION_ERROR})
+    @ExceptionResponseAnnotations({ExceptionResponseCode.AUTH_EMAIL_REQUEST_ERROR, ExceptionResponseCode.AUTH_EMAIL_DUPLICATION_ERROR})
     @PostMapping(value="/email")
     public ResponseEntity<SuccessResponse<Object>> authMail(@Valid @SwaggerRequestBody(description = "이메일 인증 보내기 요청 정보", required = true, content = @Content(schema = @Schema(implementation = AuthMailRequest.class))) @RequestBody final AuthMailRequest request) {
         authMailService.send(request);
@@ -45,6 +45,7 @@ public class AuthController {
             description = "이메일 인증 번호 인증 성공 API"
     )
     @SuccessResponseAnnotation(SuccessResponseCode.SUCCESS)
+    @ExceptionResponseAnnotations({ExceptionResponseCode.AUTH_EMAIL_REQUEST_ERROR})
     @GetMapping(value="/email/{auth_number}")
     public ResponseEntity<SuccessResponse<String>> checkAuthMail(@Parameter(description = "유저 이메일", example = "test@naver.com") @RequestParam("user_email") final String userEmail, @Parameter(description = "인증번호", example = "asdf15130")@PathVariable("auth_number") final String authNumber) {
         authMailService.check(userEmail, authNumber);

@@ -1,7 +1,7 @@
 package com.realworld.v1.feature.oauth.service;
 
 import com.realworld.v1.feature.member.domain.Member;
-import com.realworld.v1.feature.member.entity.MemberJpaEntity;
+import com.realworld.v1.feature.member.entity.MemberJpaEntityV1;
 import com.realworld.v1.feature.member.repository.MemberRepository;
 import com.realworld.v1.feature.oauth.domain.CustomOAuth2User;
 import com.realworld.v1.feature.oauth.domain.OAuthAttributes;
@@ -85,7 +85,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     private Member getMember(OAuthAttributes attributes, SocialType socialType) {
         log.info("attributes :: {}", attributes);
 
-        MemberJpaEntity findMemberEntity = memberRepository.findById(attributes.getOAuth2UserInfo().getId()).orElse(null);
+        MemberJpaEntityV1 findMemberEntity = memberRepository.findById(attributes.getOAuth2UserInfo().getId()).orElse(null);
 
         if (findMemberEntity == null) {
             return saveMember(attributes, socialType);

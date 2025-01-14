@@ -1,8 +1,8 @@
 package com.realworld.v1.feature.member.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.realworld.v1.feature.member.entity.MemberJpaEntity;
-import com.realworld.v1.feature.member.entity.QMemberJpaEntity;
+import com.realworld.v1.feature.member.entity.MemberJpaEntityV1;
+import com.realworld.v1.feature.member.entity.QMemberJpaEntityV1;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -11,39 +11,39 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public MemberJpaEntity findByUserEmail(MemberJpaEntity memberJpaEntity) {
-        QMemberJpaEntity member = QMemberJpaEntity.memberJpaEntity;
-        return jpaQueryFactory.selectFrom(member).where(member.userEmail.eq(memberJpaEntity.getUserEmail())).fetchOne();
+    public MemberJpaEntityV1 findByUserEmail(MemberJpaEntityV1 memberJpaEntityV1) {
+        QMemberJpaEntityV1 member = QMemberJpaEntityV1.memberJpaEntityV1;
+        return jpaQueryFactory.selectFrom(member).where(member.userEmail.eq(memberJpaEntityV1.getUserEmail())).fetchOne();
     }
 
     @Override
-    public long updatePassword(MemberJpaEntity memberJpaEntity) {
-        QMemberJpaEntity member = QMemberJpaEntity.memberJpaEntity;
+    public long updatePassword(MemberJpaEntityV1 memberJpaEntityV1) {
+        QMemberJpaEntityV1 member = QMemberJpaEntityV1.memberJpaEntityV1;
 
         return jpaQueryFactory
                 .update(member)
-                .set(member.password, memberJpaEntity.getPassword())
-                .where(member.userId.eq(memberJpaEntity.getUserId()))
+                .set(member.password, memberJpaEntityV1.getPassword())
+                .where(member.userId.eq(memberJpaEntityV1.getUserId()))
                 .execute();
     }
 
     @Override
-    public long updateEmail(MemberJpaEntity memberJpaEntity) {
-        QMemberJpaEntity member = QMemberJpaEntity.memberJpaEntity;
+    public long updateEmail(MemberJpaEntityV1 memberJpaEntityV1) {
+        QMemberJpaEntityV1 member = QMemberJpaEntityV1.memberJpaEntityV1;
 
         return jpaQueryFactory.update(member)
-                .set(member.userEmail, memberJpaEntity.getUserEmail())
-                .where(member.userId.eq(memberJpaEntity.getUserId()))
+                .set(member.userEmail, memberJpaEntityV1.getUserEmail())
+                .where(member.userId.eq(memberJpaEntityV1.getUserId()))
                 .execute();
     }
 
     @Override
-    public long updateNickname(MemberJpaEntity memberJpaEntity) {
-        QMemberJpaEntity member = QMemberJpaEntity.memberJpaEntity;
+    public long updateNickname(MemberJpaEntityV1 memberJpaEntityV1) {
+        QMemberJpaEntityV1 member = QMemberJpaEntityV1.memberJpaEntityV1;
 
         return jpaQueryFactory.update(member)
-                .set(member.nickname, memberJpaEntity.getNickname())
-                .where(member.userId.eq(memberJpaEntity.getUserId()))
+                .set(member.nickname, memberJpaEntityV1.getNickname())
+                .where(member.userId.eq(memberJpaEntityV1.getUserId()))
                 .execute();
     }
 

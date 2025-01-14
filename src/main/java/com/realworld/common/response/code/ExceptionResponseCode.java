@@ -14,7 +14,13 @@ public enum ExceptionResponseCode {
     /**
      * File Exception
      */
+    FILE_PROCESSING_ERROR(HttpStatus.BAD_REQUEST, "파일 처리 중 문제가 발생했습니다. 올바른 파일을 업로드해주세요.", 400),
+
     FILE_IMAGE_RESIZE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 크기를 조정하는 중 문제가 발생했습니다. 다시 시도해주세요.", 500),
+
+    FILE_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "파일이 존재하지 않습니다.", 404),
+
+    UNSUPPORTED_FILE_IMAGE_TYPE_ERROR(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "지원되지 않는 파일 형식입니다. 제공된 형식 : %s. 올바른 이미지를 업로드해주세요.", 415),
 
     // 비밀번호 변경에 실패한 경우
     FAIL_PASSWORD_CHANGE(HttpStatus.BAD_REQUEST, "패스워드 변경에 실패하였습니다.", 400),

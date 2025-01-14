@@ -7,18 +7,18 @@ import java.io.InputStream;
 @Getter
 public class ResizedImage implements AutoCloseable {
 
-    private final String extension;
-    private final long size;
     private final InputStream inputStream;
+    private final String imageFormat;
+    private final long size;
 
-    private ResizedImage(String extension, long size, InputStream inputStream) {
-        this.extension = extension;
-        this.size = size;
+    private ResizedImage(InputStream inputStream, String imageFormat, long size) {
         this.inputStream = inputStream;
+        this.imageFormat = imageFormat;
+        this.size = size;
     }
 
-    public static ResizedImage of(String extension, long size, InputStream inputStream) {
-        return new ResizedImage(extension, size, inputStream);
+    public static ResizedImage of(InputStream inputStream, String imageFormat, long size) {
+        return new ResizedImage(inputStream, imageFormat, size);
     }
 
     @Override

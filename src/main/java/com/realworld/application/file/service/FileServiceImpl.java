@@ -32,9 +32,9 @@ public class FileServiceImpl implements FileService {
         try (InputStream inputStream = file.getInputStream();
              ResizedImage resizedImage = imageResizer.resize(width, height, ImageIO.read(inputStream))
         ) {
-            FileMetaData metaData = FileMetaData.create(destinationDirectory, new UUIDHolderImpl(), resizedImage);
+            FileMetaData metaData = FileMetaData.fromResizedImage(destinationDirectory, resizedImage, new UUIDHolderImpl());
             String url = fileStorage.save(metaData, resizedImage.getInputStream());
-            return File.create(metaData, url);
+            return File.create(metaData.getDetails(), url);
         } catch (IOException e) {
             throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_PROCESSING_ERROR);
         } catch (Exception e) {
@@ -47,9 +47,9 @@ public class FileServiceImpl implements FileService {
         validateImageFileType(file);
 
         try (InputStream inputStream = file.getInputStream()) {
-            FileMetaData metaData = FileMetaData.create(destinationDirectory, file, new UUIDHolderImpl());
+            FileMetaData metaData = FileMetaData.fromMultipartFile(destinationDirectory, file, new UUIDHolderImpl());
             String url = fileStorage.save(metaData, inputStream);
-            return File.create(metaData, url);
+            return File.create(metaData.getDetails(), url);
         } catch (IOException e) {
             throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_PROCESSING_ERROR);
         }

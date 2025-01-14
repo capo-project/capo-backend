@@ -4,8 +4,8 @@ import com.realworld.v1.feature.auth.Authority;
 import com.realworld.v1.feature.member.domain.Member;
 import com.realworld.v1.feature.member.entity.BackUpMemberJpaEntity;
 import com.realworld.v1.feature.member.entity.MemberJpaEntityV1;
-import com.realworld.v1.feature.member.repository.BackUpMemberRepository;
-import com.realworld.v1.feature.member.repository.MemberRepository;
+import com.realworld.v1.feature.member.repository.BackUpMemberRepositoryV1;
+import com.realworld.v1.feature.member.repository.MemberRepositoryV1;
 import com.realworld.v1.global.code.ErrorCode;
 import com.realworld.v1.global.code.ResultErrorMsgCode;
 import com.realworld.v1.global.config.exception.CustomLoginExceptionHandlerV1;
@@ -23,8 +23,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class MemberCommandServiceImpl implements MemberCommandService {
     private final PasswordEncoder passwordEncoder;
-    private final MemberRepository repository;
-    private final BackUpMemberRepository backRepository;
+    private final MemberRepositoryV1 repository;
+    private final BackUpMemberRepositoryV1 backRepository;
 
     @Override
     public Member saveMember(Member member) {
@@ -117,6 +117,7 @@ public class MemberCommandServiceImpl implements MemberCommandService {
 
     @Override
     public long updateEmail(Member member) {
-        return repository.updateEmail(member.toEntity());
+        return repository.updateUserEmail(member.toEntity());
     }
+
 }

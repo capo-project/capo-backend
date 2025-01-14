@@ -22,6 +22,9 @@ public enum ExceptionResponseCode {
 
     UNSUPPORTED_FILE_IMAGE_TYPE_ERROR(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "지원되지 않는 파일 형식입니다. 제공된 형식 : %s. 올바른 이미지를 업로드해주세요.", 415),
 
+    // 유저 아이디 중복
+    DUPLICATION_USERID_ERROR(HttpStatus.BAD_REQUEST, "이미 존재하는 유저입니다.", 400),
+
     // 비밀번호 변경에 실패한 경우
     FAIL_PASSWORD_CHANGE(HttpStatus.BAD_REQUEST, "패스워드 변경에 실패하였습니다.", 400),
 

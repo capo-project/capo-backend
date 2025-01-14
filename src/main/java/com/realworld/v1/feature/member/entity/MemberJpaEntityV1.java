@@ -26,7 +26,7 @@ import java.util.Objects;
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Builder
-@Table(name = "userV1", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id"}))
+@Table(name = "user_v1", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id"}))
 @Slf4j
 public class MemberJpaEntityV1 {
 
@@ -38,6 +38,7 @@ public class MemberJpaEntityV1 {
 
     private String phoneNumber;
 
+    @Column(name = "user_email")
     private String userEmail;
 
     private String delYn;

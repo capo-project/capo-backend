@@ -11,7 +11,7 @@ public class NicknameGeneratorHolderImpl implements NicknameGeneratorHolder{
 
     @Override
     public String generate() {
-        return  prefix.get(random.nextInt() * prefix.size()) + names.get((int) (random.nextInt() * prefix.size()));
+        return prefix[random.nextInt(prefix.length)]+" "+names[(random.nextInt(names.length))];
     }
 
 }

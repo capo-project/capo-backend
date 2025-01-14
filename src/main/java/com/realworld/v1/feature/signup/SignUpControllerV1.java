@@ -22,7 +22,7 @@ import java.io.IOException;
 @RequestMapping("/v1")
 @RequiredArgsConstructor
 @Slf4j
-public class SignUpController {
+public class SignUpControllerV1 {
 
     private final MemberQueryService memberQueryService;
     private final MemberCommandService memberCommandService;

@@ -2,7 +2,7 @@ package com.realworld.v1.feature.member.service;
 
 import com.realworld.v1.feature.member.domain.Member;
 import com.realworld.v1.feature.member.entity.MemberJpaEntityV1;
-import com.realworld.v1.feature.member.repository.MemberRepository;
+import com.realworld.v1.feature.member.repository.MemberRepositoryV1;
 import com.realworld.v1.global.code.ErrorCode;
 import com.realworld.v1.global.config.exception.CustomMemberExceptionHandlerV1;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 public class MemberQueryServiceImpl implements MemberQueryService {
 
-    private final MemberRepository repository;
+    private final MemberRepositoryV1 repository;
 
 
     @Override

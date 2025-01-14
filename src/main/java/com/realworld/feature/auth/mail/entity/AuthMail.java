@@ -36,7 +36,6 @@ public class AuthMail {
     }
 
     public static AuthMail createMail(final String userEmail, MailKeyGeneratorHolder keyGeneratorHolder, DateTimeHolder dateTimeHolder) {
-
         return new AuthMail(userEmail, keyGeneratorHolder.generate(), dateTimeHolder.generate());
     }
 

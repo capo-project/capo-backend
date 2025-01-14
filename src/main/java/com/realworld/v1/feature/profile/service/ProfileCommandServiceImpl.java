@@ -5,7 +5,7 @@ import com.realworld.v1.feature.file.domain.FileV1;
 import com.realworld.v1.feature.file.service.CloudStorageService;
 import com.realworld.v1.feature.member.domain.Member;
 import com.realworld.v1.feature.member.entity.MemberJpaEntityV1;
-import com.realworld.v1.feature.member.repository.MemberRepository;
+import com.realworld.v1.feature.member.repository.MemberRepositoryV1;
 import com.realworld.v1.global.code.ErrorCode;
 import com.realworld.v1.global.config.exception.CustomMemberExceptionHandlerV1;
 import jakarta.transaction.Transactional;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ProfileCommandServiceImpl implements ProfileCommandService {
-    private final MemberRepository repository;
+    private final MemberRepositoryV1 repository;
     private final CloudStorageService cloudStorageService;
 
     @Transactional

@@ -2,7 +2,7 @@ package com.realworld.v1.feature.oauth.service;
 
 import com.realworld.v1.feature.member.domain.Member;
 import com.realworld.v1.feature.member.entity.MemberJpaEntityV1;
-import com.realworld.v1.feature.member.repository.MemberRepository;
+import com.realworld.v1.feature.member.repository.MemberRepositoryV1;
 import com.realworld.v1.feature.oauth.domain.CustomOAuth2User;
 import com.realworld.v1.feature.oauth.domain.OAuthAttributes;
 import com.realworld.v1.global.category.SocialType;
@@ -25,7 +25,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-    private final MemberRepository memberRepository;
+    private final MemberRepositoryV1 memberRepositoryV1;
 
     @Transactional
     @Override
@@ -85,7 +85,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     private Member getMember(OAuthAttributes attributes, SocialType socialType) {
         log.info("attributes :: {}", attributes);
 
-        MemberJpaEntityV1 findMemberEntity = memberRepository.findById(attributes.getOAuth2UserInfo().getId()).orElse(null);
+        MemberJpaEntityV1 findMemberEntity = memberRepositoryV1.findById(attributes.getOAuth2UserInfo().getId()).orElse(null);
 
         if (findMemberEntity == null) {
             return saveMember(attributes, socialType);
@@ -96,7 +96,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     private Member saveMember(OAuthAttributes attributes, SocialType socialType) {
         Member createdMember = attributes.toEntity(socialType, attributes.getOAuth2UserInfo());
 
-        return memberRepository.save(createdMember.toEntity()).toDomain();
+        return memberRepositoryV1.save(createdMember.toEntity()).toDomain();
     }
 
     private SocialType getSocialType(String registrationId) {

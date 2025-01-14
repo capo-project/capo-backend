@@ -3,6 +3,6 @@ package com.realworld.v1.feature.member.repository;
 import com.realworld.v1.feature.member.entity.BackUpMemberJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BackUpMemberRepository extends JpaRepository<BackUpMemberJpaEntity, Long> {
+public interface BackUpMemberRepositoryV1 extends JpaRepository<BackUpMemberJpaEntity, Long> {
 
 }

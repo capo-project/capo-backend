@@ -6,7 +6,7 @@ import com.realworld.v1.feature.member.entity.QMemberJpaEntityV1;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class MemberRepositoryImpl implements MemberRepositoryCustom {
+public class MemberRepositoryV1Impl implements MemberRepositoryCustomV1 {
 
     private final JPAQueryFactory jpaQueryFactory;
 
@@ -28,21 +28,11 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
     }
 
     @Override
-    public long updateEmail(MemberJpaEntityV1 memberJpaEntityV1) {
+    public long updateUserEmail(MemberJpaEntityV1 memberJpaEntityV1) {
         QMemberJpaEntityV1 member = QMemberJpaEntityV1.memberJpaEntityV1;
 
         return jpaQueryFactory.update(member)
                 .set(member.userEmail, memberJpaEntityV1.getUserEmail())
-                .where(member.userId.eq(memberJpaEntityV1.getUserId()))
-                .execute();
-    }
-
-    @Override
-    public long updateNickname(MemberJpaEntityV1 memberJpaEntityV1) {
-        QMemberJpaEntityV1 member = QMemberJpaEntityV1.memberJpaEntityV1;
-
-        return jpaQueryFactory.update(member)
-                .set(member.nickname, memberJpaEntityV1.getNickname())
                 .where(member.userId.eq(memberJpaEntityV1.getUserId()))
                 .execute();
     }

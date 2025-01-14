@@ -1,6 +1,6 @@
 package com.realworld.application.file.port;
 
-import com.realworld.feature.file.FileMetaData;
+import com.realworld.feature.file.entity.FileMetaData;
 
 import java.io.InputStream;
 

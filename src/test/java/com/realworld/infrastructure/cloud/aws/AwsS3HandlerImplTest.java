@@ -8,7 +8,7 @@
 package com.realworld.infrastructure.cloud.aws;
 
 import com.realworld.common.exception.CustomFileExceptionHandler;
-import com.realworld.feature.file.FileMetaData;
+import com.realworld.feature.file.entity.FileMetaData;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

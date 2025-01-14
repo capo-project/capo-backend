@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.realworld.common.exception.CustomFileExceptionHandler;
 import com.realworld.common.response.code.ExceptionResponseCode;
-import com.realworld.feature.file.FileMetaData;
+import com.realworld.feature.file.entity.FileMetaData;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

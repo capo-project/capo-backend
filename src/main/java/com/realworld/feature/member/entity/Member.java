@@ -1,9 +1,10 @@
 package com.realworld.feature.member.entity;
 
+import com.realworld.common.exception.CustomMemberExceptionHandler;
 import com.realworld.common.holder.date.DateTimeHolder;
 import com.realworld.common.holder.nickname.NicknameGeneratorHolder;
+import com.realworld.common.holder.password.PasswordEncodeHolder;
 import com.realworld.common.response.code.ExceptionResponseCode;
-import com.realworld.common.exception.CustomMemberExceptionHandler;
 import com.realworld.v1.feature.auth.Authority;
 import com.realworld.web.member.payload.request.SignUpRequest;
 import jakarta.persistence.*;
@@ -11,7 +12,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Getter
 @Entity
@@ -66,6 +66,17 @@ public class Member {
 
     public static Member createMember(final SignUpRequest request, DateTimeHolder dateTimeHolder, NicknameGeneratorHolder nicknameGeneratorHolder) {
         return new Member(request.userId(), request.password(), request.checkPassword(), MemberProfile.createMemberProfile(request.userEmail(), nicknameGeneratorHolder.generate()), Authority.ROLE_USER, dateTimeHolder.generate(), dateTimeHolder.generate());
+    }
+
+    public Member passwordEncode(PasswordEncodeHolder encoder) {
+        return Member.builder()
+                .userId(this.userId)
+                .password(encoder.encode(this.password))
+                .memberProfile(this.memberProfile)
+                .authority(this.authority)
+                .registerDate(this.registerDate)
+                .modifyDate(this.modifyDate)
+                .build();
     }
 
     private void isValidatePassword(final String password, final String checkPassword) {

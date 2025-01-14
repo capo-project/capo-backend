@@ -7,16 +7,15 @@ import com.realworld.common.response.code.SuccessResponseCode;
 import com.realworld.common.swagger.ExceptionResponseAnnotations;
 import com.realworld.common.swagger.SuccessResponseAnnotation;
 import com.realworld.common.swagger.SwaggerRequestBody;
-import com.realworld.feature.member.entity.Member;
 import com.realworld.web.member.payload.request.SignUpRequest;
 import com.realworld.web.member.payload.response.SignUpResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,7 +46,10 @@ public class SignUpController {
     )
     @SuccessResponseAnnotation(SuccessResponseCode.SUCCESS)
     @GetMapping
-    public ResponseEntity<SuccessResponse<Object>> validateDuplicate(@RequestParam String userId) {
+    public ResponseEntity<SuccessResponse<Object>> validateDuplicate(@Parameter(description = "유저아이디", example="capotest1") @RequestParam final String userId) {
+
+        memberService.validateUserIdDuplicate(userId);
+
         return ResponseEntity.ok(new SuccessResponse<>(null, SuccessResponseCode.SUCCESS.getResultCode(), SuccessResponseCode.SUCCESS.getHttpStatus(), "회원가입 가능한 아이디입니다."));
     }
 

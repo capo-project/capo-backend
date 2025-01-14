@@ -6,4 +6,6 @@ public interface MemberService {
 
     void signUp(SignUpRequest request);
 
+    void validateUserIdDuplicate(String userId);
+
 }

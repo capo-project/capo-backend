@@ -14,17 +14,17 @@ public class MemberRepositoryImpl implements MemberRepository {
     private final MemberJpaRepository repository;
 
     @Override
-    public Member save(Member member) {
-        return repository.save(member);
+    public void save(final Member member) {
+        repository.save(member);
     }
 
     @Override
-    public Optional<Member> findByUserEmail(String userEmail) {
+    public Optional<Member> findByUserEmail(final String userEmail) {
         return repository.findByUserEmail(userEmail);
     }
 
     @Override
-    public Optional<Member> findByUserId(String userId) {
+    public Optional<Member> findByUserId(final String userId) {
         return repository.findById(userId);
     }
 

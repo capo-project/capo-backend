@@ -36,4 +36,17 @@ public class MemberMockData {
             .modifyDate(LocalDateTime.of(2025,  1, 15, 10, 47, 0))
             .build();
 
+    public static final Member MOCK_MEMBER_DATA_TWO = Member.builder()
+            .userId("test2")
+            .authority(Authority.ROLE_USER)
+            .memberProfile(MemberProfile.builder()
+                    .nickname("미치광이 메깅")
+                    .userEmail("test2345@naver.com")
+                    .content("안녕하세요. 카포 테스트 입니다.")
+                    .thumbnail("https://photocard.com")
+                    .build())
+            .password("@poiuy12345")
+            .registerDate(LocalDateTime.of(2025,  1, 15, 10, 47, 0))
+            .modifyDate(LocalDateTime.of(2025,  1, 15, 10, 47, 0))
+            .build();
 }

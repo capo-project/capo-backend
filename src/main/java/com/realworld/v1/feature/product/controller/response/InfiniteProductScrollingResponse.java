@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.realworld.v1.feature.product.domain.Product;
 import com.realworld.v1.global.code.ErrorCode;
-import com.realworld.v1.global.config.exception.CustomProductExceptionHandler;
+import com.realworld.v1.global.config.exception.CustomProductExceptionHandlerV1;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -39,7 +39,7 @@ public class InfiniteProductScrollingResponse {
 
     public void infiniteLastSeq() {
         Optional<Product> product = products.stream().max((o1, o2) -> o2.getProductSeq().compareTo(o1.getProductSeq()));
-        this.nextCursor = product.orElseThrow(() -> new CustomProductExceptionHandler(ErrorCode.NOT_EXISTS_PRODUCT)).getProductSeq();
+        this.nextCursor = product.orElseThrow(() -> new CustomProductExceptionHandlerV1(ErrorCode.NOT_EXISTS_PRODUCT)).getProductSeq();
     }
 
 }

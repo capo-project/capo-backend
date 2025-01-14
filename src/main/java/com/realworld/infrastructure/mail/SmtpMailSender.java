@@ -1,7 +1,9 @@
 package com.realworld.infrastructure.mail;
 
+import com.realworld.common.exception.CustomAuthMailExceptionHandler;
+import com.realworld.common.response.code.ExceptionResponseCode;
 import com.realworld.v1.global.code.ErrorCode;
-import com.realworld.v1.global.config.exception.CustomMailExceptionHandler;
+import com.realworld.v1.global.config.exception.CustomAuthMailExceptionHandlerV1;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
@@ -29,7 +31,7 @@ public class SmtpMailSender implements MailSender {
         javaMailSender.send(createMessage(message, userEmail));
     }
 
-    private MimeMessage createMessage(String message, String userEmail) {
+    private MimeMessage createMessage(final String message, final String userEmail) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
         try {
@@ -39,7 +41,7 @@ public class SmtpMailSender implements MailSender {
             mimeMessage.setFrom(new InternetAddress(from, "PhotoCard_Admin"));
         } catch (MessagingException | UnsupportedEncodingException e) {
             log.error("이메일 전송 실패 :: {}", e);
-            throw new CustomMailExceptionHandler(ErrorCode.EMAIL_REQUEST_ERROR);
+            throw new CustomAuthMailExceptionHandler(ExceptionResponseCode.AUTH_EMAIL_REQUEST_ERROR);
         }
         return mimeMessage;
     }

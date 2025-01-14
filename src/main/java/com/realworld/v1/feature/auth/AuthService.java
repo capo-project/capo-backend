@@ -1,7 +1,7 @@
 package com.realworld.v1.feature.auth;
 
 import com.realworld.v1.feature.member.domain.Member;
-import com.realworld.v1.feature.member.repository.MemberRepository;
+import com.realworld.v1.feature.member.repository.MemberRepositoryV1;
 import com.realworld.v1.global.utils.CommonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class AuthService implements UserDetailsService {
 
-    private final MemberRepository repository;
+    private final MemberRepositoryV1 repository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserDetails user = this.createUserDetails(repository.findByUserId(username).toDomain());

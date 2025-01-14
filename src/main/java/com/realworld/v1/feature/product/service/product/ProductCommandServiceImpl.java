@@ -17,7 +17,7 @@ import com.realworld.v1.feature.temporarily_product.service.TemporarilyProductCo
 import com.realworld.v1.feature.temporarily_product.service.TemporarilyProductFileQueryService;
 import com.realworld.v1.feature.temporarily_product.service.TemporarilyProductQueryService;
 import com.realworld.v1.global.code.ErrorCode;
-import com.realworld.v1.global.config.exception.CustomProductExceptionHandler;
+import com.realworld.v1.global.config.exception.CustomProductExceptionHandlerV1;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.User;
@@ -114,7 +114,7 @@ public class ProductCommandServiceImpl implements ProductCommandService {
     @Override
     @Transactional
     public Product productUpdates(User user, ProductUpdateRequest request) {
-        ProductJpaEntity findProduct = repository.findById(request.getProductSeq()).orElseThrow(() -> new CustomProductExceptionHandler(ErrorCode.NOT_EXISTS_PRODUCT));
+        ProductJpaEntity findProduct = repository.findById(request.getProductSeq()).orElseThrow(() -> new CustomProductExceptionHandlerV1(ErrorCode.NOT_EXISTS_PRODUCT));
 
         findProduct.setCategory(request.getCategory());
         findProduct.setContent(request.getContent());
@@ -127,7 +127,7 @@ public class ProductCommandServiceImpl implements ProductCommandService {
     @Override
     public void productDelete(User user, Product product) {
         if (!user.getUsername().equals(product.getUserId())) {
-            throw new CustomProductExceptionHandler(ErrorCode.NOT_MATCHES_USER_PRODUCT);
+            throw new CustomProductExceptionHandlerV1(ErrorCode.NOT_MATCHES_USER_PRODUCT);
         }
 
         repository.delete(product.toEntity());
@@ -136,20 +136,20 @@ public class ProductCommandServiceImpl implements ProductCommandService {
     @Transactional
     @Override
     public void raiseLikeCount(Product product) {
-        ProductJpaEntity data = repository.findById(product.getProductSeq()).orElseThrow(() -> new CustomProductExceptionHandler(ErrorCode.NOT_EXISTS_PRODUCT));
+        ProductJpaEntity data = repository.findById(product.getProductSeq()).orElseThrow(() -> new CustomProductExceptionHandlerV1(ErrorCode.NOT_EXISTS_PRODUCT));
         data.setLikeCount(data.getLikeCount() + 1);
     }
 
     @Override
     public void decreaseLikeCount(Product product) {
-        ProductJpaEntity data = repository.findById(product.getProductSeq()).orElseThrow(() -> new CustomProductExceptionHandler(ErrorCode.NOT_EXISTS_PRODUCT));
+        ProductJpaEntity data = repository.findById(product.getProductSeq()).orElseThrow(() -> new CustomProductExceptionHandlerV1(ErrorCode.NOT_EXISTS_PRODUCT));
         data.setLikeCount(data.getLikeCount() - 1);
     }
 
     @Override
     @Transactional
     public void raiseViews(Long productSeq) {
-        ProductJpaEntity product = repository.findById(productSeq).orElseThrow(() -> new CustomProductExceptionHandler(ErrorCode.NOT_EXISTS_PRODUCT));
+        ProductJpaEntity product = repository.findById(productSeq).orElseThrow(() -> new CustomProductExceptionHandlerV1(ErrorCode.NOT_EXISTS_PRODUCT));
         product.setViews(product.getViews() + 1);
     }
 }

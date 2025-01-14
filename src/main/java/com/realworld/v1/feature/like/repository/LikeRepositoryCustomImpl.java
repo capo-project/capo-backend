@@ -4,7 +4,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.realworld.v1.feature.like.domain.Like;
 import com.realworld.v1.feature.like.entity.ProductLikeJpaEntity;
 import com.realworld.v1.feature.like.entity.QProductLikeJpaEntity;
-import com.realworld.v1.feature.member.entity.QMemberJpaEntity;
+import com.realworld.v1.feature.member.entity.QMemberJpaEntityV1;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 public class LikeRepositoryCustomImpl implements LikeRepositoryCustom {
     private final JPAQueryFactory queryFactory;
     private final QProductLikeJpaEntity like = QProductLikeJpaEntity.productLikeJpaEntity;
-    private final QMemberJpaEntity member = QMemberJpaEntity.memberJpaEntity;
+    private final QMemberJpaEntityV1 member = QMemberJpaEntityV1.memberJpaEntityV1;
 
     public List<Like> findUserProductLikes(String userId) {
         List<ProductLikeJpaEntity> likes = queryFactory.select(like)

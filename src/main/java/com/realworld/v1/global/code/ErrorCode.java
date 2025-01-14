@@ -21,16 +21,16 @@ public enum ErrorCode {
     NOT_EXISTS_EMAIL(400, "존재하지 않는 이메일입니다."),
 
     // 이메일 인증 중복
-    EMAIL_DUPLICATION_ERROR(400, "이메일이 중복되었습니다."),
+    AUTH_EMAIL_DUPLICATION_ERROR(400, "이메일이 중복되었습니다."),
 
     // 이메일 인증 코드 오류
-    EMAIL_AUTH_NUMBER_ERROR(400, "이메일 인증코드를 잘못 입력하였습니다. 다시 시도해 주세요."),
+    AUTH_EMAIL_AUTH_NUMBER_ERROR(400, "이메일 인증코드를 잘못 입력하였습니다. 다시 시도해 주세요."),
 
     // 인증 시간 만료
-    EMAIL_EXPIRED_ERROR(408, "이메일 인증 시간이 만료되었습니다."),
+    AUTH_EMAIL_EXPIRED_ERROR(408, "이메일 인증 시간이 만료되었습니다."),
 
     // 잘못된 이메일 요청
-    EMAIL_REQUEST_ERROR(400, "이메일 인증을 다시 시도해주세요."),
+    AUTH_EMAIL_REQUEST_ERROR(400, "이메일 인증을 다시 시도해주세요."),
 
     // 사용자 잘못된 요청
     LOGIN_REQUEST_ERROR(400, "비밀번호 또는 아이디가 올바르지 않습니다."),
@@ -121,4 +121,6 @@ public enum ErrorCode {
         this.status = status;
         this.message = message;
     }
+
+
 }

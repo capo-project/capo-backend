@@ -24,7 +24,7 @@ public class QProductLikeJpaEntity extends EntityPathBase<ProductLikeJpaEntity> 
 
     public final NumberPath<Long> likeSeq = createNumber("likeSeq", Long.class);
 
-    public final com.realworld.v1.feature.member.entity.QMemberJpaEntity member;
+    public final com.realworld.v1.feature.member.entity.QMemberJpaEntityV1 member;
 
     public final com.realworld.v1.feature.product.entity.QProductJpaEntity product;
 
@@ -46,7 +46,7 @@ public class QProductLikeJpaEntity extends EntityPathBase<ProductLikeJpaEntity> 
 
     public QProductLikeJpaEntity(Class<? extends ProductLikeJpaEntity> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.member = inits.isInitialized("member") ? new com.realworld.v1.feature.member.entity.QMemberJpaEntity(forProperty("member"), inits.get("member")) : null;
+        this.member = inits.isInitialized("member") ? new com.realworld.v1.feature.member.entity.QMemberJpaEntityV1(forProperty("member"), inits.get("member")) : null;
         this.product = inits.isInitialized("product") ? new com.realworld.v1.feature.product.entity.QProductJpaEntity(forProperty("product"), inits.get("product")) : null;
     }
 

@@ -1,7 +1,7 @@
 package com.realworld.v1.feature.like.entity;
 
 import com.realworld.v1.feature.like.domain.Like;
-import com.realworld.v1.feature.member.entity.MemberJpaEntity;
+import com.realworld.v1.feature.member.entity.MemberJpaEntityV1;
 import com.realworld.v1.feature.product.entity.ProductJpaEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,7 +26,7 @@ public class ProductLikeJpaEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private MemberJpaEntity member;
+    private MemberJpaEntityV1 member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_seq", referencedColumnName = "product_seq")

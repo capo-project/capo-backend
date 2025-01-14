@@ -1,7 +1,7 @@
 package com.realworld.v1.global.config.jwt;
 
 import com.realworld.v1.global.code.ErrorCode;
-import com.realworld.v1.global.config.exception.CustomJwtExceptionHandler;
+import com.realworld.v1.global.config.exception.CustomJwtExceptionHandlerV1;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
@@ -34,15 +34,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (SecurityException | MalformedJwtException e) {
-            throw new CustomJwtExceptionHandler(ErrorCode.JWT_WRONG_TYPE_TOKEN_ERROR);
+            throw new CustomJwtExceptionHandlerV1(ErrorCode.JWT_WRONG_TYPE_TOKEN_ERROR);
         } catch (ExpiredJwtException e){
-            throw new CustomJwtExceptionHandler(ErrorCode.JWT_TOKEN_EXPIRED_ERROR);
+            throw new CustomJwtExceptionHandlerV1(ErrorCode.JWT_TOKEN_EXPIRED_ERROR);
         } catch(UnsupportedJwtException e){
-            throw new CustomJwtExceptionHandler(ErrorCode.UNSUPPORTED_TOKEN_ERROR);
+            throw new CustomJwtExceptionHandlerV1(ErrorCode.UNSUPPORTED_TOKEN_ERROR);
         } catch (IllegalArgumentException e){
-            throw new CustomJwtExceptionHandler(ErrorCode.JWT_WRONG_TYPE_TOKEN_ERROR);
+            throw new CustomJwtExceptionHandlerV1(ErrorCode.JWT_WRONG_TYPE_TOKEN_ERROR);
         } catch (Exception e){
-            throw new CustomJwtExceptionHandler(ErrorCode.JWT_UNKNOWN_ERROR);
+            throw new CustomJwtExceptionHandlerV1(ErrorCode.JWT_UNKNOWN_ERROR);
         }
 
         filterChain.doFilter(request, response);

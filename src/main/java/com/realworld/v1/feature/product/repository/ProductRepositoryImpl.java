@@ -5,13 +5,13 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.realworld.v1.feature.like.entity.QProductLikeJpaEntity;
-import com.realworld.v1.feature.member.entity.QMemberJpaEntity;
+import com.realworld.v1.feature.member.entity.QMemberJpaEntityV1;
 import com.realworld.v1.feature.product.domain.Product;
 import com.realworld.v1.feature.product.entity.ProductJpaEntity;
 import com.realworld.v1.feature.product.entity.QProductJpaEntity;
 import com.realworld.v1.global.category.GroupCategory;
 import com.realworld.v1.global.code.ErrorCode;
-import com.realworld.v1.global.config.exception.CustomProductExceptionHandler;
+import com.realworld.v1.global.config.exception.CustomProductExceptionHandlerV1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,7 +22,7 @@ import java.util.List;
 public class ProductRepositoryImpl implements ProductRepositoryCustom {
     private final JPAQueryFactory queryFactory;
     private final QProductJpaEntity product = QProductJpaEntity.productJpaEntity;
-    private final QMemberJpaEntity member = QMemberJpaEntity.memberJpaEntity;
+    private final QMemberJpaEntityV1 member = QMemberJpaEntityV1.memberJpaEntityV1;
     private final QProductLikeJpaEntity like = QProductLikeJpaEntity.productLikeJpaEntity;
 
     @Override
@@ -54,7 +54,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 ).fetchOne();
 
         if (details == null) {
-            throw new CustomProductExceptionHandler(ErrorCode.NOT_EXISTS_PRODUCT);
+            throw new CustomProductExceptionHandlerV1(ErrorCode.NOT_EXISTS_PRODUCT);
         }
 
         return details.searchToDomain();

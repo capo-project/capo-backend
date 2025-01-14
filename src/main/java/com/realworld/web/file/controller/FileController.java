@@ -32,6 +32,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FileController {
 
+    private static final String SUCCESS_MESSAGE = "파일 업로드 성공";
+    private static final int SUCCESS_STATUS = 200;
+
     private final FileService fileService;
 
     @SuccessResponseAnnotation(SuccessResponseCode.SUCCESS)
@@ -45,9 +48,8 @@ public class FileController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     public ResponseEntity<SuccessResponse<FileResponses>> uploadResizedImage(
-            @RequestPart @Parameter(description = "업로드할 이미지 파일들 (다중 파일 가능)") MultipartFile[] files,
-            @RequestParam(name = "destination_directory", required = false, defaultValue = "temporary")
-            @Parameter(description = "저장할 대상 디렉터리 경로") String destinationDirectory,
+            @RequestPart("files") @Parameter(description = "업로드할 이미지 파일들 (다중 파일 가능)") MultipartFile[] files,
+            @RequestParam(name = "destination_directory", required = false, defaultValue = "temporary") @Parameter(description = "저장할 대상 디렉터리 경로") String destinationDirectory,
             @RequestParam(defaultValue = "200") @Parameter(description = "리사이즈할 이미지의 너비") int width,
             @RequestParam(defaultValue = "200") @Parameter(description = "리사이즈할 이미지의 높이") int height
     ) {
@@ -66,9 +68,9 @@ public class FileController {
 
         SuccessResponse<FileResponses> successResponse = new SuccessResponse<>(
                 responses,
-                200,
+                SUCCESS_STATUS,
                 HttpStatus.OK,
-                "파일 업로드 성공"
+                SUCCESS_MESSAGE
         );
 
         return ResponseEntity.ok(successResponse);
@@ -99,9 +101,9 @@ public class FileController {
 
         SuccessResponse<FileResponses> successResponse = new SuccessResponse<>(
                 responses,
-                200,
+                SUCCESS_STATUS,
                 HttpStatus.OK,
-                "파일 업로드 성공"
+                SUCCESS_MESSAGE
         );
 
         return ResponseEntity.ok(successResponse);
@@ -119,7 +121,7 @@ public class FileController {
 
         SuccessResponse<FileUrlResponses> successResponse = new SuccessResponse<>(
                 responses,
-                200,
+                SUCCESS_STATUS,
                 HttpStatus.OK,
                 "파일 이동 성공"
         );
@@ -136,7 +138,7 @@ public class FileController {
         return ResponseEntity.ok(
                 new SuccessResponse<>(
                         null,
-                        200,
+                        SUCCESS_STATUS,
                         HttpStatus.OK,
                         "파일 삭제 성공"
                 )

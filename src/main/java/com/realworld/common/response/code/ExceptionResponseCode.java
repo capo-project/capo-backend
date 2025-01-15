@@ -64,6 +64,9 @@ public enum ExceptionResponseCode {
     // 변조된 토큰
     JWT_WRONG_TYPE_TOKEN_ERROR(HttpStatus.UNAUTHORIZED, "변조된 토큰입니다.", 401),
 
+    // 찾을 수 없는 토큰
+    JWT_TOKEN_NOT_FOUND(HttpStatus.UNAUTHORIZED, "토큰을 찾을 수 없습니다.", 401),
+
     // Token 오류
     JWT_TOKEN_REQUEST_ERROR(HttpStatus.UNAUTHORIZED, "토큰이 유효하지 않습니다.", 401),
 

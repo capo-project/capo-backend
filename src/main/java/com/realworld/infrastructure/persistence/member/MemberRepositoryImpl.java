@@ -14,8 +14,8 @@ public class MemberRepositoryImpl implements MemberRepository {
     private final MemberJpaRepository repository;
 
     @Override
-    public void save(final Member member) {
-        repository.save(member);
+    public Member save(final Member member) {
+        return repository.save(member);
     }
 
     @Override

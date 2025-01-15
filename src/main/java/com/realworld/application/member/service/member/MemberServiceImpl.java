@@ -11,29 +11,42 @@ import com.realworld.web.member.payload.request.SignUpRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository repository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void signUp(final SignUpRequest request) {
+    public Member signUp(final SignUpRequest request) {
 
-        validateUserIdDuplicate(request.userId());
+        if(repository.findByUserId(request.userId()).isPresent()){
+            throw new CustomMemberExceptionHandler(ExceptionResponseCode.DUPLICATION_USERID_ERROR);
+        }
 
         final Member member = Member.createMember(request, new DateTimeHolderImpl(), new NicknameGeneratorHolderImpl());
 
-        repository.save(member.passwordEncode(new PasswordEncodeHolderImpl(passwordEncoder)));
+        return repository.save(member.passwordEncode(new PasswordEncodeHolderImpl(passwordEncoder)));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public void validateUserIdDuplicate(final String userId) {
         if(repository.findByUserId(userId).isPresent()){
             throw new CustomMemberExceptionHandler(ExceptionResponseCode.DUPLICATION_USERID_ERROR);
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Member findById(String id) {
+        return repository.findByUserId(id).orElseThrow(() -> new CustomMemberExceptionHandler(ExceptionResponseCode.NOT_EXISTS_USERID));
     }
 
 }

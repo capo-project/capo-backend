@@ -1,7 +1,7 @@
 package com.realworld.v1.feature.token.service;
 
 import com.realworld.v1.feature.token.entity.TokenJpaEntity;
-import com.realworld.v1.feature.token.repository.TokenRepository;
+import com.realworld.v1.feature.token.repository.TokenRepositoryV1;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -13,9 +13,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TokenQueryServiceImpl implements TokenQueryService {
 
-    private final TokenRepository tokenRepository;
+    private final TokenRepositoryV1 tokenRepositoryV1;
 
     @Override
-    public Optional<TokenJpaEntity> findByUserId(String userId){ return tokenRepository.findByUserId(userId);
+    public Optional<TokenJpaEntity> findByUserId(String userId){ return tokenRepositoryV1.findByUserId(userId);
     }
 }

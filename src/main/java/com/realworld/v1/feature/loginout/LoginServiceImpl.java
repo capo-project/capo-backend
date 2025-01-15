@@ -6,7 +6,7 @@ import com.realworld.v1.feature.token.domain.Token;
 import com.realworld.v1.feature.token.service.TokenCommandService;
 import com.realworld.v1.global.code.ErrorCode;
 import com.realworld.v1.global.config.exception.CustomLoginExceptionHandlerV1;
-import com.realworld.v1.global.config.jwt.JwtTokenProvider;
+import com.realworld.v1.global.config.jwt.JwtTokenProviderV1;
 import com.realworld.v1.global.utils.CommonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class LoginServiceImpl implements LoginService {
     private final PasswordEncoder passwordEncoder;
     private final TokenCommandService tokenCommandService;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProviderV1 jwtTokenProviderV1;
 
     @Override
     public Token loginAndGetToken(Member member) {
@@ -49,7 +49,7 @@ public class LoginServiceImpl implements LoginService {
         // authenticationToken 객체를 통해 Authentication 생성
         // authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행된다.
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        Token token = jwtTokenProvider.createToken(authentication);
+        Token token = jwtTokenProviderV1.createToken(authentication);
         token.setUserId(userId);
 
         Token savedToken = tokenCommandService.saveToken(token);

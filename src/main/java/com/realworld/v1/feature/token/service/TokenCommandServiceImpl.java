@@ -3,10 +3,10 @@ package com.realworld.v1.feature.token.service;
 import com.realworld.v1.feature.token.controller.request.ReissueRequest;
 import com.realworld.v1.feature.token.domain.Token;
 import com.realworld.v1.feature.token.entity.TokenJpaEntity;
-import com.realworld.v1.feature.token.repository.TokenRepository;
+import com.realworld.v1.feature.token.repository.TokenRepositoryV1;
 import com.realworld.v1.global.code.ErrorCode;
 import com.realworld.v1.global.config.exception.CustomJwtExceptionHandlerV1;
-import com.realworld.v1.global.config.jwt.JwtTokenProvider;
+import com.realworld.v1.global.config.jwt.JwtTokenProviderV1;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,12 +20,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TokenCommandServiceImpl implements TokenCommandService {
 
-    private final TokenRepository tokenRepository;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final TokenRepositoryV1 tokenRepositoryV1;
+    private final JwtTokenProviderV1 jwtTokenProviderV1;
 
     @Override
     public Token saveToken(Token token) {
-        TokenJpaEntity tokenEntity = tokenRepository.save(token.toEntity());
+        TokenJpaEntity tokenEntity = tokenRepositoryV1.save(token.toEntity());
 
         return tokenEntity.toDomain();
     }
@@ -33,15 +33,15 @@ public class TokenCommandServiceImpl implements TokenCommandService {
     @Transactional
     @Override
     public Token reissue(ReissueRequest request) {
-        if(!jwtTokenProvider.validateToken(request.getRefreshToken())){
+        if(!jwtTokenProviderV1.validateToken(request.getRefreshToken())){
             throw new CustomJwtExceptionHandlerV1(ErrorCode.JWT_TOKEN_REQUEST_ERROR);
         }
 
-        Authentication authentication = jwtTokenProvider.getAuthentication(request.getAccessToken());
+        Authentication authentication = jwtTokenProviderV1.getAuthentication(request.getAccessToken());
 
-        Token newToken = jwtTokenProvider.createToken(authentication);
+        Token newToken = jwtTokenProviderV1.createToken(authentication);
 
-        Optional<TokenJpaEntity> getToken = tokenRepository.findByUserId(authentication.getName());
+        Optional<TokenJpaEntity> getToken = tokenRepositoryV1.findByUserId(authentication.getName());
         getToken.ifPresent(value ->{
             value.setAccessToken(newToken.getAccessToken());
             value.setRefreshToken(newToken.getRefreshToken());
@@ -61,6 +61,6 @@ public class TokenCommandServiceImpl implements TokenCommandService {
                                     .userId(userId)
                                     .build();
 
-        tokenRepository.delete(entity);
+        tokenRepositoryV1.delete(entity);
     }
 }

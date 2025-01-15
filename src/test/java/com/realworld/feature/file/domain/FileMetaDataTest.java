@@ -2,7 +2,7 @@ package com.realworld.feature.file.domain;
 
 import com.realworld.common.exception.CustomFileExceptionHandler;
 import com.realworld.common.holder.uuid.UUIDHolder;
-import com.realworld.feature.file.FileMetaData;
+import com.realworld.feature.file.entity.FileMetaData;
 import com.realworld.feature.file.mock.MockFileData;
 import com.realworld.infrastructure.image.ResizedImage;
 import org.apache.commons.io.FilenameUtils;
@@ -132,7 +132,7 @@ class FileMetaDataTest {
 
         // when
         assertThatThrownBy(
-                () -> FileMetaData.fromResizedImage("", resizedImage, uuidHolder)
+                () -> FileMetaData.fromResizedImage(emptyDirectory, resizedImage, uuidHolder)
         ).isInstanceOf(CustomFileExceptionHandler.class);
     }
 

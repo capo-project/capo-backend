@@ -1,9 +1,13 @@
-package com.realworld.infrastructure.cloud.aws;
+package com.realworld.infrastructure.cloud.test.mock;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.realworld.common.exception.CustomFileExceptionHandler;
 import com.realworld.feature.file.entity.FileMetaData;
+import com.realworld.infrastructure.cloud.aws.AwsS3Handler;
+import com.realworld.infrastructure.cloud.aws.AwsS3HandlerImpl;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -14,21 +18,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Disabled(
-        "AWS S3 관련 테스트는 비용 발생 우려로 인해 현재는 비활성화합니다."
+        """
+        외부 laaS 방식과 Testcontainers 방식을 비교하기 위한 테스트 코드이므로,
+        현재는 사용하지 않아 비활성화합니다.
+        """
 )
-@ActiveProfiles("local")
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class AwsS3HandlerImplTest {
+class AwsS3HandlerMockTest {
+
+    @Value("${localstack.localfront}")
+    private String mockCloudFrontBaseUri;
 
     private static final String BUCKET_NAME = "photocardsite";
 
-    private InputStream inputStream;
-
     @Autowired
+    private AmazonS3 s3Client;
+
     private AwsS3Handler awsS3Handler;
+    private InputStream inputStream;
 
     @BeforeEach
     void setUp() throws IOException {
+        awsS3Handler = new AwsS3HandlerImpl(mockCloudFrontBaseUri, BUCKET_NAME, s3Client);
         inputStream = new FileInputStream(testFile);
     }
 

@@ -1,7 +1,7 @@
 package com.realworld.infrastructure.cloud;
 
 import com.realworld.application.file.port.FileStorage;
-import com.realworld.feature.file.FileMetaData;
+import com.realworld.feature.file.entity.FileMetaData;
 import com.realworld.infrastructure.cloud.aws.AwsS3Handler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

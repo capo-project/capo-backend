@@ -1,4 +1,4 @@
-package com.realworld.application.member.service;
+package com.realworld.application.member.service.member;
 
 import com.realworld.application.member.port.MemberRepository;
 import com.realworld.common.exception.CustomMemberExceptionHandler;

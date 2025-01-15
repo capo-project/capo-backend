@@ -1,4 +1,4 @@
-package com.realworld.application.member.service;
+package com.realworld.application.member.service.member;
 
 import com.realworld.web.member.payload.request.SignUpRequest;
 

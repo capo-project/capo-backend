@@ -1,6 +1,6 @@
 package com.realworld.web.member.controller;
 
-import com.realworld.application.member.service.MemberService;
+import com.realworld.application.member.service.member.MemberService;
 import com.realworld.common.response.SuccessResponse;
 import com.realworld.common.response.code.ExceptionResponseCode;
 import com.realworld.common.response.code.SuccessResponseCode;

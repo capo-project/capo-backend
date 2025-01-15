@@ -1,4 +1,4 @@
-package com.realworld.infrastructure.cloud.aws.testcontainers;
+package com.realworld.infrastructure.cloud.aws.mock.testcontainers;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

@@ -16,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Disabled(
         "AWS S3 관련 테스트는 비용 발생 우려로 인해 현재는 비활성화합니다."
 )
+@Deprecated
 @ActiveProfiles("local")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AwsS3HandlerImplTest {

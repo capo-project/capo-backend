@@ -1,4 +1,4 @@
-package com.realworld.infrastructure.cloud.test.mock;
+package com.realworld.infrastructure.cloud.aws.mock;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.realworld.common.exception.CustomFileExceptionHandler;
@@ -23,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
         현재는 사용하지 않아 비활성화합니다.
         """
 )
+@Deprecated
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AwsS3HandlerMockTest {

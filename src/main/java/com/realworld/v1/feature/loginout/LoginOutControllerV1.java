@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1")
 @RequiredArgsConstructor
 @Slf4j
-public class LoginOutController {
+public class LoginOutControllerV1 {
     private final LoginService loginService;
     private final TokenCommandService tokenCommandService;
 

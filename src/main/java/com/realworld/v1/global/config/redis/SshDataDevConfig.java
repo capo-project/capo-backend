@@ -9,9 +9,9 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 
 @Configuration
-@Profile("prod")
+@Profile("dev")
 @RequiredArgsConstructor
-public class SshDataProdConfig extends RedisConnectionFactoryConfig {
+public class SshDataDevConfig extends RedisConnectionFactoryConfig {
 
     @Bean
     @Override

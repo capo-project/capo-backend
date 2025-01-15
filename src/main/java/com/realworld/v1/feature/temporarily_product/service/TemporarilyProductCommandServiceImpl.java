@@ -9,7 +9,7 @@ import com.realworld.v1.feature.temporarily_product.domain.TemporarilyProduct;
 import com.realworld.v1.feature.temporarily_product.entity.TemporarilyProductJpaEntity;
 import com.realworld.v1.feature.temporarily_product.repository.TemporarilyProductRepository;
 import com.realworld.v1.global.code.ErrorCode;
-import com.realworld.v1.global.config.exception.CustomProductExceptionHandler;
+import com.realworld.v1.global.config.exception.CustomProductExceptionHandlerV1;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -57,7 +57,7 @@ public class TemporarilyProductCommandServiceImpl implements TemporarilyProductC
     @Override
     public void delete(User user, TemporarilyProduct product) {
         if (!user.getUsername().equals(product.getUserId())) {
-            throw new CustomProductExceptionHandler(ErrorCode.NOT_MATCHES_USER_PRODUCT);
+            throw new CustomProductExceptionHandlerV1(ErrorCode.NOT_MATCHES_USER_PRODUCT);
         }
 
         repository.delete(product.toEntity());

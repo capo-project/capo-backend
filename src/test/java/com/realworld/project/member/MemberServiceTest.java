@@ -5,7 +5,7 @@ import com.realworld.v1.feature.member.domain.Member;
 import com.realworld.v1.feature.member.service.MemberCommandServiceImpl;
 import com.realworld.v1.feature.member.service.MemberQueryService;
 import com.realworld.v1.global.code.ErrorCode;
-import com.realworld.v1.global.config.exception.CustomMemberExceptionHandler;
+import com.realworld.v1.global.config.exception.CustomMemberExceptionHandlerV1;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +39,7 @@ public class MemberServiceTest {
                 .userEmail("test02@naver.com")
                 .build();
         // when
-        CustomMemberExceptionHandler exception = assertThrows(CustomMemberExceptionHandler.class, () -> memberCommandService.saveMember(member));
+        CustomMemberExceptionHandlerV1 exception = assertThrows(CustomMemberExceptionHandlerV1.class, () -> memberCommandService.saveMember(member));
 
         // then
         assertEquals(ErrorCode.PASSWORD_REQUEST_ERROR.getMessage(), exception.getMessage());
@@ -57,7 +57,7 @@ public class MemberServiceTest {
                 .build();
 
         // when
-        CustomMemberExceptionHandler exception = assertThrows(CustomMemberExceptionHandler.class, () -> memberCommandService.saveMember(member));
+        CustomMemberExceptionHandlerV1 exception = assertThrows(CustomMemberExceptionHandlerV1.class, () -> memberCommandService.saveMember(member));
 
         // then
         assertEquals(ErrorCode.VALIDATION_USERID_ERROR.getMessage(), exception.getMessage());

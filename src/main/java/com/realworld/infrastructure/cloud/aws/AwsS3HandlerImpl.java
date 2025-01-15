@@ -4,7 +4,9 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.realworld.application.file.dto.FileMetaData;
+import com.realworld.common.exception.CustomFileExceptionHandler;
+import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.feature.file.FileMetaData;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -34,18 +36,20 @@ public class AwsS3HandlerImpl implements AwsS3Handler {
 
     @Override
     public String save(FileMetaData metaData, InputStream stream) {
-        String bucketPath = bucketName + File.separator + metaData.getTargetDirectory();
+        String bucketPath = bucketName + File.separator + metaData.getDirectory();
+        String fileName = metaData.getDetails().getName();
+        ObjectMetadata metadata = getObjectMetadata(metaData.getDetails().getContentType(), metaData.getDetails().getSize());
 
         s3Client.putObject(
                 new PutObjectRequest(
                         bucketPath,
-                        metaData.getName(),
+                        fileName,
                         stream,
-                        getObjectMetadata(metaData.getContentType(), metaData.getSize())
+                        metadata
                 ).withCannedAcl(CannedAccessControlList.Private)
         );
 
-        return cloudFrontBasePath + metaData.getTargetDirectory() + File.separator + metaData.getName();
+        return cloudFrontBasePath + metaData.getDirectory() + File.separator + metaData.getDetails().getName();
     }
 
     private ObjectMetadata getObjectMetadata(String contentType, long size) {
@@ -69,7 +73,7 @@ public class AwsS3HandlerImpl implements AwsS3Handler {
         String targetFullPath = bucketName + File.separator + targetDirectory;
 
         if (!isFileExist(sourceFullPath, fileName)) {
-            // Rest API Exception 발생 !!!
+            throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_NOT_FOUND_ERROR);
         }
 
         s3Client.copyObject(sourceFullPath, fileName, targetFullPath, fileName);
@@ -86,7 +90,7 @@ public class AwsS3HandlerImpl implements AwsS3Handler {
         if (isFileExist(targetFullPath, fileName)) {
             s3Client.deleteObject(targetFullPath, fileName);
         } else {
-            // Rest API Exception 발생!
+            throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_NOT_FOUND_ERROR);
         }
     }
 

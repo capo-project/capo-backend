@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Getter
 @RequiredArgsConstructor
 public enum ExceptionResponseCode {
@@ -11,7 +14,16 @@ public enum ExceptionResponseCode {
     /**
      * File Exception
      */
+    FILE_PROCESSING_ERROR(HttpStatus.BAD_REQUEST, "파일 처리 중 문제가 발생했습니다. 올바른 파일을 업로드해주세요.", 400),
+
     FILE_IMAGE_RESIZE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 크기를 조정하는 중 문제가 발생했습니다. 다시 시도해주세요.", 500),
+
+    FILE_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "파일이 존재하지 않습니다.", 404),
+
+    UNSUPPORTED_FILE_IMAGE_TYPE_ERROR(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "지원되지 않는 파일 형식입니다. 제공된 형식 : %s. 올바른 이미지를 업로드해주세요.", 415),
+
+    // 유저 아이디 중복
+    DUPLICATION_USERID_ERROR(HttpStatus.BAD_REQUEST, "이미 존재하는 유저입니다.", 400),
 
     // 비밀번호 변경에 실패한 경우
     FAIL_PASSWORD_CHANGE(HttpStatus.BAD_REQUEST, "패스워드 변경에 실패하였습니다.", 400),
@@ -29,16 +41,16 @@ public enum ExceptionResponseCode {
     NOT_EXISTS_EMAIL(HttpStatus.BAD_REQUEST, "존재하지 않는 이메일입니다.", 400),
 
     // 이메일 인증 중복
-    EMAIL_DUPLICATION_ERROR(HttpStatus.BAD_REQUEST, "이메일이 중복되었습니다.", 400),
+    AUTH_EMAIL_DUPLICATION_ERROR(HttpStatus.BAD_REQUEST, "이메일이 중복되었습니다.", 400),
 
     // 이메일 인증 코드 오류
-    EMAIL_AUTH_NUMBER_ERROR(HttpStatus.BAD_REQUEST, "이메일 인증코드를 잘못 입력하였습니다. 다시 시도해 주세요.", 400),
+    AUTH_EMAIL_AUTH_NUMBER_ERROR(HttpStatus.BAD_REQUEST, "이메일 인증코드를 잘못 입력하였습니다. 다시 시도해 주세요.", 400),
 
     // 인증 시간 만료
-    EMAIL_EXPIRED_ERROR(HttpStatus.UNAUTHORIZED, "이메일 인증 시간이 만료되었습니다.", 401),
+    AUTH_EMAIL_EXPIRED_ERROR(HttpStatus.BAD_REQUEST, "이메일 인증 시간이 만료되었습니다.", 400),
 
     // 잘못된 이메일 요청
-    EMAIL_REQUEST_ERROR(HttpStatus.BAD_REQUEST, "잘못된 요청입니다. 이메일 인증을 다시 시도해주세요.", 400),
+    AUTH_EMAIL_REQUEST_ERROR(HttpStatus.BAD_REQUEST, "이메일 인증을 다시 시도해주세요.", 400),
 
     // 사용자 잘못된 요청
     LOGIN_REQUEST_ERROR(HttpStatus.BAD_REQUEST, "비밀번호 또는 아이디가 올바르지 않습니다.", 400),
@@ -61,8 +73,11 @@ public enum ExceptionResponseCode {
     // 변조된 토큰
     UNSUPPORTED_TOKEN_ERROR(HttpStatus.UNAUTHORIZED, "변조된 토큰입니다.", 401),
 
-    // 패스워드 오류
+    // 패스워드 형식 오류
     PASSWORD_REQUEST_ERROR(HttpStatus.BAD_REQUEST, "패스워드 형식이 올바르지 않습니다.", 400),
+
+    // 패스워드 일치 오류
+    PASSWORD_MISS_MATCH_ERROR(HttpStatus.BAD_REQUEST, "패스워드 형식이 일치하지 않습니다.", 400),
 
     // 포토카드 게시물 조회 오류
     NOT_EXISTS_PRODUCT(HttpStatus.BAD_REQUEST, "포토카드가 존재하지 않습니다.", 400),
@@ -125,5 +140,16 @@ public enum ExceptionResponseCode {
     private final HttpStatus httpStatus;
     private final String message;
     private final int resultCode;
+    private static final Map<String, ExceptionResponseCode> exceptionMap = new HashMap<>();
+
+    static {
+        for(ExceptionResponseCode responseCode :ExceptionResponseCode.values()) {
+            exceptionMap.put(responseCode.getMessage(), responseCode);
+        }
+    }
+
+    public static ExceptionResponseCode getExceptionResponseCode(String message) {
+        return exceptionMap.getOrDefault(message, ExceptionResponseCode.INTERVAL_SERVER_ERROR);
+    }
 
 }

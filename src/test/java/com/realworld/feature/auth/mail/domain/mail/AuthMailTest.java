@@ -1,8 +1,9 @@
 package com.realworld.feature.auth.mail.domain.mail;
 
+import com.realworld.common.exception.CustomAuthMailExceptionHandler;
 import com.realworld.feature.auth.mail.entity.AuthMail;
 import com.realworld.feature.auth.mail.mock.mail.MockMailData;
-import com.realworld.v1.global.config.exception.CustomAuthMailExceptionHandler;
+import com.realworld.v1.global.config.exception.CustomAuthMailExceptionHandlerV1;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

@@ -3,13 +3,13 @@ package com.realworld.v1.feature.member.service;
 import com.realworld.v1.feature.auth.Authority;
 import com.realworld.v1.feature.member.domain.Member;
 import com.realworld.v1.feature.member.entity.BackUpMemberJpaEntity;
-import com.realworld.v1.feature.member.entity.MemberJpaEntity;
-import com.realworld.v1.feature.member.repository.BackUpMemberRepository;
-import com.realworld.v1.feature.member.repository.MemberRepository;
+import com.realworld.v1.feature.member.entity.MemberJpaEntityV1;
+import com.realworld.v1.feature.member.repository.BackUpMemberRepositoryV1;
+import com.realworld.v1.feature.member.repository.MemberRepositoryV1;
 import com.realworld.v1.global.code.ErrorCode;
 import com.realworld.v1.global.code.ResultErrorMsgCode;
-import com.realworld.v1.global.config.exception.CustomLoginExceptionHandler;
-import com.realworld.v1.global.config.exception.CustomMemberExceptionHandler;
+import com.realworld.v1.global.config.exception.CustomLoginExceptionHandlerV1;
+import com.realworld.v1.global.config.exception.CustomMemberExceptionHandlerV1;
 import com.realworld.v1.global.utils.CommonUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,16 +23,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class MemberCommandServiceImpl implements MemberCommandService {
     private final PasswordEncoder passwordEncoder;
-    private final MemberRepository repository;
-    private final BackUpMemberRepository backRepository;
+    private final MemberRepositoryV1 repository;
+    private final BackUpMemberRepositoryV1 backRepository;
 
     @Override
     public Member saveMember(Member member) {
         if (!CommonUtil.passwordValidationCheck(member.getPassword())) {
-            throw new CustomMemberExceptionHandler(ErrorCode.PASSWORD_REQUEST_ERROR);
+            throw new CustomMemberExceptionHandlerV1(ErrorCode.PASSWORD_REQUEST_ERROR);
         }
         if (!CommonUtil.userIdValidationCheck(member.getUserId())) {
-            throw new CustomMemberExceptionHandler(ErrorCode.VALIDATION_USERID_ERROR);
+            throw new CustomMemberExceptionHandlerV1(ErrorCode.VALIDATION_USERID_ERROR);
         }
 
         Member registMember = Member.builder()
@@ -48,7 +48,7 @@ public class MemberCommandServiceImpl implements MemberCommandService {
 
         // repository 예외
         if (repository.existsByUserId(registMember.getUserId()) || repository.existsByUserEmail(registMember.getUserEmail())) {
-            throw new CustomLoginExceptionHandler(ResultErrorMsgCode.LOGIN_DUPLICATION_ERROR.getMsg(), ErrorCode.LOGIN_DUPLICATION_ERROR);
+            throw new CustomLoginExceptionHandlerV1(ResultErrorMsgCode.LOGIN_DUPLICATION_ERROR.getMsg(), ErrorCode.LOGIN_DUPLICATION_ERROR);
         }
         return repository.save(registMember.toEntity()).toDomain();
     }
@@ -76,7 +76,7 @@ public class MemberCommandServiceImpl implements MemberCommandService {
 
             backRepository.save(entity);
         } else {
-            throw new CustomMemberExceptionHandler(ErrorCode.NOT_EQUAL_PASSWORD);
+            throw new CustomMemberExceptionHandlerV1(ErrorCode.NOT_EQUAL_PASSWORD);
         }
 
     }
@@ -89,22 +89,22 @@ public class MemberCommandServiceImpl implements MemberCommandService {
 
 
         if (StringUtils.isNotEmpty(member.getUserEmail())) {
-            MemberJpaEntity memberEntity = MemberJpaEntity.builder()
+            MemberJpaEntityV1 memberEntity = MemberJpaEntityV1.builder()
                     .userEmail(member.getUserEmail())
                     .build();
 
             member = repository.findByUserEmail(memberEntity).toDomain();
-            if (CommonUtil.isEmpty(member)) throw new CustomMemberExceptionHandler(ErrorCode.NOT_EXISTS_EMAIL);
+            if (CommonUtil.isEmpty(member)) throw new CustomMemberExceptionHandlerV1(ErrorCode.NOT_EXISTS_EMAIL);
         }
 
         if (StringUtils.isNotEmpty(member.getUserId())) {
             member = repository.findByUserId(member.getUserId()).toDomain();
-            if (CommonUtil.isEmpty(member)) throw new CustomMemberExceptionHandler(ErrorCode.NOT_EXISTS_USERID);
+            if (CommonUtil.isEmpty(member)) throw new CustomMemberExceptionHandlerV1(ErrorCode.NOT_EXISTS_USERID);
         }
 
         if (StringUtils.isNotEmpty(currentPassword)
                 && !passwordEncoder.matches(currentPassword, member.getPassword())) {
-            throw new CustomMemberExceptionHandler(ErrorCode.NOT_EQUAL_PASSWORD);
+            throw new CustomMemberExceptionHandlerV1(ErrorCode.NOT_EQUAL_PASSWORD);
         }
 
         Member targetMember = Member.builder()
@@ -117,6 +117,7 @@ public class MemberCommandServiceImpl implements MemberCommandService {
 
     @Override
     public long updateEmail(Member member) {
-        return repository.updateEmail(member.toEntity());
+        return repository.updateUserEmail(member.toEntity());
     }
+
 }

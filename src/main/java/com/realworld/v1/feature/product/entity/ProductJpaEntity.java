@@ -1,7 +1,7 @@
 package com.realworld.v1.feature.product.entity;
 
 import com.realworld.v1.feature.like.entity.ProductLikeJpaEntity;
-import com.realworld.v1.feature.member.entity.MemberJpaEntity;
+import com.realworld.v1.feature.member.entity.MemberJpaEntityV1;
 import com.realworld.v1.feature.product.domain.Product;
 import com.realworld.v1.global.category.GroupCategory;
 import jakarta.persistence.*;
@@ -41,7 +41,7 @@ public class ProductJpaEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
-    private MemberJpaEntity member;
+    private MemberJpaEntityV1 member;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<ProductFileJpaEntity> images = new ArrayList<>();
@@ -80,7 +80,7 @@ public class ProductJpaEntity {
     private List<ProductLikeJpaEntity> likes;
 
     @Builder
-    public ProductJpaEntity(Long productSeq, String userId, String title, int likeCount, MemberJpaEntity member, String content, Long price, GroupCategory category, int views, String thumbnailUrl, List<ProductFileJpaEntity> images, LocalDateTime createAt, LocalDateTime modifiedAt) {
+    public ProductJpaEntity(Long productSeq, String userId, String title, int likeCount, MemberJpaEntityV1 member, String content, Long price, GroupCategory category, int views, String thumbnailUrl, List<ProductFileJpaEntity> images, LocalDateTime createAt, LocalDateTime modifiedAt) {
         this.productSeq = productSeq;
         this.userId = userId;
         this.title = title;

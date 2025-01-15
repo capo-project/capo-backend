@@ -3,7 +3,7 @@ name: PR 템플릿
 about: "PR 템플릿 가이드라인 \U0001F4DD"
 title: "{태그 이모지} {태그} : {제목} "
 labels: ''
-assignees: ''
+assignees: hanseu9839, rowing0328
 
 ---
 

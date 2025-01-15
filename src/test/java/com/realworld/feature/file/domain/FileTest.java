@@ -1,8 +1,8 @@
 package com.realworld.feature.file.domain;
 
 import com.realworld.common.exception.CustomFileExceptionHandler;
-import com.realworld.feature.file.File;
-import com.realworld.feature.file.FileDetails;
+import com.realworld.feature.file.entity.File;
+import com.realworld.feature.file.entity.FileDetails;
 import com.realworld.feature.file.mock.MockFileData;
 import org.junit.jupiter.api.Test;
 

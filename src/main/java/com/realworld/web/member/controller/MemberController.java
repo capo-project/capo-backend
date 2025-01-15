@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/v2/member")
 public class MemberController {
-
 
 
 }

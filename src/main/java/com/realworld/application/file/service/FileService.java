@@ -1,6 +1,6 @@
 package com.realworld.application.file.service;
 
-import com.realworld.feature.file.File;
+import com.realworld.feature.file.entity.File;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface FileService {

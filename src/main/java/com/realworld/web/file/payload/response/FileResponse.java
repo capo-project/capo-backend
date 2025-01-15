@@ -1,6 +1,6 @@
 package com.realworld.web.file.payload.response;
 
-import com.realworld.feature.file.File;
+import com.realworld.feature.file.entity.File;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;

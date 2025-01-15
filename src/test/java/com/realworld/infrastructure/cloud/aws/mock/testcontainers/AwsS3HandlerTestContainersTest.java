@@ -1,11 +1,21 @@
-package com.realworld.infrastructure.cloud.aws;
+package com.realworld.infrastructure.cloud.aws.mock.testcontainers;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.client.builder.AwsClientBuilder;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.realworld.common.exception.CustomFileExceptionHandler;
 import com.realworld.feature.file.entity.FileMetaData;
+import com.realworld.infrastructure.cloud.aws.AwsS3Handler;
+import com.realworld.infrastructure.cloud.aws.AwsS3HandlerImpl;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.testcontainers.containers.localstack.LocalStackContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 import java.io.*;
 
@@ -13,23 +23,47 @@ import static com.realworld.feature.file.mock.MockFileData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@Disabled(
-        "AWS S3 관련 테스트는 비용 발생 우려로 인해 현재는 비활성화합니다."
-)
-@Deprecated
-@ActiveProfiles("local")
+@Testcontainers
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class AwsS3HandlerImplTest {
+class AwsS3HandlerTestContainersTest {
+
+    private static final DockerImageName LOCALSTACK_IMAGE_NAME = DockerImageName.parse("localstack/localstack:latest");
+
+    @Container
+    public static final LocalStackContainer localStack = new LocalStackContainer(LOCALSTACK_IMAGE_NAME).withServices(LocalStackContainer.Service.S3);
+
+    private static final String localFrontBaseUri = "http://localhost:4566/";
 
     private static final String BUCKET_NAME = "photocardsite";
 
-    private InputStream inputStream;
+    private AmazonS3 s3Client;
 
-    @Autowired
     private AwsS3Handler awsS3Handler;
+
+    private InputStream inputStream;
 
     @BeforeEach
     void setUp() throws IOException {
+        s3Client = AmazonS3ClientBuilder
+                .standard()
+                .withEndpointConfiguration(
+                        new AwsClientBuilder.EndpointConfiguration(
+                                localStack.getEndpoint().toString(),
+                                localStack.getRegion()
+                        )
+                )
+                .withCredentials(
+                        new AWSStaticCredentialsProvider(
+                                new BasicAWSCredentials(localStack.getAccessKey(), localStack.getSecretKey())
+                        )
+                )
+                .build();
+
+        s3Client.createBucket(BUCKET_NAME);
+
+        awsS3Handler = new AwsS3HandlerImpl(localFrontBaseUri, BUCKET_NAME, s3Client);
+
         inputStream = new FileInputStream(testFile);
     }
 

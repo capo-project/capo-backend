@@ -17,6 +17,12 @@ import static com.realworld.feature.file.mock.MockFileData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@Disabled(
+        """
+        외부 laaS 방식과 Testcontainers 방식을 비교하기 위한 테스트 코드이므로,
+        현재는 사용하지 않아 비활성화합니다.
+        """
+)
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AwsS3HandlerMockTest {

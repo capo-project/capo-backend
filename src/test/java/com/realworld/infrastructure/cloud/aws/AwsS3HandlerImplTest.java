@@ -1,10 +1,3 @@
-/*
- * AWS S3 관련 테스트는 실제 AWS를 호출하므로 비용이 발생할 수 있습니다.
- * CI/CD 환경에서 이러한 테스트를 실행하지 않도록 주석 처리했습니다.
- * 로컬 환경에서 테스트가 필요한 경우 주석을 해제하고 실행해주세요.
- */
-
-/*
 package com.realworld.infrastructure.cloud.aws;
 
 import com.realworld.common.exception.CustomFileExceptionHandler;
@@ -20,6 +13,9 @@ import static com.realworld.feature.file.mock.MockFileData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@Disabled(
+        "AWS S3 관련 테스트는 비용 발생 우려로 인해 현재는 비활성화합니다."
+)
 @ActiveProfiles("local")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AwsS3HandlerImplTest {
@@ -70,7 +66,6 @@ class AwsS3HandlerImplTest {
         Boolean result = awsS3Handler.isFileExist(getBucketPath(TEMPORARY_DIRECTORY), metaData.getDetails().getName());
 
         // then
-        assertThat(result).isNotNull();
         assertThat(result).isTrue();
     }
 
@@ -124,4 +119,3 @@ class AwsS3HandlerImplTest {
     }
 
 }
-*/

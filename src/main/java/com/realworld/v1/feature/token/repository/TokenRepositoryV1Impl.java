@@ -6,7 +6,7 @@ import com.realworld.v1.feature.token.entity.TokenJpaEntity;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class TokenRepositoryImpl implements TokenRepositoryCustom{
+public class TokenRepositoryV1Impl implements TokenRepositoryCustom{
     private final JPAQueryFactory jpaQueryFactory;
     @Override
     public long updateToken(TokenJpaEntity tokenJpaEntity) {

@@ -1,5 +1,7 @@
 package com.realworld.v1.global.config.jwt;
 
+import com.realworld.common.exception.CustomJwtExceptionHandler;
+import com.realworld.common.response.code.ExceptionResponseCode;
 import com.realworld.v1.feature.token.domain.Token;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -22,18 +24,18 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class JwtTokenProvider {
+public class JwtTokenProviderV1 {
     private static final String AUTHORITY_KEY = "auth";
     private static final String BEARER = "Bearer";
 
     private final Key key;
 
     // 30분
-    private final long ACCESS_TOKEN_VALIDATION_SECOND = 30 * 60 * 1000;
+    private static final long ACCESS_TOKEN_VALIDATION_SECOND = 30 * 60 * 1000;
 
-    private final long REFRESH_TOKEN_VALIDATION_SECOND = 14 * 24 * 60 * 60 * 1000;
+    private static final long REFRESH_TOKEN_VALIDATION_SECOND = 14 * 24 * 60 * 60 * 1000;
 
-    public JwtTokenProvider(@Value("${jwt.secret}") String secret) {
+    public JwtTokenProviderV1(@Value("${jwt.secret}") String secret) {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
@@ -56,7 +58,7 @@ public class JwtTokenProvider {
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITY_KEY, authorities)
-                .signWith(SignatureAlgorithm.HS256, key)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .setExpiration(accessValidity)
                 .compact();
 
@@ -65,7 +67,7 @@ public class JwtTokenProvider {
                 .setSubject(authentication.getName())
                 .claim(AUTHORITY_KEY, authorities)
                 .setExpiration(refreshValidity)
-                .signWith(SignatureAlgorithm.HS256, key)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
         // TokenInfo 생성
@@ -83,14 +85,14 @@ public class JwtTokenProvider {
         // 토큰 복호화
         Claims claims = parseClaims(accessToken);
         if (claims.get("auth") == null) {
-            throw new RuntimeException("Token without credential.");
+            throw new CustomJwtExceptionHandler(ExceptionResponseCode.JWT_UNKNOWN_ERROR);
         }
 
         // 클레임에서 권한 정보 가져오기
         Collection<? extends GrantedAuthority> authorities = Arrays.stream(
                         claims.get(AUTHORITY_KEY).toString().split(","))
                 .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+                .toList();
 
         UserDetails principal = new User(claims.getSubject(), "", authorities);
 

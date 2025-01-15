@@ -23,25 +23,23 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public static final String AUTHORZATION_HEADER = "Authorization";
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProviderV1 jwtTokenProviderV1;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = resolveToken(request);
         try{
-            if(token != null && jwtTokenProvider.validateToken(token)){
-                Authentication authentication = jwtTokenProvider.getAuthentication(token);
+            if(token != null && jwtTokenProviderV1.validateToken(token)){
+                Authentication authentication = jwtTokenProviderV1.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        } catch (SecurityException | MalformedJwtException e) {
+        } catch (SecurityException | MalformedJwtException | IllegalArgumentException e) {
             throw new CustomJwtExceptionHandlerV1(ErrorCode.JWT_WRONG_TYPE_TOKEN_ERROR);
         } catch (ExpiredJwtException e){
             throw new CustomJwtExceptionHandlerV1(ErrorCode.JWT_TOKEN_EXPIRED_ERROR);
         } catch(UnsupportedJwtException e){
             throw new CustomJwtExceptionHandlerV1(ErrorCode.UNSUPPORTED_TOKEN_ERROR);
-        } catch (IllegalArgumentException e){
-            throw new CustomJwtExceptionHandlerV1(ErrorCode.JWT_WRONG_TYPE_TOKEN_ERROR);
-        } catch (Exception e){
+        }  catch (Exception e){
             throw new CustomJwtExceptionHandlerV1(ErrorCode.JWT_UNKNOWN_ERROR);
         }
 

@@ -31,6 +31,7 @@ public class AuthService implements UserDetailsService {
     // DB 에 User 값이 존재하면 UserDetails 객체로 만들어서 리턴
     private UserDetails createUserDetails(Member member) {
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(member.getAuthority().toString());
+
         log.info("Collections.singleton : {}", Collections.singleton(grantedAuthority));
         log.info("member getUserId : {} ", member.getUserId());
         log.info("member getUserEmail : {}", member.getUserEmail());

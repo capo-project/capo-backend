@@ -34,7 +34,7 @@ public class ImageResizerHandlerImpl implements ImageResizer {
 
             return ResizedImage.of(inputStream, IMAGE_FORMAT_JPEG, outputStream.size());
         } catch (IOException e) {
-            throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_PROCESSING_ERROR);
+            throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_IMAGE_PROCESSING_ERROR);
         }
     }
 

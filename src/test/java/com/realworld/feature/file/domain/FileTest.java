@@ -1,6 +1,7 @@
 package com.realworld.feature.file.domain;
 
 import com.realworld.common.exception.CustomFileExceptionHandler;
+import com.realworld.common.response.code.ExceptionResponseCode;
 import com.realworld.feature.file.entity.File;
 import com.realworld.feature.file.entity.FileDetails;
 import com.realworld.feature.file.mock.MockFileData;
@@ -28,17 +29,21 @@ class FileTest {
     @Test
     void 파일을_생성할_때_상세_정보가_NULL이면_예외를_던진다() {
         // When & Then
-        assertThatThrownBy(
-                () -> File.create(null, MockFileData.TEST_URL)
-        ).isInstanceOf(CustomFileExceptionHandler.class);
+        assertThatThrownBy(() -> File.create(null, MockFileData.TEST_URL))
+                .isInstanceOf(CustomFileExceptionHandler.class)
+                .hasMessageContaining(
+                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                );
     }
 
     @Test
     void 파일을_생성할_때_URL이_NULL이면_예외를_던진다() {
         // When & Then
-        assertThatThrownBy(
-                () -> File.create(MockFileData.details, null)
-        ).isInstanceOf(CustomFileExceptionHandler.class);
+        assertThatThrownBy(() -> File.create(MockFileData.details, null))
+                .isInstanceOf(CustomFileExceptionHandler.class)
+                .hasMessageContaining(
+                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                );
     }
 
 }

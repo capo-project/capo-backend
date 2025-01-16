@@ -2,6 +2,7 @@ package com.realworld.feature.file.domain;
 
 import com.realworld.common.exception.CustomFileExceptionHandler;
 import com.realworld.common.holder.uuid.UUIDHolder;
+import com.realworld.common.response.code.ExceptionResponseCode;
 import com.realworld.feature.file.entity.FileMetaData;
 import com.realworld.feature.file.mock.MockFileData;
 import com.realworld.infrastructure.image.ResizedImage;
@@ -48,9 +49,45 @@ class FileMetaDataTest {
         ResizedImage invalidImage = null;
 
         // When & Then
-        assertThatThrownBy(
-                () -> FileMetaData.fromResizedImage(destinationDirectory, invalidImage, uuidHolder)
-        ).isInstanceOf(CustomFileExceptionHandler.class);
+        assertThatThrownBy(() -> FileMetaData.fromResizedImage(destinationDirectory, invalidImage, uuidHolder))
+                .isInstanceOf(CustomFileExceptionHandler.class)
+                .hasMessageContaining(
+                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                );
+    }
+
+    @Test
+    void 저장_디렉토리가_NULL이면_리사이즈된_이미지로_예외를_던진다() {
+        // Given
+        String emptyDirectory = null;
+        UUIDHolder uuidHolder = () -> MockFileData.TEST_UUID;
+        ResizedImage resizedImage = mock(ResizedImage.class);
+        when(resizedImage.getImageFormat()).thenReturn(MockFileData.TEST_EXTENSION);
+        when(resizedImage.getSize()).thenReturn(MockFileData.FILE_SIZE);
+
+        // when
+        assertThatThrownBy(() -> FileMetaData.fromResizedImage(emptyDirectory, resizedImage, uuidHolder))
+                .isInstanceOf(CustomFileExceptionHandler.class)
+                .hasMessageContaining(
+                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                );
+    }
+
+    @Test
+    void UUIDHolder가_NULL이면_리사이즈된_이미지로_예외를_던진다() {
+        // Given
+        String destinationDirectory = MockFileData.TEST_DIRECTORY;
+        UUIDHolder uuidHolder = null;
+        ResizedImage resizedImage = mock(ResizedImage.class);
+        when(resizedImage.getImageFormat()).thenReturn(MockFileData.TEST_EXTENSION);
+        when(resizedImage.getSize()).thenReturn(MockFileData.FILE_SIZE);
+
+        // When & Then
+        assertThatThrownBy(() -> FileMetaData.fromResizedImage(destinationDirectory, resizedImage, uuidHolder))
+                .isInstanceOf(CustomFileExceptionHandler.class)
+                .hasMessageContaining(
+                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                );
     }
 
     @Test
@@ -94,61 +131,32 @@ class FileMetaDataTest {
         MockMultipartFile invalidFile = null;
 
         // When & Then
-        assertThatThrownBy(
-                () -> FileMetaData.fromMultipartFile(destinationDirectory, invalidFile, uuidHolder)
-        ).isInstanceOf(CustomFileExceptionHandler.class);
+        assertThatThrownBy(() -> FileMetaData.fromMultipartFile(destinationDirectory, invalidFile, uuidHolder))
+                .isInstanceOf(CustomFileExceptionHandler.class)
+                .hasMessageContaining(
+                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                );
     }
 
     @Test
-    void 저장_디렉토리가_비어있으면_MultipartFile로_예외를_던진다() {
+    void 저장_디렉토리가_NULL이면_MultipartFile로_예외를_던진다() {
         // Given
-        String emptyDirectory = "";
-        UUIDHolder uuidHolder = () -> MockFileData.TEST_UUID;
+        String emptyDirectory = null;
         MockMultipartFile multipartFile = new MockMultipartFile(
                 "file",
                 "original-file.jpeg",
                 "image/jpeg",
                 new byte[(int) MockFileData.FILE_SIZE]
         );
-
-        ResizedImage resizedImage = mock(ResizedImage.class);
-        when(resizedImage.getImageFormat()).thenReturn(MockFileData.TEST_EXTENSION);
-        when(resizedImage.getSize()).thenReturn(MockFileData.FILE_SIZE);
-
-        // When & Then
-        assertThatThrownBy(
-                () -> FileMetaData.fromMultipartFile(emptyDirectory, multipartFile, uuidHolder)
-        ).isInstanceOf(CustomFileExceptionHandler.class);
-    }
-
-    @Test
-    void 저장_디렉토리가_비어있으면_리사이즈된_이미지로_예외를_던진다() {
-        // Given
-        String emptyDirectory = "";
         UUIDHolder uuidHolder = () -> MockFileData.TEST_UUID;
-        ResizedImage resizedImage = mock(ResizedImage.class);
-        when(resizedImage.getImageFormat()).thenReturn(MockFileData.TEST_EXTENSION);
-        when(resizedImage.getSize()).thenReturn(MockFileData.FILE_SIZE);
 
-        // when
-        assertThatThrownBy(
-                () -> FileMetaData.fromResizedImage(emptyDirectory, resizedImage, uuidHolder)
-        ).isInstanceOf(CustomFileExceptionHandler.class);
-    }
-
-    @Test
-    void UUIDHolder가_NULL이면_리사이즈된_이미지로_예외를_던진다() {
-        // Given
-        String destinationDirectory = MockFileData.TEST_DIRECTORY;
-        UUIDHolder uuidHolder = null;
         ResizedImage resizedImage = mock(ResizedImage.class);
         when(resizedImage.getImageFormat()).thenReturn(MockFileData.TEST_EXTENSION);
         when(resizedImage.getSize()).thenReturn(MockFileData.FILE_SIZE);
 
         // When & Then
-        assertThatThrownBy(
-                () -> FileMetaData.fromResizedImage(destinationDirectory, resizedImage, uuidHolder)
-        ).isInstanceOf(CustomFileExceptionHandler.class);
+        assertThatThrownBy(() -> FileMetaData.fromMultipartFile(emptyDirectory, multipartFile, uuidHolder))
+                .isInstanceOf(CustomFileExceptionHandler.class);
     }
 
     @Test
@@ -164,9 +172,11 @@ class FileMetaDataTest {
         );
 
         // When & Then
-        assertThatThrownBy(
-                () -> FileMetaData.fromMultipartFile(emptyDirectory, multipartFile, uuidHolder)
-        ).isInstanceOf(CustomFileExceptionHandler.class);
+        assertThatThrownBy(() -> FileMetaData.fromMultipartFile(emptyDirectory, multipartFile, uuidHolder))
+                .isInstanceOf(CustomFileExceptionHandler.class)
+                .hasMessageContaining(
+                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                );
     }
 
 }

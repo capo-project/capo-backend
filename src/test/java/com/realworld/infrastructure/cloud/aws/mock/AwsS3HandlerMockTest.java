@@ -2,6 +2,7 @@ package com.realworld.infrastructure.cloud.aws.mock;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.realworld.common.exception.CustomFileExceptionHandler;
+import com.realworld.common.response.code.ExceptionResponseCode;
 import com.realworld.feature.file.entity.FileMetaData;
 import com.realworld.infrastructure.cloud.aws.AwsS3Handler;
 import com.realworld.infrastructure.cloud.aws.AwsS3HandlerImpl;
@@ -102,9 +103,11 @@ class AwsS3HandlerMockTest {
         String nonExistentFileUrl = "https://xxxxxxxxxxxxxx.cloudfront.net/test/test.jpeg";
 
         // when & then
-        assertThatThrownBy(
-                () -> awsS3Handler.move(nonExistentFileUrl, TEST_DIRECTORY)
-        ).isInstanceOf(CustomFileExceptionHandler.class);
+        assertThatThrownBy(() -> awsS3Handler.move(nonExistentFileUrl, TEST_DIRECTORY))
+                .isInstanceOf(CustomFileExceptionHandler.class)
+                .hasMessageContaining(
+                        ExceptionResponseCode.FILE_NOT_FOUND_ERROR.getMessage()
+                );
     }
 
     @Test
@@ -126,9 +129,11 @@ class AwsS3HandlerMockTest {
         String nonExistentFileUrl = "https://xxxxxxxxxxxxxx.cloudfront.net/test/test.jpeg";
 
         // when & then
-        assertThatThrownBy(
-                () -> awsS3Handler.delete(nonExistentFileUrl)
-        ).isInstanceOf(CustomFileExceptionHandler.class);
+        assertThatThrownBy(() -> awsS3Handler.delete(nonExistentFileUrl))
+                .isInstanceOf(CustomFileExceptionHandler.class)
+                .hasMessageContaining(
+                        ExceptionResponseCode.FILE_NOT_FOUND_ERROR.getMessage()
+                );
     }
 
 }

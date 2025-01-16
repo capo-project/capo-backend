@@ -1,7 +1,7 @@
 package com.realworld.common.config.security;
 
 import com.realworld.application.auth.jwt.service.JwtService;
-import com.realworld.application.member.service.MemberService;
+import com.realworld.application.member.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,14 +20,33 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
-    public static final String[] PERMITTED_URI = new String[]{"/favicon.ico", "/api/prometheus", "/api/actuator/**", "/api/swagger-ui/index.html", "/api/v2/auth/email", "/api/v2/auth/email/**", "/api/v2/member", "/error", "/api/**", "/**", "/swagger-ui/index.html", "/logout"};
+    public static final String[] exclude = new String[]{
+            "/favicon.ico",
+            "/prometheus",
+            "/actuator/**",
+            "/v2/auth/email",
+            "/v2/auth/email/**",
+            "/v2/member",
+            "/error",
+            "/v2/login",
+            "/swagger-ui/index.html",
+            "/swagger-ui/**", // Swagger UI
+            "/api/v3/api-docs", // Swagger API docs
+            "/swagger-resources/**", // Swagger resources
+            "/swagger-ui.html", // Swagger HTML
+            "/webjars/**",// Webjars for Swagger
+            "/swagger/**",// Swagger try it out
+            "/v3/api-docs/**"
+    };
     private final JwtService jwtService;
     private final MemberService memberService;
+
 
     @Order(1)
     @Bean
     public SecurityFilterChain customFilterChain(HttpSecurity http) throws Exception {
         http
+
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
@@ -35,13 +54,13 @@ public class SecurityConfig {
                 .exceptionHandling(authenticationManager -> authenticationManager
                         .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
                         .accessDeniedHandler(new JwtAccessDeniedFilter()))
-                .authorizeHttpRequests(request -> request
-                        .requestMatchers(PERMITTED_URI).permitAll()
+                .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(new JwtAuthenticationFilter(jwtService, memberService), UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(auth -> auth.
+                        requestMatchers(exclude).permitAll()
                         .anyRequest()
                         .authenticated()
-                )
-                .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new JwtAuthenticationFilter(jwtService, memberService), UsernamePasswordAuthenticationFilter.class);
+                );
 
         return http.build();
     }

@@ -6,11 +6,13 @@ import com.realworld.common.response.code.ExceptionResponseCode;
 import com.realworld.feature.auth.jwt.CustomUserDetails;
 import com.realworld.feature.member.entity.Member;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserDetailServiceImpl implements UserDetailsService {

@@ -12,4 +12,6 @@ public interface TokenRepository {
 
     void deleteById(String id);
 
+    Optional<Token> findByAccessToken(String token);
+
 }

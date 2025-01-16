@@ -60,8 +60,7 @@ public class Member {
         this.authority = authority;
         this.registerDate = registerDate;
         this.modifyDate = modifyDate;
-        this.isValidatePassword(password, checkPassword);
-
+        this.isValidatePassword(checkPassword);
     }
 
     public static Member createMember(final SignUpRequest request, DateTimeHolder dateTimeHolder, NicknameGeneratorHolder nicknameGeneratorHolder) {
@@ -79,8 +78,8 @@ public class Member {
                 .build();
     }
 
-    private void isValidatePassword(final String password, final String checkPassword) {
-        if (!password.equals(checkPassword)) {
+    public void isValidatePassword(final String checkPassword) {
+        if (!this.password.equals(checkPassword)) {
             throw new CustomMemberExceptionHandler(ExceptionResponseCode.PASSWORD_MISS_MATCH_ERROR);
         }
     }

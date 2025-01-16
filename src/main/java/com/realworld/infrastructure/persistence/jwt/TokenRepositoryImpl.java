@@ -28,4 +28,9 @@ public class TokenRepositoryImpl implements TokenRepository {
         repository.deleteById(id);
     }
 
+    @Override
+    public Optional<Token> findByAccessToken(String token) {
+        return repository.findByAccessToken(token);
+    }
+
 }

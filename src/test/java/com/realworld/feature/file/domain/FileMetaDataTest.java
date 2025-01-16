@@ -156,7 +156,10 @@ class FileMetaDataTest {
 
         // When & Then
         assertThatThrownBy(() -> FileMetaData.fromMultipartFile(emptyDirectory, multipartFile, uuidHolder))
-                .isInstanceOf(CustomFileExceptionHandler.class);
+                .isInstanceOf(CustomFileExceptionHandler.class)
+                .hasMessageContaining(
+                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                );
     }
 
     @Test

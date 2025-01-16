@@ -16,6 +16,8 @@ public enum ExceptionResponseCode {
      */
     FILE_PROCESSING_ERROR(HttpStatus.BAD_REQUEST, "파일 처리 중 문제가 발생했습니다. 올바른 파일을 업로드해주세요.", 400),
 
+    FILE_IMAGE_PROCESSING_ERROR(HttpStatus.BAD_REQUEST, "파일 이미지 처리 중 문제가 발생했습니다. 올바른 파일을 업로드해주세요.", 400),
+
     FILE_IMAGE_RESIZE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 크기를 조정하는 중 문제가 발생했습니다. 다시 시도해주세요.", 500),
 
     FILE_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "파일이 존재하지 않습니다.", 404),

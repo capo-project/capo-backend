@@ -28,7 +28,6 @@ public class FileServiceImpl implements FileService {
     @Override
     public File saveResizedImage(String destinationDirectory, MultipartFile file, int width, int height) {
         validateImageFileType(file);
-
         try (InputStream inputStream = file.getInputStream();
              ResizedImage resizedImage = imageResizer.resize(width, height, ImageIO.read(inputStream))
         ) {
@@ -45,7 +44,6 @@ public class FileServiceImpl implements FileService {
     @Override
     public File saveImage(String destinationDirectory, MultipartFile file) {
         validateImageFileType(file);
-
         try (InputStream inputStream = file.getInputStream()) {
             FileMetaData metaData = FileMetaData.fromMultipartFile(destinationDirectory, file, new UUIDHolderImpl());
             String url = fileStorage.save(metaData, inputStream);

@@ -1,7 +1,8 @@
 package com.realworld.feature.file.domain;
 
 import com.realworld.common.exception.CustomFileExceptionHandler;
-import com.realworld.feature.file.FileDetails;
+import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.feature.file.entity.FileDetails;
 import com.realworld.feature.file.mock.MockFileData;
 import org.junit.jupiter.api.Test;
 
@@ -35,9 +36,11 @@ class FileDetailsTest {
         long size = 1024L;
 
         // When & Then
-        assertThatThrownBy(
-                () -> FileDetails.of(name, contentType, size)
-        ).isInstanceOf(CustomFileExceptionHandler.class);
+        assertThatThrownBy(() -> FileDetails.of(name, contentType, size))
+                .isInstanceOf(CustomFileExceptionHandler.class)
+                .hasMessageContaining(
+                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                );
     }
 
     @Test
@@ -48,9 +51,11 @@ class FileDetailsTest {
         long size = 1024L;
 
         // When & Then
-        assertThatThrownBy(
-                () -> FileDetails.of(name, contentType, size)
-        ).isInstanceOf(CustomFileExceptionHandler.class);
+        assertThatThrownBy(() -> FileDetails.of(name, contentType, size))
+                .isInstanceOf(CustomFileExceptionHandler.class)
+                .hasMessageContaining(
+                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                );
     }
 
     @Test
@@ -61,9 +66,11 @@ class FileDetailsTest {
         long size = 0L;
 
         // When & Then
-        assertThatThrownBy(
-                () -> FileDetails.of(name, contentType, size)
-        ).isInstanceOf(CustomFileExceptionHandler.class);
+        assertThatThrownBy(() -> FileDetails.of(name, contentType, size))
+                .isInstanceOf(CustomFileExceptionHandler.class)
+                .hasMessageContaining(
+                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                );
     }
 
 }

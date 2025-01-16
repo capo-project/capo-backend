@@ -1,4 +1,4 @@
-package com.realworld.feature.file;
+package com.realworld.feature.file.entity;
 
 import com.realworld.common.exception.CustomFileExceptionHandler;
 import com.realworld.common.holder.uuid.UUIDHolder;
@@ -40,11 +40,7 @@ public class FileMetaData {
     }
 
     private static void notNullParameters(ResizedImage resizedImage, String destinationDirectory, UUIDHolder uuidHolder) {
-        if (Objects.isNull(destinationDirectory) || destinationDirectory.trim().isEmpty() ||
-                Objects.isNull(uuidHolder) ||
-                Objects.isNull(resizedImage) ||
-                resizedImage.getSize() <= 0
-        ) {
+        if (Objects.isNull(destinationDirectory) || Objects.isNull(uuidHolder) || Objects.isNull(resizedImage) || resizedImage.getSize() <= 0) {
             throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_PROCESSING_ERROR);
         }
     }
@@ -67,11 +63,7 @@ public class FileMetaData {
     }
 
     private static void notNullParameters(MultipartFile file, String destinationDirectory, UUIDHolder uuidHolder) {
-        if (Objects.isNull(destinationDirectory) || destinationDirectory.trim().isEmpty() ||
-                Objects.isNull(uuidHolder) ||
-                Objects.isNull(file) ||
-                file.getSize() <= 0
-        ) {
+        if (Objects.isNull(destinationDirectory) || Objects.isNull(uuidHolder) || Objects.isNull(file) || file.getSize() <= 0) {
             throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_PROCESSING_ERROR);
         }
     }

@@ -1,7 +1,7 @@
 package com.realworld.feature.file.mock;
 
-import com.realworld.feature.file.FileDetails;
-import com.realworld.feature.file.FileMetaData;
+import com.realworld.feature.file.entity.FileDetails;
+import com.realworld.feature.file.entity.FileMetaData;
 
 import java.io.File;
 

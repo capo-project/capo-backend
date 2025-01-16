@@ -1,4 +1,4 @@
-package com.realworld.feature.file;
+package com.realworld.feature.file.entity;
 
 import com.realworld.common.exception.CustomFileExceptionHandler;
 import com.realworld.common.response.code.ExceptionResponseCode;

@@ -7,8 +7,8 @@ import com.realworld.common.exception.CustomImageExceptionHandler;
 import com.realworld.common.holder.uuid.UUIDHolderImpl;
 import com.realworld.common.response.code.ExceptionResponseCode;
 import com.realworld.common.type.file.FileFormat;
-import com.realworld.feature.file.File;
-import com.realworld.feature.file.FileMetaData;
+import com.realworld.feature.file.entity.File;
+import com.realworld.feature.file.entity.FileMetaData;
 import com.realworld.infrastructure.image.ResizedImage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,6 @@ public class FileServiceImpl implements FileService {
     @Override
     public File saveResizedImage(String destinationDirectory, MultipartFile file, int width, int height) {
         validateImageFileType(file);
-
         try (InputStream inputStream = file.getInputStream();
              ResizedImage resizedImage = imageResizer.resize(width, height, ImageIO.read(inputStream))
         ) {
@@ -45,7 +44,6 @@ public class FileServiceImpl implements FileService {
     @Override
     public File saveImage(String destinationDirectory, MultipartFile file) {
         validateImageFileType(file);
-
         try (InputStream inputStream = file.getInputStream()) {
             FileMetaData metaData = FileMetaData.fromMultipartFile(destinationDirectory, file, new UUIDHolderImpl());
             String url = fileStorage.save(metaData, inputStream);

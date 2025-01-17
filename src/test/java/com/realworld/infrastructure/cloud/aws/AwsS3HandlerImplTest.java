@@ -3,6 +3,7 @@ package com.realworld.infrastructure.cloud.aws;
 import com.realworld.common.exception.custom.CustomFileExceptionHandler;
 import com.realworld.common.response.code.ErrorCode;
 import com.realworld.feature.file.entity.FileMetaData;
+import com.realworld.feature.file.mock.MockFileData;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,9 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.io.*;
 
-import static com.realworld.feature.file.mock.MockFileData.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 @Disabled(
         "AWS S3 관련 테스트는 비용 발생 우려로 인해 현재는 비활성화합니다."
@@ -22,16 +21,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AwsS3HandlerImplTest {
 
-    private static final String BUCKET_NAME = "photocardsite";
-
-    private InputStream inputStream;
+    private static final String TEST_IMAGE_PATH = "src/test/resources/test_image.jpg";
+    private static final File TEST_FILE = new File(TEST_IMAGE_PATH);
+    private static final String TEST_DIRECTORY = "temporary";
+    private static final String TEST_BUCKET_NAME = "test-bucket";
 
     @Autowired
     private AwsS3Handler awsS3Handler;
 
+    private InputStream inputStream;
+
     @BeforeEach
     void setUp() throws IOException {
-        inputStream = new FileInputStream(testFile);
+        inputStream = new FileInputStream(TEST_FILE);
     }
 
     @AfterEach
@@ -42,39 +44,39 @@ class AwsS3HandlerImplTest {
     }
 
     private String getBucketPath(String directory) {
-        return BUCKET_NAME + "/" + directory;
+        return TEST_BUCKET_NAME + "/" + directory;
     }
 
     @Test
-    void AWS_S3_파일_업로드() {
+    void 파일을_S3에_업로드하면_정상적으로_업로드된_URL을_반환한다() {
         // given
-        FileMetaData metaData = create(TEMPORARY_DIRECTORY);
+        FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
 
         // when
         String result = awsS3Handler.save(metaData, inputStream);
 
         // then
         assertThat(result).isNotNull();
-        assertThat(awsS3Handler.isFileExist(getBucketPath(TEMPORARY_DIRECTORY), metaData.getDetails().getName())).isTrue();
+        assertThat(awsS3Handler.isFileExist(getBucketPath(TEST_DIRECTORY), metaData.getDetails().getName())).isTrue();
     }
 
     @Test
-    void AWS_S3_파일_조회() {
+    void S3에_업로드된_파일이_존재하는지_확인한다() {
         // given
-        FileMetaData metaData = create(TEMPORARY_DIRECTORY);
+        FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
         awsS3Handler.save(metaData, inputStream);
 
         // when
-        Boolean result = awsS3Handler.isFileExist(getBucketPath(TEMPORARY_DIRECTORY), metaData.getDetails().getName());
+        Boolean result = awsS3Handler.isFileExist(getBucketPath(TEST_DIRECTORY), metaData.getDetails().getName());
 
         // then
         assertThat(result).isTrue();
     }
 
     @Test
-    void AWS_S3_파일_이동() {
+    void S3_파일을_다른_디렉토리로_이동하면_정상적으로_이동된다() {
         // given
-        FileMetaData metaData = create(TEMPORARY_DIRECTORY);
+        FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
         String savedFileUrl = awsS3Handler.save(metaData, inputStream);
 
         // when
@@ -86,7 +88,7 @@ class AwsS3HandlerImplTest {
     }
 
     @Test
-    void AWS_S3_존재하지_않는_파일_이동_시_예외_발생() {
+    void 존재하지_않는_S3_파일을_이동하려고_하면_예외를_발생시킨다() {
         //given
         String nonExistentFileUrl = "https://xxxxxxxxxxxxxx.cloudfront.net/test/test.jpeg";
 
@@ -99,20 +101,20 @@ class AwsS3HandlerImplTest {
     }
 
     @Test
-    void AWS_S3_파일_삭제() {
+    void S3에서_파일을_삭제하면_정상적으로_삭제된다() {
         // given
-        FileMetaData metaData = create(TEMPORARY_DIRECTORY);
+        FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
         String savedFileUrl = awsS3Handler.save(metaData, inputStream);
 
         // when
         awsS3Handler.delete(savedFileUrl);
 
         // then
-        assertThat(awsS3Handler.isFileExist(getBucketPath(TEMPORARY_DIRECTORY), metaData.getDetails().getName())).isFalse();
+        assertThat(awsS3Handler.isFileExist(getBucketPath(TEST_DIRECTORY), metaData.getDetails().getName())).isFalse();
     }
 
     @Test
-    void AWS_S3_존재하지_않는_파일_삭제_시_예외_발생() {
+    void 존재하지_않는_S3_파일을_삭제하려고_하면_예외를_발생시킨다() {
         //given
         String nonExistentFileUrl = "https://xxxxxxxxxxxxxx.cloudfront.net/test/test.jpeg";
 

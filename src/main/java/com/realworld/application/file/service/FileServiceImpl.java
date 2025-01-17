@@ -26,12 +26,12 @@ public class FileServiceImpl implements FileService {
     private final FileStorage fileStorage;
 
     @Override
-    public File saveResizedImage(String destinationDirectory, MultipartFile file, int width, int height) {
+    public File saveResizedImage(String targetDir, MultipartFile file, int width, int height) {
         validateImageFileType(file);
         try (InputStream inputStream = file.getInputStream();
              ResizedImage resizedImage = imageResizer.resize(width, height, ImageIO.read(inputStream))
         ) {
-            FileMetaData metaData = FileMetaData.fromResizedImage(destinationDirectory, resizedImage, new UUIDHolderImpl());
+            FileMetaData metaData = FileMetaData.fromResizedImage(targetDir, resizedImage, new UUIDHolderImpl());
             String url = fileStorage.save(metaData, resizedImage.getInputStream());
             return File.create(metaData.getDetails(), url);
         } catch (IOException e) {
@@ -42,10 +42,10 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public File saveImage(String destinationDirectory, MultipartFile file) {
+    public File saveImage(String targetDir, MultipartFile file) {
         validateImageFileType(file);
         try (InputStream inputStream = file.getInputStream()) {
-            FileMetaData metaData = FileMetaData.fromMultipartFile(destinationDirectory, file, new UUIDHolderImpl());
+            FileMetaData metaData = FileMetaData.fromMultipartFile(targetDir, file, new UUIDHolderImpl());
             String url = fileStorage.save(metaData, inputStream);
             return File.create(metaData.getDetails(), url);
         } catch (IOException e) {
@@ -61,8 +61,8 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public String move(String sourcePath, String destinationDirectory) {
-        return fileStorage.move(sourcePath, destinationDirectory);
+    public String move(String sourcePath, String targetDir) {
+        return fileStorage.move(sourcePath, targetDir);
     }
 
     @Override

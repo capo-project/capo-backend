@@ -1,4 +1,4 @@
-package com.realworld.common.swagger;
+package com.realworld.common.annotation.swagger;
 
 import io.swagger.v3.oas.annotations.media.Content;
 

@@ -1,6 +1,6 @@
 package com.realworld.feature.auth.mail.domain.member;
 
-import com.realworld.common.exception.CustomMemberExceptionHandler;
+import com.realworld.common.exception.custom.CustomMemberExceptionHandler;
 import com.realworld.feature.auth.mail.mock.member.MemberMockData;
 import com.realworld.feature.member.entity.Member;
 import com.realworld.feature.member.entity.MemberProfile;

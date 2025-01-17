@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Getter
 @RequiredArgsConstructor
-public enum ExceptionResponseCode {
+public enum ErrorCode {
 
     /**
      * File Exception
@@ -145,16 +145,16 @@ public enum ExceptionResponseCode {
     private final HttpStatus httpStatus;
     private final String message;
     private final int resultCode;
-    private static final Map<String, ExceptionResponseCode> exceptionMap = new HashMap<>();
+    private static final Map<String, ErrorCode> exceptionMap = new HashMap<>();
 
     static {
-        for(ExceptionResponseCode responseCode :ExceptionResponseCode.values()) {
+        for(ErrorCode responseCode : ErrorCode.values()) {
             exceptionMap.put(responseCode.getMessage(), responseCode);
         }
     }
 
-    public static ExceptionResponseCode getExceptionResponseCode(String message) {
-        return exceptionMap.getOrDefault(message, ExceptionResponseCode.INTERVAL_SERVER_ERROR);
+    public static ErrorCode getExceptionResponseCode(String message) {
+        return exceptionMap.getOrDefault(message, ErrorCode.INTERVAL_SERVER_ERROR);
     }
 
 }

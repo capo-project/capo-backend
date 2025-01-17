@@ -6,8 +6,8 @@ import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.realworld.application.file.port.ImageResizer;
-import com.realworld.common.exception.CustomFileExceptionHandler;
-import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.common.exception.custom.CustomFileExceptionHandler;
+import com.realworld.common.response.code.ErrorCode;
 import com.realworld.feature.file.entity.File;
 import com.realworld.infrastructure.cloud.CloudFileStorage;
 import com.realworld.infrastructure.cloud.aws.AwsS3Handler;
@@ -107,7 +107,7 @@ class FileServiceImplTest {
         assertThatThrownBy(() -> fileService.saveResizedImage(destinationDirectory, multipartFile, width, height))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.UNSUPPORTED_FILE_IMAGE_TYPE_ERROR.getMessage()
+                        ErrorCode.UNSUPPORTED_FILE_IMAGE_TYPE_ERROR.getMessage()
                 );
     }
 

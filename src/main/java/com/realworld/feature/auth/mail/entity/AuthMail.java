@@ -1,12 +1,10 @@
 package com.realworld.feature.auth.mail.entity;
 
-import com.realworld.common.exception.CustomAuthMailExceptionHandler;
+import com.realworld.common.exception.custom.CustomAuthMailExceptionHandler;
 import com.realworld.common.holder.auth.key.MailKeyGeneratorHolder;
 import com.realworld.common.holder.date.DateTimeHolder;
-import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.common.response.code.ErrorCode;
 import com.realworld.infrastructure.mail.MailSender;
-import com.realworld.v1.global.code.ErrorCode;
-import com.realworld.v1.global.config.exception.CustomAuthMailExceptionHandlerV1;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.Id;
@@ -54,7 +52,7 @@ public class AuthMail {
 
     public void authCheck(String authNumber) {
         if(!this.authNumber.equals(authNumber)) {
-            throw new CustomAuthMailExceptionHandler(ExceptionResponseCode.AUTH_EMAIL_AUTH_NUMBER_ERROR);
+            throw new CustomAuthMailExceptionHandler(ErrorCode.AUTH_EMAIL_AUTH_NUMBER_ERROR);
         }
     }
 

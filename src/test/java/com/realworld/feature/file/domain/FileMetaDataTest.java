@@ -1,8 +1,8 @@
 package com.realworld.feature.file.domain;
 
-import com.realworld.common.exception.CustomFileExceptionHandler;
+import com.realworld.common.exception.custom.CustomFileExceptionHandler;
 import com.realworld.common.holder.uuid.UUIDHolder;
-import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.common.response.code.ErrorCode;
 import com.realworld.feature.file.entity.FileMetaData;
 import com.realworld.feature.file.mock.MockFileData;
 import com.realworld.infrastructure.image.ResizedImage;
@@ -52,7 +52,7 @@ class FileMetaDataTest {
         assertThatThrownBy(() -> FileMetaData.fromResizedImage(destinationDirectory, invalidImage, uuidHolder))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                        ErrorCode.FILE_PROCESSING_ERROR.getMessage()
                 );
     }
 
@@ -69,7 +69,7 @@ class FileMetaDataTest {
         assertThatThrownBy(() -> FileMetaData.fromResizedImage(emptyDirectory, resizedImage, uuidHolder))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                        ErrorCode.FILE_PROCESSING_ERROR.getMessage()
                 );
     }
 
@@ -86,7 +86,7 @@ class FileMetaDataTest {
         assertThatThrownBy(() -> FileMetaData.fromResizedImage(destinationDirectory, resizedImage, uuidHolder))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                        ErrorCode.FILE_PROCESSING_ERROR.getMessage()
                 );
     }
 
@@ -134,7 +134,7 @@ class FileMetaDataTest {
         assertThatThrownBy(() -> FileMetaData.fromMultipartFile(destinationDirectory, invalidFile, uuidHolder))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                        ErrorCode.FILE_PROCESSING_ERROR.getMessage()
                 );
     }
 
@@ -158,7 +158,7 @@ class FileMetaDataTest {
         assertThatThrownBy(() -> FileMetaData.fromMultipartFile(emptyDirectory, multipartFile, uuidHolder))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                        ErrorCode.FILE_PROCESSING_ERROR.getMessage()
                 );
     }
 
@@ -178,7 +178,7 @@ class FileMetaDataTest {
         assertThatThrownBy(() -> FileMetaData.fromMultipartFile(emptyDirectory, multipartFile, uuidHolder))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                        ErrorCode.FILE_PROCESSING_ERROR.getMessage()
                 );
     }
 

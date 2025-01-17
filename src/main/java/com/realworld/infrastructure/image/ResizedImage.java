@@ -1,7 +1,7 @@
 package com.realworld.infrastructure.image;
 
-import com.realworld.common.exception.CustomImageExceptionHandler;
-import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.common.exception.custom.CustomImageExceptionHandler;
+import com.realworld.common.response.code.ErrorCode;
 import lombok.Getter;
 
 import java.io.InputStream;
@@ -23,7 +23,7 @@ public class ResizedImage implements AutoCloseable {
 
     private void notNullParameters(InputStream inputStream, String imageFormat, long size) {
         if (Objects.isNull(inputStream) || Objects.isNull(imageFormat) || size <= 0) {
-            throw new CustomImageExceptionHandler(ExceptionResponseCode.FILE_IMAGE_PROCESSING_ERROR);
+            throw new CustomImageExceptionHandler(ErrorCode.FILE_IMAGE_PROCESSING_ERROR);
         }
     }
 

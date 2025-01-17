@@ -1,7 +1,7 @@
 package com.realworld.infrastructure.image;
 
-import com.realworld.common.exception.CustomImageExceptionHandler;
-import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.common.exception.custom.CustomImageExceptionHandler;
+import com.realworld.common.response.code.ErrorCode;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -77,7 +77,7 @@ class ResizedImageTest {
         assertThatThrownBy(() -> ResizedImage.of(null, imageFormat, size))
                 .isInstanceOf(CustomImageExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_IMAGE_PROCESSING_ERROR.getMessage()
+                        ErrorCode.FILE_IMAGE_PROCESSING_ERROR.getMessage()
                 );
     }
 
@@ -91,7 +91,7 @@ class ResizedImageTest {
         assertThatThrownBy(() -> ResizedImage.of(inputStream, imageFormat, size))
                 .isInstanceOf(CustomImageExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_IMAGE_PROCESSING_ERROR.getMessage()
+                        ErrorCode.FILE_IMAGE_PROCESSING_ERROR.getMessage()
                 );
     }
 
@@ -105,7 +105,7 @@ class ResizedImageTest {
         assertThatThrownBy(() -> ResizedImage.of(inputStream, imageFormat, size))
                 .isInstanceOf(CustomImageExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_IMAGE_PROCESSING_ERROR.getMessage()
+                        ErrorCode.FILE_IMAGE_PROCESSING_ERROR.getMessage()
                 );
     }
 

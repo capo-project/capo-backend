@@ -2,10 +2,10 @@ package com.realworld.web.file.controller;
 
 import com.realworld.application.file.service.FileService;
 import com.realworld.common.response.SuccessResponse;
-import com.realworld.common.response.code.ExceptionResponseCode;
-import com.realworld.common.response.code.SuccessResponseCode;
-import com.realworld.common.swagger.ExceptionResponseAnnotations;
-import com.realworld.common.swagger.SuccessResponseAnnotation;
+import com.realworld.common.response.code.ErrorCode;
+import com.realworld.common.response.code.SuccessCode;
+import com.realworld.common.annotation.swagger.ExceptionResponseAnnotations;
+import com.realworld.common.annotation.swagger.SuccessResponseAnnotation;
 import com.realworld.web.file.payload.request.FileDeleteRequest;
 import com.realworld.web.file.payload.request.FileMoveRequest;
 import com.realworld.web.file.payload.response.FileResponse;
@@ -37,11 +37,11 @@ public class FileController {
 
     private final FileService fileService;
 
-    @SuccessResponseAnnotation(SuccessResponseCode.SUCCESS)
+    @SuccessResponseAnnotation(SuccessCode.SUCCESS)
     @ExceptionResponseAnnotations({
-            ExceptionResponseCode.UNSUPPORTED_FILE_IMAGE_TYPE_ERROR,
-            ExceptionResponseCode.FILE_PROCESSING_ERROR,
-            ExceptionResponseCode.FILE_IMAGE_RESIZE_ERROR
+            ErrorCode.UNSUPPORTED_FILE_IMAGE_TYPE_ERROR,
+            ErrorCode.FILE_PROCESSING_ERROR,
+            ErrorCode.FILE_IMAGE_RESIZE_ERROR
     })
     @PostMapping(
             value = "/upload/images/resize",
@@ -76,11 +76,11 @@ public class FileController {
         return ResponseEntity.ok(successResponse);
     }
 
-    @SuccessResponseAnnotation(SuccessResponseCode.SUCCESS)
+    @SuccessResponseAnnotation(SuccessCode.SUCCESS)
     @ExceptionResponseAnnotations({
-            ExceptionResponseCode.UNSUPPORTED_FILE_IMAGE_TYPE_ERROR,
-            ExceptionResponseCode.FILE_PROCESSING_ERROR,
-            ExceptionResponseCode.FILE_IMAGE_RESIZE_ERROR
+            ErrorCode.UNSUPPORTED_FILE_IMAGE_TYPE_ERROR,
+            ErrorCode.FILE_PROCESSING_ERROR,
+            ErrorCode.FILE_IMAGE_RESIZE_ERROR
     })
     @PostMapping(value = "/upload/images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<SuccessResponse<FileResponses>> uploadImage(
@@ -109,8 +109,8 @@ public class FileController {
         return ResponseEntity.ok(successResponse);
     }
 
-    @SuccessResponseAnnotation(SuccessResponseCode.SUCCESS)
-    @ExceptionResponseAnnotations(ExceptionResponseCode.FILE_NOT_FOUND_ERROR)
+    @SuccessResponseAnnotation(SuccessCode.SUCCESS)
+    @ExceptionResponseAnnotations(ErrorCode.FILE_NOT_FOUND_ERROR)
     @PatchMapping("/move")
     public ResponseEntity<SuccessResponse<FileUrlResponses>> move(@RequestBody final FileMoveRequest request) {
         List<String> movedUrls = request.getUrls().stream()
@@ -130,8 +130,8 @@ public class FileController {
     }
 
     @DeleteMapping
-    @SuccessResponseAnnotation(SuccessResponseCode.SUCCESS)
-    @ExceptionResponseAnnotations(ExceptionResponseCode.FILE_NOT_FOUND_ERROR)
+    @SuccessResponseAnnotation(SuccessCode.SUCCESS)
+    @ExceptionResponseAnnotations(ErrorCode.FILE_NOT_FOUND_ERROR)
     public ResponseEntity<SuccessResponse<FileResponse>> delete(@RequestBody final FileDeleteRequest request) {
         request.getUrls().forEach(fileService::delete);
 

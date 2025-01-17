@@ -2,11 +2,11 @@ package com.realworld.web.member.controller;
 
 import com.realworld.application.member.service.member.MemberService;
 import com.realworld.common.response.SuccessResponse;
-import com.realworld.common.response.code.ExceptionResponseCode;
-import com.realworld.common.response.code.SuccessResponseCode;
-import com.realworld.common.swagger.ExceptionResponseAnnotations;
-import com.realworld.common.swagger.SuccessResponseAnnotation;
-import com.realworld.common.swagger.SwaggerRequestBody;
+import com.realworld.common.response.code.ErrorCode;
+import com.realworld.common.response.code.SuccessCode;
+import com.realworld.common.annotation.swagger.ExceptionResponseAnnotations;
+import com.realworld.common.annotation.swagger.SuccessResponseAnnotation;
+import com.realworld.common.annotation.swagger.SwaggerRequestBody;
 import com.realworld.feature.auth.jwt.CustomUserDetails;
 import com.realworld.web.member.payload.request.LoginRequest;
 import com.realworld.web.member.payload.response.LoginResponse;
@@ -34,26 +34,26 @@ public class LoginOutController {
             summary = "로그인 요청 보내기",
             description = "로그인 API"
     )
-    @SuccessResponseAnnotation(SuccessResponseCode.SUCCESS)
-    @ExceptionResponseAnnotations({ExceptionResponseCode.NOT_EXISTS_USERID})
+    @SuccessResponseAnnotation(SuccessCode.SUCCESS)
+    @ExceptionResponseAnnotations({ErrorCode.NOT_EXISTS_USERID})
     @PostMapping("/login")
     public ResponseEntity<SuccessResponse<Object>> login(@SwaggerRequestBody(description = "로그인 유저 정보", required = true, content = @Content(schema = @Schema(implementation = LoginRequest.class))) @RequestBody final LoginRequest loginRequest){
         LoginResponse loginResponse = new LoginResponse(memberService.login(loginRequest));
 
-        return ResponseEntity.ok(new SuccessResponse<>(loginResponse, SuccessResponseCode.SUCCESS.getResultCode(), SuccessResponseCode.SUCCESS.getHttpStatus(), "로그인 성공하였습니다."));
+        return ResponseEntity.ok(new SuccessResponse<>(loginResponse, SuccessCode.SUCCESS.getResultCode(), SuccessCode.SUCCESS.getHttpStatus(), "로그인 성공하였습니다."));
     }
 
     @Operation(
             summary = "로그아웃 요청 보내기",
             description = "로그아웃 API"
     )
-    @SuccessResponseAnnotation(SuccessResponseCode.SUCCESS)
-    @ExceptionResponseAnnotations({ExceptionResponseCode.NOT_EXISTS_USERID})
+    @SuccessResponseAnnotation(SuccessCode.SUCCESS)
+    @ExceptionResponseAnnotations({ErrorCode.NOT_EXISTS_USERID})
     @DeleteMapping("/logout")
     public ResponseEntity<SuccessResponse<Object>> logout(@AuthenticationPrincipal CustomUserDetails userDetails) {
         memberService.logout(userDetails.getUserId());
 
-        return ResponseEntity.ok(new SuccessResponse<>(null, SuccessResponseCode.SUCCESS.getResultCode(), SuccessResponseCode.SUCCESS.getHttpStatus(), "로그아웃 성공하였습니다."));
+        return ResponseEntity.ok(new SuccessResponse<>(null, SuccessCode.SUCCESS.getResultCode(), SuccessCode.SUCCESS.getHttpStatus(), "로그아웃 성공하였습니다."));
     }
 
 }

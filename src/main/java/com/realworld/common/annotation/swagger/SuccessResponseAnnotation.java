@@ -1,6 +1,7 @@
-package com.realworld.common.swagger;
+package com.realworld.common.annotation.swagger;
 
-import com.realworld.common.response.code.ExceptionResponseCode;
+
+import com.realworld.common.response.code.SuccessCode;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,6 +10,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExceptionResponseAnnotations {
-    ExceptionResponseCode[] value();
+public @interface SuccessResponseAnnotation {
+    SuccessCode value() default SuccessCode.SUCCESS;
+
 }

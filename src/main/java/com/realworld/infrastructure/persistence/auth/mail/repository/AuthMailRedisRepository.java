@@ -1,6 +1,6 @@
 package com.realworld.infrastructure.persistence.auth.mail.repository;
 
-import com.realworld.common.annotation.ExcludeFromJpaRepositories;
+import com.realworld.common.annotation.jpa.ExcludeFromJpaRepositories;
 import com.realworld.feature.auth.mail.entity.AuthMail;
 import org.springframework.data.repository.CrudRepository;
 

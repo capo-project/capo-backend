@@ -3,8 +3,6 @@ package com.realworld.v1.global.config.exception;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.realworld.common.exception.CustomFileExceptionHandler;
-import com.realworld.common.exception.CustomImageExceptionHandler;
 import com.realworld.v1.global.code.ErrorCode;
 import com.realworld.v1.global.code.ResultErrorMsgCode;
 import com.realworld.v1.global.response.ExceptionResponse;

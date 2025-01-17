@@ -5,8 +5,8 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.realworld.common.exception.CustomFileExceptionHandler;
-import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.common.exception.custom.CustomFileExceptionHandler;
+import com.realworld.common.response.code.ErrorCode;
 import com.realworld.feature.file.entity.FileMetaData;
 import com.realworld.infrastructure.cloud.aws.AwsS3Handler;
 import com.realworld.infrastructure.cloud.aws.AwsS3HandlerImpl;
@@ -14,6 +14,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.localstack.LocalStackContainer;
+import org.testcontainers.containers.localstack.LocalStackContainer.Service;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
@@ -32,7 +33,10 @@ class AwsS3HandlerTestContainersTest {
     private static final DockerImageName LOCALSTACK_IMAGE_NAME = DockerImageName.parse("localstack/localstack:latest");
 
     @Container
-    public static final LocalStackContainer localStack = new LocalStackContainer(LOCALSTACK_IMAGE_NAME).withServices(LocalStackContainer.Service.S3);
+    public static final LocalStackContainer localStack = new LocalStackContainer(LOCALSTACK_IMAGE_NAME)
+            .withServices(
+                    Service.S3
+            );
 
     private static final String localFrontBaseUri = "http://localhost:4566/";
 
@@ -128,7 +132,7 @@ class AwsS3HandlerTestContainersTest {
         assertThatThrownBy(() -> awsS3Handler.move(nonExistentFileUrl, TEST_DIRECTORY))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_NOT_FOUND_ERROR.getMessage()
+                        ErrorCode.FILE_NOT_FOUND_ERROR.getMessage()
                 );
     }
 
@@ -154,7 +158,7 @@ class AwsS3HandlerTestContainersTest {
         assertThatThrownBy(() -> awsS3Handler.delete(nonExistentFileUrl))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_NOT_FOUND_ERROR.getMessage()
+                        ErrorCode.FILE_NOT_FOUND_ERROR.getMessage()
                 );
     }
 

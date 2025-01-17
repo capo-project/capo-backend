@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @RequiredArgsConstructor
-public enum SuccessResponseCode {
+public enum SuccessCode {
     SUCCESS(HttpStatus.OK, "요청이 성공하였습니다.", 200),
     CREATED(HttpStatus.CREATED, "리소스가 성공적으로 생성되었습니다.", 201),
     ACCEPTED(HttpStatus.ACCEPTED, "요청이 접수되었습니다.", 202),

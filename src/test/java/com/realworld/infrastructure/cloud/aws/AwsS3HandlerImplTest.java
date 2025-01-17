@@ -1,7 +1,7 @@
 package com.realworld.infrastructure.cloud.aws;
 
-import com.realworld.common.exception.CustomFileExceptionHandler;
-import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.common.exception.custom.CustomFileExceptionHandler;
+import com.realworld.common.response.code.ErrorCode;
 import com.realworld.feature.file.entity.FileMetaData;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +94,7 @@ class AwsS3HandlerImplTest {
         assertThatThrownBy(() -> awsS3Handler.move(nonExistentFileUrl, TEST_DIRECTORY))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_NOT_FOUND_ERROR.getMessage()
+                        ErrorCode.FILE_NOT_FOUND_ERROR.getMessage()
                 );
     }
 
@@ -120,7 +120,7 @@ class AwsS3HandlerImplTest {
         assertThatThrownBy(() -> awsS3Handler.delete(nonExistentFileUrl))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_NOT_FOUND_ERROR.getMessage()
+                        ErrorCode.FILE_NOT_FOUND_ERROR.getMessage()
                 );
     }
 

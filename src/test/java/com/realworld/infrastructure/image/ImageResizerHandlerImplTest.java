@@ -1,8 +1,8 @@
 package com.realworld.infrastructure.image;
 
 import com.realworld.application.file.port.ImageResizer;
-import com.realworld.common.exception.CustomFileExceptionHandler;
-import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.common.exception.custom.CustomFileExceptionHandler;
+import com.realworld.common.response.code.ErrorCode;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -83,7 +83,7 @@ class ImageResizerHandlerImplTest {
         assertThatThrownBy(() -> imageResizerHandler.resize(width, height, originalImage))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_IMAGE_PROCESSING_ERROR.getMessage()
+                        ErrorCode.FILE_IMAGE_PROCESSING_ERROR.getMessage()
                 );
     }
 

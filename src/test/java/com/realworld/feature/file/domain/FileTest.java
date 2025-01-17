@@ -1,7 +1,7 @@
 package com.realworld.feature.file.domain;
 
-import com.realworld.common.exception.CustomFileExceptionHandler;
-import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.common.exception.custom.CustomFileExceptionHandler;
+import com.realworld.common.response.code.ErrorCode;
 import com.realworld.feature.file.entity.File;
 import com.realworld.feature.file.entity.FileDetails;
 import com.realworld.feature.file.mock.MockFileData;
@@ -32,7 +32,7 @@ class FileTest {
         assertThatThrownBy(() -> File.create(null, MockFileData.TEST_URL))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                        ErrorCode.FILE_PROCESSING_ERROR.getMessage()
                 );
     }
 
@@ -42,7 +42,7 @@ class FileTest {
         assertThatThrownBy(() -> File.create(MockFileData.details, null))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_PROCESSING_ERROR.getMessage()
+                        ErrorCode.FILE_PROCESSING_ERROR.getMessage()
                 );
     }
 

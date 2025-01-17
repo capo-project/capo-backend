@@ -1,8 +1,8 @@
 package com.realworld.infrastructure.image;
 
 import com.realworld.application.file.port.ImageResizer;
-import com.realworld.common.exception.CustomFileExceptionHandler;
-import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.common.exception.custom.CustomFileExceptionHandler;
+import com.realworld.common.response.code.ErrorCode;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
@@ -34,7 +34,7 @@ public class ImageResizerHandlerImpl implements ImageResizer {
 
             return ResizedImage.of(inputStream, IMAGE_FORMAT_JPEG, outputStream.size());
         } catch (IOException e) {
-            throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_IMAGE_PROCESSING_ERROR);
+            throw new CustomFileExceptionHandler(ErrorCode.FILE_IMAGE_PROCESSING_ERROR);
         }
     }
 

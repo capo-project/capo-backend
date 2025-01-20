@@ -1,74 +1,55 @@
-package com.realworld.infrastructure.cloud.aws.mock.testcontainers;
+package com.realworld.infrastructure.cloud.aws.mock;
 
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.realworld.common.exception.custom.CustomFileExceptionHandler;
+import com.realworld.common.localstack.TestLocalStackConfig;
 import com.realworld.common.response.code.ErrorCode;
 import com.realworld.feature.file.entity.FileMetaData;
 import com.realworld.feature.file.mock.MockFileData;
 import com.realworld.infrastructure.cloud.aws.AwsS3Handler;
 import com.realworld.infrastructure.cloud.aws.AwsS3HandlerImpl;
 import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.testcontainers.containers.localstack.LocalStackContainer;
-import org.testcontainers.containers.localstack.LocalStackContainer.Service;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.io.*;
 
 import static org.assertj.core.api.Assertions.*;
 
-@Testcontainers
+@Disabled(
+        """
+        이 테스트 코드는 외부 IaaS 방식과 Testcontainers 방식을 비교하기 위한 목적으로 작성되었습니다.
+        현재는 사용하지 않으므로 비활성화되어 있습니다.
+        테스트를 실행하려면 main 패키지에 있는 AwsS3Config 클래스를 비활성화한 후 진행하시기 바랍니다.
+        """
+)
+@Deprecated
 @ActiveProfiles("test")
+@ContextConfiguration(classes = TestLocalStackConfig.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class AwsS3HandlerTestContainersTest {
+class AwsS3HandlerRemoteTest {
 
-    private static final DockerImageName LOCALSTACK_IMAGE_NAME = DockerImageName.parse("localstack/localstack:latest");
-
-    private static final String LOCALSTACK_URI = "http://localhost:4566/";
     private static final String TEST_DIRECTORY = "temporary";
-
-    @Container
-    public static final LocalStackContainer localStack = new LocalStackContainer(LOCALSTACK_IMAGE_NAME)
-            .withServices(Service.S3);
 
     @Value("${localstack.s3.bucket}")
     private String bucket;
 
+    @Value("${localstack.cloudfront}")
+    private String cloudFrontBaseUri;
+
+    @Autowired
     private AmazonS3 s3Client;
-    private AwsS3Handler awsS3Handler;
 
     private InputStream inputStream;
+    private AwsS3Handler awsS3Handler;
 
     @BeforeEach
     void setUp() throws IOException {
         inputStream = new FileInputStream(MockFileData.testFile);
-
-        s3Client = AmazonS3ClientBuilder
-                .standard()
-                .withEndpointConfiguration(
-                        new AwsClientBuilder.EndpointConfiguration(
-                                localStack.getEndpoint().toString(),
-                                localStack.getRegion()
-                        )
-                )
-                .withCredentials(
-                        new AWSStaticCredentialsProvider(
-                                new BasicAWSCredentials(localStack.getAccessKey(), localStack.getSecretKey())
-                        )
-                )
-                .build();
-
-        s3Client.createBucket(bucket);
-
-        awsS3Handler = new AwsS3HandlerImpl(LOCALSTACK_URI, bucket, s3Client);
+        awsS3Handler = new AwsS3HandlerImpl(cloudFrontBaseUri, bucket, s3Client);
     }
 
     @AfterEach
@@ -123,7 +104,7 @@ class AwsS3HandlerTestContainersTest {
     }
 
     @Test
-    void 존재하지_않는_S3_파일을_이동하려고_하면_예외를_발생시킨다() {
+    void AWS_S3_존재하지_않는_파일_이동_시_예외_발생() {
         //given
         String nonExistentFileUrl = "https://xxxxxxxxxxxxxx.cloudfront.net/test/test.jpeg";
 
@@ -136,7 +117,7 @@ class AwsS3HandlerTestContainersTest {
     }
 
     @Test
-    void S3에서_파일을_삭제하면_정상적으로_삭제된다() {
+    void AWS_S3_파일_삭제() {
         // given
         FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
         String savedFileUrl = awsS3Handler.save(metaData, inputStream);
@@ -149,7 +130,7 @@ class AwsS3HandlerTestContainersTest {
     }
 
     @Test
-    void 존재하지_않는_S3_파일을_삭제하려고_하면_예외를_발생시킨다() {
+    void AWS_S3_존재하지_않는_파일_삭제_시_예외_발생() {
         //given
         String nonExistentFileUrl = "https://xxxxxxxxxxxxxx.cloudfront.net/test/test.jpeg";
 

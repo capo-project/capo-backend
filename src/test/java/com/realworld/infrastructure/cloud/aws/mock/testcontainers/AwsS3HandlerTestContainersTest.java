@@ -12,6 +12,7 @@ import com.realworld.feature.file.mock.MockFileData;
 import com.realworld.infrastructure.cloud.aws.AwsS3Handler;
 import com.realworld.infrastructure.cloud.aws.AwsS3HandlerImpl;
 import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.localstack.LocalStackContainer;
@@ -30,15 +31,16 @@ import static org.assertj.core.api.Assertions.*;
 class AwsS3HandlerTestContainersTest {
 
     private static final DockerImageName LOCALSTACK_IMAGE_NAME = DockerImageName.parse("localstack/localstack:latest");
-    private static final String TEST_IMAGE_PATH = "src/test/resources/test_image.jpg";
-    private static final File TEST_FILE = new File(TEST_IMAGE_PATH);
+
     private static final String LOCALSTACK_URI = "http://localhost:4566/";
-    private static final String TEST_BUCKET_NAME = "test-bucket";
     private static final String TEST_DIRECTORY = "temporary";
 
     @Container
     public static final LocalStackContainer localStack = new LocalStackContainer(LOCALSTACK_IMAGE_NAME)
             .withServices(Service.S3);
+
+    @Value("${localstack.s3.bucket}")
+    private String bucket;
 
     private AmazonS3 s3Client;
     private AwsS3Handler awsS3Handler;
@@ -47,7 +49,7 @@ class AwsS3HandlerTestContainersTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        inputStream = new FileInputStream(TEST_FILE);
+        inputStream = new FileInputStream(MockFileData.testFile);
 
         s3Client = AmazonS3ClientBuilder
                 .standard()
@@ -64,9 +66,9 @@ class AwsS3HandlerTestContainersTest {
                 )
                 .build();
 
-        s3Client.createBucket(TEST_BUCKET_NAME);
+        s3Client.createBucket(bucket);
 
-        awsS3Handler = new AwsS3HandlerImpl(LOCALSTACK_URI, TEST_BUCKET_NAME, s3Client);
+        awsS3Handler = new AwsS3HandlerImpl(LOCALSTACK_URI, bucket, s3Client);
     }
 
     @AfterEach
@@ -77,7 +79,7 @@ class AwsS3HandlerTestContainersTest {
     }
 
     private String getBucketPath(String directory) {
-        return TEST_BUCKET_NAME + "/" + directory;
+        return bucket + "/" + directory;
     }
 
     @Test
@@ -113,11 +115,11 @@ class AwsS3HandlerTestContainersTest {
         String savedFileUrl = awsS3Handler.save(metaData, inputStream);
 
         // when
-        String result = awsS3Handler.move(savedFileUrl, TEST_DIRECTORY);
+        String result = awsS3Handler.move(savedFileUrl, "test");
 
         // then
         assertThat(result).isNotNull();
-        assertThat(awsS3Handler.isFileExist(getBucketPath(TEST_DIRECTORY), metaData.getDetails().getName())).isTrue();
+        assertThat(awsS3Handler.isFileExist(getBucketPath("test"), metaData.getDetails().getName())).isTrue();
     }
 
     @Test

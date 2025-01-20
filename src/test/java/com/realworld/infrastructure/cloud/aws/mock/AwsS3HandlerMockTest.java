@@ -2,6 +2,7 @@ package com.realworld.infrastructure.cloud.aws.mock;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.realworld.common.exception.custom.CustomFileExceptionHandler;
+import com.realworld.common.localstack.TestLocalStackConfig;
 import com.realworld.common.response.code.ErrorCode;
 import com.realworld.feature.file.entity.FileMetaData;
 import com.realworld.feature.file.mock.MockFileData;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.io.*;
 
@@ -19,22 +21,24 @@ import static org.assertj.core.api.Assertions.*;
 
 @Disabled(
         """
-        외부 laaS 방식과 Testcontainers 방식을 비교하기 위한 테스트 코드이므로,
-        현재는 사용하지 않아 비활성화합니다.
+        이 테스트 코드는 외부 IaaS 방식과 Testcontainers 방식을 비교하기 위한 목적으로 작성되었습니다.
+        현재는 사용하지 않으므로 비활성화되어 있습니다.
+        테스트를 실행하려면 main 패키지에 있는 AwsS3Config 클래스를 비활성화한 후 진행하시기 바랍니다.
         """
 )
 @Deprecated
 @ActiveProfiles("test")
+@ContextConfiguration(classes = TestLocalStackConfig.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AwsS3HandlerMockTest {
 
-    private static final String TEST_IMAGE_PATH = "src/test/resources/test_image.jpg";
-    private static final File TEST_FILE = new File(TEST_IMAGE_PATH);
-    private static final String TEST_BUCKET_NAME = "photocardsite";
     private static final String TEST_DIRECTORY = "temporary";
 
+    @Value("${localstack.s3.bucket}")
+    private String bucket;
+
     @Value("${localstack.cloudfront}")
-    private static String mockCloudFrontBaseUri;
+    private String cloudFrontBaseUri;
 
     @Autowired
     private AmazonS3 s3Client;
@@ -44,8 +48,8 @@ class AwsS3HandlerMockTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        inputStream = new FileInputStream(TEST_FILE);
-        awsS3Handler = new AwsS3HandlerImpl(mockCloudFrontBaseUri, TEST_BUCKET_NAME, s3Client);
+        inputStream = new FileInputStream(MockFileData.testFile);
+        awsS3Handler = new AwsS3HandlerImpl(cloudFrontBaseUri, bucket, s3Client);
     }
 
     @AfterEach
@@ -56,7 +60,7 @@ class AwsS3HandlerMockTest {
     }
 
     private String getBucketPath(String directory) {
-        return TEST_BUCKET_NAME + "/" + directory;
+        return bucket + "/" + directory;
     }
 
     @Test
@@ -92,11 +96,11 @@ class AwsS3HandlerMockTest {
         String savedFileUrl = awsS3Handler.save(metaData, inputStream);
 
         // when
-        String result = awsS3Handler.move(savedFileUrl, TEST_DIRECTORY);
+        String result = awsS3Handler.move(savedFileUrl, "test");
 
         // then
         assertThat(result).isNotNull();
-        assertThat(awsS3Handler.isFileExist(getBucketPath(TEST_DIRECTORY), metaData.getDetails().getName())).isTrue();
+        assertThat(awsS3Handler.isFileExist(getBucketPath("test"), metaData.getDetails().getName())).isTrue();
     }
 
     @Test

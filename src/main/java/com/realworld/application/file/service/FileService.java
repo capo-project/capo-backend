@@ -5,11 +5,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface FileService {
 
-    File saveResizedImage(String destinationDirectory, MultipartFile file, int width, int height);
+    File saveResizedImage(String targetDir, MultipartFile file, int width, int height);
 
-    File saveImage(String destinationDirectory, MultipartFile file);
+    File saveImage(String targetDir, MultipartFile file);
 
-    String move(String sourcePath, String destinationDirectory);
+    String move(String sourcePath, String targetDir);
 
     void delete(String sourcePath);
 

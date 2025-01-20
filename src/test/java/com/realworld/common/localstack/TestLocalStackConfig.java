@@ -10,7 +10,6 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.validation.annotation.Validated;
 
@@ -40,15 +39,11 @@ public class TestLocalStackConfig {
     }
 
     @Bean
-    @Primary
     public AmazonS3 amazonS3() {
-        AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder
-                .EndpointConfiguration(endpoint, region);
-
         AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
 
         AmazonS3 amazonS3 = AmazonS3ClientBuilder.standard()
-                .withEndpointConfiguration(endpointConfiguration)
+                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpoint, region))
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .withPathStyleAccessEnabled(true)
                 .build();

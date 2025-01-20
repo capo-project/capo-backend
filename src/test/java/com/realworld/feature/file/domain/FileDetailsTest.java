@@ -14,8 +14,8 @@ class FileDetailsTest {
     @Test
     void 파일_상세_정보를_생성한다() {
         // Given
-        String name = MockFileData.TEST_FILE_NAME;
-        String contentType = MockFileData.TEST_CONTENT_TYPE;
+        String name = MockFileData.FILE_NAME;
+        String contentType = MockFileData.FILE_CONTENT_TYPE;
         long size = 1024L;
 
         // When
@@ -32,7 +32,7 @@ class FileDetailsTest {
     void 파일_이름이_NULL이면_예외를_던진다() {
         // Given
         String name = null;
-        String contentType = MockFileData.TEST_CONTENT_TYPE;
+        String contentType = MockFileData.FILE_CONTENT_TYPE;
         long size = 1024L;
 
         // When & Then
@@ -46,7 +46,7 @@ class FileDetailsTest {
     @Test
     void 콘텐츠_타입이_NULL이면_예외를_던진다() {
         // Given
-        String name = MockFileData.TEST_FILE_NAME;
+        String name = MockFileData.FILE_NAME;
         String contentType = null;
         long size = 1024L;
 
@@ -61,8 +61,8 @@ class FileDetailsTest {
     @Test
     void 파일_사이즈가_0이면_예외를_던진다() {
         // Given
-        String name = MockFileData.TEST_FILE_NAME;
-        String contentType = MockFileData.TEST_CONTENT_TYPE;
+        String name = MockFileData.FILE_NAME;
+        String contentType = MockFileData.FILE_CONTENT_TYPE;
         long size = 0L;
 
         // When & Then

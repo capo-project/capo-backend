@@ -6,6 +6,7 @@ import com.realworld.feature.file.entity.FileMetaData;
 import com.realworld.feature.file.mock.MockFileData;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -14,17 +15,21 @@ import java.io.*;
 import static org.assertj.core.api.Assertions.*;
 
 @Disabled(
-        "AWS S3 관련 테스트는 비용 발생 우려로 인해 현재는 비활성화합니다."
+        """
+        AWS S3 관련 테스트는 비용 발생 우려로 인해 비활성화되어 있습니다.
+        로컬 환경에서 테스트할 경우, application-local.yml을 기준으로 실행해야 합니다.
+        CI/CD 환경에서 활성화할 경우, application-dev.yml을 기준으로 변경 후 실행해야 합니다.
+        """
 )
 @Deprecated
 @ActiveProfiles("local")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AwsS3HandlerImplTest {
 
-    private static final String TEST_IMAGE_PATH = "src/test/resources/test_image.jpg";
-    private static final File TEST_FILE = new File(TEST_IMAGE_PATH);
     private static final String TEST_DIRECTORY = "temporary";
-    private static final String TEST_BUCKET_NAME = "test-bucket";
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     @Autowired
     private AwsS3Handler awsS3Handler;
@@ -33,7 +38,7 @@ class AwsS3HandlerImplTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        inputStream = new FileInputStream(TEST_FILE);
+        inputStream = new FileInputStream(MockFileData.testFile);
     }
 
     @AfterEach
@@ -44,7 +49,7 @@ class AwsS3HandlerImplTest {
     }
 
     private String getBucketPath(String directory) {
-        return TEST_BUCKET_NAME + "/" + directory;
+        return bucket + "/" + directory;
     }
 
     @Test
@@ -80,11 +85,11 @@ class AwsS3HandlerImplTest {
         String savedFileUrl = awsS3Handler.save(metaData, inputStream);
 
         // when
-        String result = awsS3Handler.move(savedFileUrl, TEST_DIRECTORY);
+        String result = awsS3Handler.move(savedFileUrl, "test");
 
         // then
         assertThat(result).isNotNull();
-        assertThat(awsS3Handler.isFileExist(getBucketPath(TEST_DIRECTORY), metaData.getDetails().getName())).isTrue();
+        assertThat(awsS3Handler.isFileExist(getBucketPath("test"), metaData.getDetails().getName())).isTrue();
     }
 
     @Test

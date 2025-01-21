@@ -1,7 +1,7 @@
 package com.realworld.feature.file.entity;
 
-import com.realworld.common.exception.CustomFileExceptionHandler;
-import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.common.exception.custom.CustomFileExceptionHandler;
+import com.realworld.common.response.code.ErrorCode;
 import lombok.Getter;
 
 import java.util.Objects;
@@ -20,7 +20,7 @@ public class File {
 
     private void notNullParameters(FileDetails details, String url) {
         if (Objects.isNull(details) || Objects.isNull(url)) {
-            throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_PROCESSING_ERROR);
+            throw new CustomFileExceptionHandler(ErrorCode.FILE_PROCESSING_ERROR);
         }
     }
 

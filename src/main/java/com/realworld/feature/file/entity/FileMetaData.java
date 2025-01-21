@@ -1,8 +1,8 @@
 package com.realworld.feature.file.entity;
 
-import com.realworld.common.exception.CustomFileExceptionHandler;
+import com.realworld.common.exception.custom.CustomFileExceptionHandler;
 import com.realworld.common.holder.uuid.UUIDHolder;
-import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.common.response.code.ErrorCode;
 import com.realworld.common.type.file.FileFormat;
 import com.realworld.infrastructure.image.ResizedImage;
 import lombok.Builder;
@@ -24,8 +24,8 @@ public class FileMetaData {
         this.details = details;
     }
 
-    public static FileMetaData fromResizedImage(String destinationDirectory, ResizedImage resizedImage, UUIDHolder uuidHolder) {
-        notNullParameters(resizedImage, destinationDirectory, uuidHolder);
+    public static FileMetaData fromResizedImage(String targetDir, ResizedImage resizedImage, UUIDHolder uuidHolder) {
+        notNullParameters(resizedImage, targetDir, uuidHolder);
 
         String generatedName = FileFormat.IMAGE.generateFileName(uuidHolder.generate(), resizedImage.getImageFormat());
         String generatedContentType = FileFormat.IMAGE.generateContentType(resizedImage.getImageFormat());
@@ -34,19 +34,19 @@ public class FileMetaData {
         FileDetails details = FileDetails.of(generatedName, generatedContentType, size);
 
         return FileMetaData.builder()
-                .directory(destinationDirectory)
+                .directory(targetDir)
                 .details(details)
                 .build();
     }
 
-    private static void notNullParameters(ResizedImage resizedImage, String destinationDirectory, UUIDHolder uuidHolder) {
-        if (Objects.isNull(destinationDirectory) || Objects.isNull(uuidHolder) || Objects.isNull(resizedImage) || resizedImage.getSize() <= 0) {
-            throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_PROCESSING_ERROR);
+    private static void notNullParameters(ResizedImage resizedImage, String targetDir, UUIDHolder uuidHolder) {
+        if (Objects.isNull(targetDir) || Objects.isNull(uuidHolder) || Objects.isNull(resizedImage) || resizedImage.getSize() <= 0) {
+            throw new CustomFileExceptionHandler(ErrorCode.FILE_PROCESSING_ERROR);
         }
     }
 
-    public static FileMetaData fromMultipartFile(String destinationDirectory, MultipartFile file, UUIDHolder uuidHolder) {
-        notNullParameters(file, destinationDirectory, uuidHolder);
+    public static FileMetaData fromMultipartFile(String targetDir, MultipartFile file, UUIDHolder uuidHolder) {
+        notNullParameters(file, targetDir, uuidHolder);
 
         String originalFilename = FilenameUtils.getName(file.getOriginalFilename());
         String extension = FilenameUtils.getExtension(originalFilename);
@@ -57,14 +57,14 @@ public class FileMetaData {
         FileDetails details = FileDetails.of(generatedName, generatedContentType, size);
 
         return FileMetaData.builder()
-                .directory(destinationDirectory)
+                .directory(targetDir)
                 .details(details)
                 .build();
     }
 
-    private static void notNullParameters(MultipartFile file, String destinationDirectory, UUIDHolder uuidHolder) {
-        if (Objects.isNull(destinationDirectory) || Objects.isNull(uuidHolder) || Objects.isNull(file) || file.getSize() <= 0) {
-            throw new CustomFileExceptionHandler(ExceptionResponseCode.FILE_PROCESSING_ERROR);
+    private static void notNullParameters(MultipartFile file, String targetDir, UUIDHolder uuidHolder) {
+        if (Objects.isNull(targetDir) || Objects.isNull(uuidHolder) || Objects.isNull(file) || file.getSize() <= 0) {
+            throw new CustomFileExceptionHandler(ErrorCode.FILE_PROCESSING_ERROR);
         }
     }
 

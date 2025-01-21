@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
 
     <!--로그 파일 저장 위치-->
@@ -15,7 +14,9 @@
             <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
         </layout>
     </appender>
+
     <logger name="com.realworld" level="DEBUG"/>
+
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>

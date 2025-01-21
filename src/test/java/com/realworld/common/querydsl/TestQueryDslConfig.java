@@ -1,7 +1,7 @@
 package com.realworld.common.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.realworld.common.annotation.ExcludeFromJpaRepositories;
+import com.realworld.common.annotation.jpa.ExcludeFromJpaRepositories;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.boot.test.context.TestConfiguration;

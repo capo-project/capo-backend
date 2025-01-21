@@ -3,11 +3,11 @@ package com.realworld.application.member.service.member;
 import com.realworld.application.auth.jwt.port.TokenRepository;
 import com.realworld.application.auth.jwt.service.JwtService;
 import com.realworld.application.member.port.MemberRepository;
-import com.realworld.common.exception.CustomMemberExceptionHandler;
+import com.realworld.common.exception.custom.CustomMemberExceptionHandler;
 import com.realworld.common.holder.date.DateTimeHolderImpl;
 import com.realworld.common.holder.nickname.NicknameGeneratorHolderImpl;
 import com.realworld.common.holder.password.PasswordEncodeHolderImpl;
-import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.common.response.code.ErrorCode;
 import com.realworld.feature.auth.jwt.Token;
 import com.realworld.feature.member.entity.Member;
 import com.realworld.web.member.payload.request.LoginRequest;
@@ -32,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member signUp(final SignUpRequest request) {
         if(repository.findByUserId(request.userId()).isPresent()){
-            throw new CustomMemberExceptionHandler(ExceptionResponseCode.DUPLICATION_USERID_ERROR);
+            throw new CustomMemberExceptionHandler(ErrorCode.DUPLICATION_USERID_ERROR);
         }
 
         final Member member = Member.createMember(request, new DateTimeHolderImpl(), new NicknameGeneratorHolderImpl());
@@ -44,20 +44,20 @@ public class MemberServiceImpl implements MemberService {
     @Transactional(readOnly = true)
     public void validateUserIdDuplicate(final String userId) {
         if(repository.findByUserId(userId).isPresent()){
-            throw new CustomMemberExceptionHandler(ExceptionResponseCode.DUPLICATION_USERID_ERROR);
+            throw new CustomMemberExceptionHandler(ErrorCode.DUPLICATION_USERID_ERROR);
         }
     }
 
     @Override
     @Transactional(readOnly = true)
     public Member findById(String id) {
-        return repository.findByUserId(id).orElseThrow(() -> new CustomMemberExceptionHandler(ExceptionResponseCode.NOT_EXISTS_USERID));
+        return repository.findByUserId(id).orElseThrow(() -> new CustomMemberExceptionHandler(ErrorCode.NOT_EXISTS_USERID));
     }
 
     @Override
     @Transactional
     public String login(final LoginRequest loginRequest) {
-        final Member member = repository.findByUserId(loginRequest.userId()).orElseThrow(() -> new CustomMemberExceptionHandler(ExceptionResponseCode.NOT_EXISTS_USERID));
+        final Member member = repository.findByUserId(loginRequest.userId()).orElseThrow(() -> new CustomMemberExceptionHandler(ErrorCode.NOT_EXISTS_USERID));
         member.isValidatePassword(member.getPassword());
         String accessToken = jwtService.generateAccessToken(member);
         tokenRepository.save(new Token(member.getUserId(),accessToken));
@@ -66,7 +66,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void logout(String userId) {
-        Member member = repository.findByUserId(userId).orElseThrow(() -> new CustomMemberExceptionHandler(ExceptionResponseCode.NOT_EXISTS_USERID));
+        Member member = repository.findByUserId(userId).orElseThrow(() -> new CustomMemberExceptionHandler(ErrorCode.NOT_EXISTS_USERID));
         jwtService.logout(member);
     }
 

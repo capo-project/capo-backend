@@ -1,37 +1,44 @@
 package com.realworld.infrastructure.cloud.aws;
 
-import com.realworld.common.exception.CustomFileExceptionHandler;
-import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.common.exception.custom.CustomFileExceptionHandler;
+import com.realworld.common.response.code.ErrorCode;
 import com.realworld.feature.file.entity.FileMetaData;
+import com.realworld.feature.file.mock.MockFileData;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.io.*;
 
-import static com.realworld.feature.file.mock.MockFileData.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 @Disabled(
-        "AWS S3 관련 테스트는 비용 발생 우려로 인해 현재는 비활성화합니다."
+        """
+        AWS S3 관련 테스트는 비용 발생 우려로 인해 비활성화되어 있습니다.
+        로컬 환경에서 테스트할 경우, application-local.yml을 기준으로 실행해야 합니다.
+        CI/CD 환경에서 활성화할 경우, application-dev.yml을 기준으로 변경 후 실행해야 합니다.
+        """
 )
 @Deprecated
 @ActiveProfiles("local")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AwsS3HandlerImplTest {
 
-    private static final String BUCKET_NAME = "photocardsite";
+    private static final String TEST_DIRECTORY = "temporary";
 
-    private InputStream inputStream;
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     @Autowired
     private AwsS3Handler awsS3Handler;
 
+    private InputStream inputStream;
+
     @BeforeEach
     void setUp() throws IOException {
-        inputStream = new FileInputStream(testFile);
+        inputStream = new FileInputStream(MockFileData.testFile);
     }
 
     @AfterEach
@@ -42,43 +49,16 @@ class AwsS3HandlerImplTest {
     }
 
     private String getBucketPath(String directory) {
-        return BUCKET_NAME + "/" + directory;
+        return bucket + "/" + directory;
     }
 
     @Test
-    void AWS_S3_파일_업로드() {
+    void 파일을_S3에_업로드하면_정상적으로_업로드된_URL을_반환한다() {
         // given
-        FileMetaData metaData = create(TEMPORARY_DIRECTORY);
+        FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
 
         // when
         String result = awsS3Handler.save(metaData, inputStream);
-
-        // then
-        assertThat(result).isNotNull();
-        assertThat(awsS3Handler.isFileExist(getBucketPath(TEMPORARY_DIRECTORY), metaData.getDetails().getName())).isTrue();
-    }
-
-    @Test
-    void AWS_S3_파일_조회() {
-        // given
-        FileMetaData metaData = create(TEMPORARY_DIRECTORY);
-        awsS3Handler.save(metaData, inputStream);
-
-        // when
-        Boolean result = awsS3Handler.isFileExist(getBucketPath(TEMPORARY_DIRECTORY), metaData.getDetails().getName());
-
-        // then
-        assertThat(result).isTrue();
-    }
-
-    @Test
-    void AWS_S3_파일_이동() {
-        // given
-        FileMetaData metaData = create(TEMPORARY_DIRECTORY);
-        String savedFileUrl = awsS3Handler.save(metaData, inputStream);
-
-        // when
-        String result = awsS3Handler.move(savedFileUrl, TEST_DIRECTORY);
 
         // then
         assertThat(result).isNotNull();
@@ -86,7 +66,34 @@ class AwsS3HandlerImplTest {
     }
 
     @Test
-    void AWS_S3_존재하지_않는_파일_이동_시_예외_발생() {
+    void S3에_업로드된_파일이_존재하는지_확인한다() {
+        // given
+        FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
+        awsS3Handler.save(metaData, inputStream);
+
+        // when
+        Boolean result = awsS3Handler.isFileExist(getBucketPath(TEST_DIRECTORY), metaData.getDetails().getName());
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    void S3_파일을_다른_디렉토리로_이동하면_정상적으로_이동된다() {
+        // given
+        FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
+        String savedFileUrl = awsS3Handler.save(metaData, inputStream);
+
+        // when
+        String result = awsS3Handler.move(savedFileUrl, "test");
+
+        // then
+        assertThat(result).isNotNull();
+        assertThat(awsS3Handler.isFileExist(getBucketPath("test"), metaData.getDetails().getName())).isTrue();
+    }
+
+    @Test
+    void 존재하지_않는_S3_파일을_이동하려고_하면_예외를_발생시킨다() {
         //given
         String nonExistentFileUrl = "https://xxxxxxxxxxxxxx.cloudfront.net/test/test.jpeg";
 
@@ -94,25 +101,25 @@ class AwsS3HandlerImplTest {
         assertThatThrownBy(() -> awsS3Handler.move(nonExistentFileUrl, TEST_DIRECTORY))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_NOT_FOUND_ERROR.getMessage()
+                        ErrorCode.FILE_NOT_FOUND_ERROR.getMessage()
                 );
     }
 
     @Test
-    void AWS_S3_파일_삭제() {
+    void S3에서_파일을_삭제하면_정상적으로_삭제된다() {
         // given
-        FileMetaData metaData = create(TEMPORARY_DIRECTORY);
+        FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
         String savedFileUrl = awsS3Handler.save(metaData, inputStream);
 
         // when
         awsS3Handler.delete(savedFileUrl);
 
         // then
-        assertThat(awsS3Handler.isFileExist(getBucketPath(TEMPORARY_DIRECTORY), metaData.getDetails().getName())).isFalse();
+        assertThat(awsS3Handler.isFileExist(getBucketPath(TEST_DIRECTORY), metaData.getDetails().getName())).isFalse();
     }
 
     @Test
-    void AWS_S3_존재하지_않는_파일_삭제_시_예외_발생() {
+    void 존재하지_않는_S3_파일을_삭제하려고_하면_예외를_발생시킨다() {
         //given
         String nonExistentFileUrl = "https://xxxxxxxxxxxxxx.cloudfront.net/test/test.jpeg";
 
@@ -120,7 +127,7 @@ class AwsS3HandlerImplTest {
         assertThatThrownBy(() -> awsS3Handler.delete(nonExistentFileUrl))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
-                        ExceptionResponseCode.FILE_NOT_FOUND_ERROR.getMessage()
+                        ErrorCode.FILE_NOT_FOUND_ERROR.getMessage()
                 );
     }
 

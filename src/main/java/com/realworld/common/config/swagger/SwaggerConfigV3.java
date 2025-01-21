@@ -1,8 +1,11 @@
-package com.realworld.common.swagger;
+package com.realworld.common.config.swagger;
 
+import com.realworld.common.annotation.swagger.ExceptionResponseAnnotations;
+import com.realworld.common.annotation.swagger.SuccessResponseAnnotation;
+import com.realworld.common.annotation.swagger.SwaggerRequestBody;
 import com.realworld.common.response.SuccessResponse;
-import com.realworld.common.response.code.ExceptionResponseCode;
-import com.realworld.common.response.code.SuccessResponseCode;
+import com.realworld.common.response.code.ErrorCode;
+import com.realworld.common.response.code.SuccessCode;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -46,8 +49,8 @@ public class SwaggerConfigV3 {
             // @SuccessResponseAnnotation 추가
             SuccessResponseAnnotation successAnnotation = handlerMethod.getMethodAnnotation(SuccessResponseAnnotation.class);
             // 응답 코드 설정
-            SuccessResponseCode successResponseCode = Optional.ofNullable(successAnnotation).map(SuccessResponseAnnotation::value).orElse(SuccessResponseCode.SUCCESS);
-            this.addResponseBodyWrapperSchema(operation, SuccessResponse.class, "result", successResponseCode);
+            SuccessCode successCode = Optional.ofNullable(successAnnotation).map(SuccessResponseAnnotation::value).orElse(SuccessCode.SUCCESS);
+            this.addResponseBodyWrapperSchema(operation, SuccessResponse.class, "result", successCode);
 
             ExceptionResponseAnnotations exceptionAnnotation = handlerMethod.getMethodAnnotation(ExceptionResponseAnnotations.class);
             if (exceptionAnnotation != null) {
@@ -91,24 +94,24 @@ public class SwaggerConfigV3 {
     }
 
     @SneakyThrows
-    private <T> void addResponseBodyWrapperSchema(Operation operation, Class<T> type, String wrapFieldName, SuccessResponseCode successResponseCode) {
+    private <T> void addResponseBodyWrapperSchema(Operation operation, Class<T> type, String wrapFieldName, SuccessCode successCode) {
         ApiResponses responses = operation.getResponses();
 
-        String responseCode = String.valueOf(successResponseCode.getHttpStatus().value());
+        String responseCode = String.valueOf(successCode.getHttpStatus().value());
 
         if (!"200".equals(responseCode)) {
             ApiResponse existingResponse = responses.get("200");
             this.changeResponseCode(existingResponse, responses, responseCode);
         }
 
-        ApiResponse response = responses.computeIfAbsent(String.valueOf(successResponseCode.getHttpStatus()), key -> new ApiResponse());
-        response.setDescription(successResponseCode.getMessage());
+        ApiResponse response = responses.computeIfAbsent(String.valueOf(successCode.getHttpStatus()), key -> new ApiResponse());
+        response.setDescription(successCode.getMessage());
         Content content = response.getContent();
 
         if (content != null) {
             content.keySet().forEach(key -> {
                 MediaType mediaType = content.get(key);
-                mediaType.setSchema(wrapSchema(mediaType.getSchema(), type, wrapFieldName, successResponseCode));
+                mediaType.setSchema(wrapSchema(mediaType.getSchema(), type, wrapFieldName, successCode));
             });
         }
     }
@@ -125,7 +128,7 @@ public class SwaggerConfigV3 {
     }
 
     @SneakyThrows
-    private <T> Schema<T> wrapSchema(Schema<?> originalSchema, Class<T> type, String wrapFieldName, SuccessResponseCode successResponseCode) {
+    private <T> Schema<T> wrapSchema(Schema<?> originalSchema, Class<T> type, String wrapFieldName, SuccessCode successCode) {
         Schema<T> wrapperSchema = new Schema<>();
         T instance = type.getDeclaredConstructor().newInstance();
 
@@ -140,11 +143,11 @@ public class SwaggerConfigV3 {
             if (fieldName.equals("result")) {
                 fieldSchema = originalSchema;
             } else if (fieldName.equals("resultCode")) {
-                fieldSchema.example(successResponseCode.getResultCode());
+                fieldSchema.example(successCode.getResultCode());
             } else if (fieldName.equals("resultMsg")) {
-                fieldSchema.example(successResponseCode.getMessage());
+                fieldSchema.example(successCode.getMessage());
             } else if (fieldName.equals("httpStatus")) {
-                fieldSchema.example(successResponseCode.getHttpStatus());
+                fieldSchema.example(successCode.getHttpStatus());
             }
 
             wrapperSchema.addProperty(fieldName, fieldSchema);
@@ -156,32 +159,32 @@ public class SwaggerConfigV3 {
     }
 
     private void addExceptionResponses(Operation operation, ExceptionResponseAnnotations exceptionResponseAnnotations) {
-        for (ExceptionResponseCode exceptionCode : exceptionResponseAnnotations.value()) {
+        for (ErrorCode exceptionCode : exceptionResponseAnnotations.value()) {
             this.addExceptionResponse(operation, exceptionCode);
         }
 
     }
 
-    private void addExceptionResponse(Operation operation, ExceptionResponseCode exceptionResponseCode) {
+    private void addExceptionResponse(Operation operation, ErrorCode errorCode) {
         ApiResponses responses = operation.getResponses();
-        String responseCodeKey = String.valueOf(exceptionResponseCode.getHttpStatus().value());
+        String responseCodeKey = String.valueOf(errorCode.getHttpStatus().value());
         ApiResponse response = new ApiResponse()
-                .description(exceptionResponseCode.getMessage());
+                .description(errorCode.getMessage());
 
         Content content = new Content();
         MediaType mediaType = new MediaType();
-        mediaType.setSchema(createExceptionSchema(exceptionResponseCode));
+        mediaType.setSchema(createExceptionSchema(errorCode));
         content.addMediaType("application/json", mediaType);
         response.setContent(content);
 
-        responses.addApiResponse(responseCodeKey + "_" + exceptionResponseCode.name(), response);
+        responses.addApiResponse(responseCodeKey + "_" + errorCode.name(), response);
     }
 
-    private <T> Schema<T> createExceptionSchema(ExceptionResponseCode exceptionResponseCode) {
+    private <T> Schema<T> createExceptionSchema(ErrorCode errorCode) {
         Schema<T> exceptionSchema = new Schema<>();
-        exceptionSchema.addProperty("httpStatus", new Schema<>().example(exceptionResponseCode.getHttpStatus().toString()));
-        exceptionSchema.addProperty("resultCode", new Schema<>().example(exceptionResponseCode.getResultCode()));
-        exceptionSchema.addProperty("resultMsg", new Schema<>().example(exceptionResponseCode.getMessage()));
+        exceptionSchema.addProperty("httpStatus", new Schema<>().example(errorCode.getHttpStatus().toString()));
+        exceptionSchema.addProperty("resultCode", new Schema<>().example(errorCode.getResultCode()));
+        exceptionSchema.addProperty("resultMsg", new Schema<>().example(errorCode.getMessage()));
 
         return exceptionSchema;
     }

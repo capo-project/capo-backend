@@ -9,6 +9,7 @@ import com.realworld.common.response.code.SuccessCode;
 import com.realworld.feature.member.entity.Member;
 import com.realworld.web.member.payload.response.MemberFindResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,7 @@ public class MemberController {
     @SuccessResponseAnnotation(SuccessCode.SUCCESS)
     @ExceptionResponseAnnotations({ErrorCode.NOT_EXISTS_USERID})
     @GetMapping(value = "/{user_id}")
-    public ResponseEntity<SuccessResponse<MemberFindResponse>> find(@PathVariable(value = "user_id") final String userId) {
+    public ResponseEntity<SuccessResponse<MemberFindResponse>> find(@Parameter(description = "유저아이디", example="capotest1") @PathVariable(value = "user_id") final String userId) {
 
         Member member = memberService.findById(userId);
 

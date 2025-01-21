@@ -1,7 +1,6 @@
 package com.realworld.common.config.security;
 
 import com.realworld.application.auth.jwt.service.JwtService;
-import com.realworld.application.member.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +19,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
-    public static final String[] exclude = new String[]{
+    protected static final String[] exclude = new String[]{
             "/favicon.ico",
             "/prometheus",
             "/actuator/**",
@@ -39,8 +38,6 @@ public class SecurityConfig {
             "/v3/api-docs/**"
     };
     private final JwtService jwtService;
-    private final MemberService memberService;
-
 
     @Order(1)
     @Bean
@@ -55,7 +52,7 @@ public class SecurityConfig {
                         .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
                         .accessDeniedHandler(new JwtAccessDeniedFilter()))
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new JwtAuthenticationFilter(jwtService, memberService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtService), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth.
                         requestMatchers(exclude).permitAll()
                         .anyRequest()

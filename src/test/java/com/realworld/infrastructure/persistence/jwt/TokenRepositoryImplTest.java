@@ -1,7 +1,6 @@
 package com.realworld.infrastructure.persistence.jwt;
 
 import com.realworld.feature.auth.jwt.Token;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,6 @@ class TokenRepositoryImplTest {
 
     @Autowired
     TokenRedisRepository tokenRedisRepository;
-
-    @BeforeEach
 
     @Test
     void 리프래쉬_토큰_저장_테스트() {

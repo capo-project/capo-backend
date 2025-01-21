@@ -1,7 +1,7 @@
 package com.realworld.common.config.security;
 
 import com.realworld.application.auth.jwt.service.JwtService;
-import com.realworld.application.member.service.member.MemberService;
+import com.realworld.infrastructure.jwt.handler.JwtTokenHandlerImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,14 +20,13 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final MemberService memberService;
 
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String accessToken = jwtService.resolveAccessToken(request);
-        if(jwtService.validateAccessToken(accessToken)) {
+        if(jwtService.validateAccessToken(accessToken, new JwtTokenHandlerImpl())) {
             log.info("accessToken");
             setAuthenticationToContext(accessToken);
             filterChain.doFilter(request, response);

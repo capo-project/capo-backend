@@ -12,4 +12,6 @@ public interface MemberRepository {
 
     Optional<Member> findByUserId(String userId);
 
+    void delete(Member member);
+
 }

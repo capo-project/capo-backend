@@ -9,7 +9,6 @@ import com.realworld.common.annotation.swagger.SuccessResponseAnnotation;
 import com.realworld.common.annotation.swagger.SwaggerRequestBody;
 import com.realworld.feature.member.entity.Member;
 import com.realworld.web.member.payload.request.SignUpRequest;
-import com.realworld.web.member.payload.response.SignUpResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -37,7 +36,7 @@ public class SignUpController {
     @SuccessResponseAnnotation(SuccessCode.CREATED)
     @ExceptionResponseAnnotations({ErrorCode.BAD_REQUEST_ERROR, ErrorCode.PASSWORD_MISS_MATCH_ERROR, ErrorCode.DUPLICATION_USERID_ERROR})
     @PostMapping(value = "/member")
-    public ResponseEntity<SuccessResponse<SignUpResponse>> signUp(@SwaggerRequestBody(description = "회원 가입 요청 정보", required = true, content = @Content(schema = @Schema(implementation = SignUpRequest.class))) @Valid @RequestBody final SignUpRequest request) {
+    public ResponseEntity<SuccessResponse<Object>> signUp(@SwaggerRequestBody(description = "회원 가입 요청 정보", required = true, content = @Content(schema = @Schema(implementation = SignUpRequest.class))) @Valid @RequestBody final SignUpRequest request) {
         final Member response = memberService.signUp(request);
 
         return ResponseEntity.created(URI.create("/api/v2/member/" + response.getUserId())).body(new SuccessResponse<>(null, SuccessCode.CREATED.getResultCode(), SuccessCode.CREATED.getHttpStatus(), "유저 생성 성공"));

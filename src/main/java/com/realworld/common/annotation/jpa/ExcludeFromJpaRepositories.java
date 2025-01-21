@@ -1,4 +1,4 @@
-package com.realworld.common.annotation;
+package com.realworld.common.annotation.jpa;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

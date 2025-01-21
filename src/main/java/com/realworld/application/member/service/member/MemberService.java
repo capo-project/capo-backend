@@ -1,6 +1,7 @@
-package com.realworld.application.member.service;
+package com.realworld.application.member.service.member;
 
 import com.realworld.feature.member.entity.Member;
+import com.realworld.web.member.payload.request.LoginRequest;
 import com.realworld.web.member.payload.request.SignUpRequest;
 
 public interface MemberService {
@@ -10,5 +11,9 @@ public interface MemberService {
     void validateUserIdDuplicate(String userId);
 
     Member findById(String id);
+
+    String login(LoginRequest loginRequest);
+
+    void logout(String userId);
 
 }

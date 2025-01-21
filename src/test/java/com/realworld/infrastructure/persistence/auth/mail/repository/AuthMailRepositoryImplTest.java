@@ -24,10 +24,10 @@ class AuthMailRepositoryImplTest {
 
     @Test
     void 메일_저장_테스트() {
-        AuthMail authMail = AuthMail.createMail(MockMailData.userEmailMockData1, () -> "otirj109", () -> LocalDateTime.of(2025, 1, 2, 12, 8, 0));
+        AuthMail authMail = AuthMail.createMail(MockMailData.TEST_EMAIL_MOCK_DATA_1, () -> "otirj109", () -> LocalDateTime.of(2025, 1, 2, 12, 8, 0));
         repository.save(authMail);
 
-        AuthMail expected = repository.findByUserEmail(MockMailData.userEmailMockData1).get();
+        AuthMail expected = repository.findByUserEmail(MockMailData.TEST_EMAIL_MOCK_DATA_1).get();
         assertThat(authMail).isEqualTo(expected);
     }
 

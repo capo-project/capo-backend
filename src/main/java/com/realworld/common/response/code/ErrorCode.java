@@ -9,12 +9,14 @@ import java.util.Map;
 
 @Getter
 @RequiredArgsConstructor
-public enum ExceptionResponseCode {
+public enum ErrorCode {
 
     /**
      * File Exception
      */
     FILE_PROCESSING_ERROR(HttpStatus.BAD_REQUEST, "파일 처리 중 문제가 발생했습니다. 올바른 파일을 업로드해주세요.", 400),
+
+    FILE_IMAGE_PROCESSING_ERROR(HttpStatus.BAD_REQUEST, "파일 이미지 처리 중 문제가 발생했습니다. 올바른 파일을 업로드해주세요.", 400),
 
     FILE_IMAGE_RESIZE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 크기를 조정하는 중 문제가 발생했습니다. 다시 시도해주세요.", 500),
 
@@ -143,16 +145,16 @@ public enum ExceptionResponseCode {
     private final HttpStatus httpStatus;
     private final String message;
     private final int resultCode;
-    private static final Map<String, ExceptionResponseCode> exceptionMap = new HashMap<>();
+    private static final Map<String, ErrorCode> exceptionMap = new HashMap<>();
 
     static {
-        for(ExceptionResponseCode responseCode :ExceptionResponseCode.values()) {
+        for(ErrorCode responseCode : ErrorCode.values()) {
             exceptionMap.put(responseCode.getMessage(), responseCode);
         }
     }
 
-    public static ExceptionResponseCode getExceptionResponseCode(String message) {
-        return exceptionMap.getOrDefault(message, ExceptionResponseCode.INTERVAL_SERVER_ERROR);
+    public static ErrorCode getExceptionResponseCode(String message) {
+        return exceptionMap.getOrDefault(message, ErrorCode.INTERVAL_SERVER_ERROR);
     }
 
 }

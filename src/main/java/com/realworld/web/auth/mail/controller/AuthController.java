@@ -2,11 +2,11 @@ package com.realworld.web.auth.mail.controller;
 
 import com.realworld.application.auth.mail.service.AuthMailService;
 import com.realworld.common.response.SuccessResponse;
-import com.realworld.common.response.code.ExceptionResponseCode;
-import com.realworld.common.response.code.SuccessResponseCode;
-import com.realworld.common.swagger.ExceptionResponseAnnotations;
-import com.realworld.common.swagger.SuccessResponseAnnotation;
-import com.realworld.common.swagger.SwaggerRequestBody;
+import com.realworld.common.response.code.ErrorCode;
+import com.realworld.common.response.code.SuccessCode;
+import com.realworld.common.annotation.swagger.ExceptionResponseAnnotations;
+import com.realworld.common.annotation.swagger.SuccessResponseAnnotation;
+import com.realworld.common.annotation.swagger.SwaggerRequestBody;
 import com.realworld.web.auth.mail.payload.request.AuthMailRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,8 +31,8 @@ public class AuthController {
         summary = "이메일 인증 메일 보내기",
         description = "이메일 인증 메일 보내기 API"
     )
-    @SuccessResponseAnnotation(SuccessResponseCode.CREATED)
-    @ExceptionResponseAnnotations({ExceptionResponseCode.AUTH_EMAIL_REQUEST_ERROR, ExceptionResponseCode.AUTH_EMAIL_DUPLICATION_ERROR})
+    @SuccessResponseAnnotation(SuccessCode.CREATED)
+    @ExceptionResponseAnnotations({ErrorCode.AUTH_EMAIL_REQUEST_ERROR, ErrorCode.AUTH_EMAIL_DUPLICATION_ERROR})
     @PostMapping(value="/email")
     public ResponseEntity<SuccessResponse<Object>> authMail(@Valid @SwaggerRequestBody(description = "이메일 인증 보내기 요청 정보", required = true, content = @Content(schema = @Schema(implementation = AuthMailRequest.class))) @RequestBody final AuthMailRequest request) {
         authMailService.send(request);
@@ -44,8 +44,8 @@ public class AuthController {
             summary = "이메일 인증 번호 인증 성공 테스트",
             description = "이메일 인증 번호 인증 성공 API"
     )
-    @SuccessResponseAnnotation(SuccessResponseCode.SUCCESS)
-    @ExceptionResponseAnnotations({ExceptionResponseCode.AUTH_EMAIL_REQUEST_ERROR})
+    @SuccessResponseAnnotation(SuccessCode.SUCCESS)
+    @ExceptionResponseAnnotations({ErrorCode.AUTH_EMAIL_REQUEST_ERROR})
     @GetMapping(value="/email/{auth_number}")
     public ResponseEntity<SuccessResponse<String>> checkAuthMail(@Parameter(description = "유저 이메일", example = "test@naver.com") @RequestParam("user_email") final String userEmail, @Parameter(description = "인증번호", example = "asdf15130")@PathVariable("auth_number") final String authNumber) {
         authMailService.check(userEmail, authNumber);

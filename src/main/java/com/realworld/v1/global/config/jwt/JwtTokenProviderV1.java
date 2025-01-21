@@ -1,7 +1,7 @@
 package com.realworld.v1.global.config.jwt;
 
-import com.realworld.common.exception.CustomJwtExceptionHandler;
-import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.common.exception.custom.CustomJwtExceptionHandler;
+import com.realworld.common.response.code.ErrorCode;
 import com.realworld.v1.feature.token.domain.Token;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -85,7 +85,7 @@ public class JwtTokenProviderV1 {
         // 토큰 복호화
         Claims claims = parseClaims(accessToken);
         if (claims.get("auth") == null) {
-            throw new CustomJwtExceptionHandler(ExceptionResponseCode.JWT_UNKNOWN_ERROR);
+            throw new CustomJwtExceptionHandler(ErrorCode.JWT_UNKNOWN_ERROR);
         }
 
         // 클레임에서 권한 정보 가져오기

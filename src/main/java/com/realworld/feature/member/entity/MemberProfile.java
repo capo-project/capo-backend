@@ -1,13 +1,9 @@
 package com.realworld.feature.member.entity;
 
-import com.realworld.common.exception.CustomMemberExceptionHandler;
-import com.realworld.common.response.code.ExceptionResponseCode;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import java.util.Objects;
 
 @Getter
 @EqualsAndHashCode

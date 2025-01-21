@@ -37,7 +37,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build --info
 
   sonarqube:
     needs: build
@@ -55,16 +55,17 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
+          distribution: 'zulu'
 
       - name: Cache SonarQube packages
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
       - name: Cache Gradle packages
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
@@ -74,32 +75,49 @@ jobs:
         run: |
           cd ./src/test/resources
           touch ./application-test.yml
-          echo "${{ secrets.APPLICATION_TEST }}" > ./application-test.yml  
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
+          echo "${{ secrets.APPLICATION_TEST }}" > ./application-test.yml
 
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
-          SONAR_PROJECT_NAME: ${{ secrets.SONAR_PROJECT_NAME }}
-          PR_NUMBER: ${{github.event.pull_request.number}}
-        run: ./gradlew build sonarqube -Dsonar.login=${{ secrets.SONAR_TOKEN }} -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} -Dsonar.projectName=${{ secrets.SONAR_PROJECT_NAME }} 
-      
-      - name: Comment Sonarqube URL
-        uses: actions/github-script@v4
+        run: ./gradlew build sonar --info
+
+      - name: Send SonarQube Analysis Result to Discord
         env:
-          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_NAME }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-        with: 
-          script: |
-            const { SONAR_PROJECT_KEY, SONAR_HOST_URL, PR_NUMBER } = process.env;
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `📊 ${ SONAR_PROJECT_KEY }-${ PR_NUMBER } 분석 결과 확인하기 [링크] (${SONAR_HOST_URL})`
-            });
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          curl -H "Content-Type: application/json" \
+            -d "{\"content\": \"📊 **SonarQube 분석 결과**\n\n프로젝트: **${SONAR_PROJECT_KEY}**\nPull Request 번호: **${PR_NUMBER}**\n분석 결과 링크: [SonarQube 결과 확인하기](${SONAR_HOST_URL})\"}" \
+            $DISCORD_WEBHOOK_URL
+
+#      - name: Grant execute permission for gradlew
+#        run: chmod +x ./gradlew
+#
+#      - name: Build and analyze
+#        env:
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+#          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+#          SONAR_PROJECT_NAME: ${{ secrets.SONAR_PROJECT_NAME }}
+#          PR_NUMBER: ${{github.event.pull_request.number}}
+#        run: ./gradlew build sonarqube -Dsonar.login=${{ secrets.SONAR_TOKEN }} -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} -Dsonar.projectName=${{ secrets.SONAR_PROJECT_NAME }}
+      
+#      - name: Comment Sonarqube URL
+#        uses: actions/github-script@v4
+#        env:
+#          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+#          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+#          PR_NUMBER: ${{ github.event.pull_request.number }}
+#        with:
+#          script: |
+#            const { SONAR_PROJECT_KEY, SONAR_HOST_URL, PR_NUMBER } = process.env;
+#            github.issues.createComment({
+#              issue_number: context.issue.number,
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              body: `📊 ${ SONAR_PROJECT_KEY }-${ PR_NUMBER } 분석 결과 확인하기 [링크] (${SONAR_HOST_URL})`
+#            });

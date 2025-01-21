@@ -24,10 +24,10 @@ repositories {
 
 dependencies {
     // QueryDSL JPA 라이브러리
+    annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+    annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+    annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jakarta'
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
-    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
-    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
-    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
     // java.lang.NoClassDefFoundError(javax.annotation.Generated) 발생 시 추가
     annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
@@ -41,6 +41,7 @@ dependencies {
 
     //security
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
     //h2
     runtimeOnly 'com.h2database:h2'
     //jwt
@@ -71,7 +72,6 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mockito:mockito-core:3.9.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testImplementation 'com.querydsl:querydsl-jpa'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     testImplementation 'org.assertj:assertj-core:3.24.2'
 
@@ -95,8 +95,9 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-    // mongodb 설정 추가
+//    // mongodb 설정 추가
 //    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
     // kafka
 //    implementation 'org.springframework.kafka:spring-kafka'
 
@@ -106,6 +107,9 @@ dependencies {
 
     // Testcontainers - LocalStack
     testImplementation "org.testcontainers:localstack:1.20.4"
+
+    // Mockito - inline 의존성을 추가합니다.
+    testImplementation 'org.mockito:mockito-inline:4.11.0'
 }
 
 tasks.named('test') {
@@ -130,10 +134,9 @@ clean.doLast {
     file(querydslDir).deleteDir()
 }
 
-sonarqube {
+sonar {
     properties {
-        property "sonar.projectKey", "capo-backend"
-        property "sonar.host.url", "http://13.124.217.23:9000"
-        property "sonar.login", "squ_c4fb1b4048ff7711b6b12c2cc43c45b900b09982"
+        property "sonar.projectKey", "capo-project_capo-backend_89d062f5-c979-4114-b0c5-9f3797033f98"
+        property "sonar.projectName", "capo-backend"
     }
 }

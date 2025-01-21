@@ -1,10 +1,10 @@
 package com.realworld.feature.member.entity;
 
-import com.realworld.common.exception.CustomMemberExceptionHandler;
+import com.realworld.common.exception.custom.CustomMemberExceptionHandler;
 import com.realworld.common.holder.date.DateTimeHolder;
 import com.realworld.common.holder.nickname.NicknameGeneratorHolder;
 import com.realworld.common.holder.password.PasswordEncodeHolder;
-import com.realworld.common.response.code.ExceptionResponseCode;
+import com.realworld.common.response.code.ErrorCode;
 import com.realworld.v1.feature.auth.Authority;
 import com.realworld.web.member.payload.request.SignUpRequest;
 import jakarta.persistence.*;
@@ -60,8 +60,7 @@ public class Member {
         this.authority = authority;
         this.registerDate = registerDate;
         this.modifyDate = modifyDate;
-        this.isValidatePassword(password, checkPassword);
-
+        this.isValidatePassword(checkPassword);
     }
 
     public static Member createMember(final SignUpRequest request, DateTimeHolder dateTimeHolder, NicknameGeneratorHolder nicknameGeneratorHolder) {
@@ -79,9 +78,9 @@ public class Member {
                 .build();
     }
 
-    private void isValidatePassword(final String password, final String checkPassword) {
-        if (!password.equals(checkPassword)) {
-            throw new CustomMemberExceptionHandler(ExceptionResponseCode.PASSWORD_MISS_MATCH_ERROR);
+    public void isValidatePassword(final String checkPassword) {
+        if (!this.password.equals(checkPassword)) {
+            throw new CustomMemberExceptionHandler(ErrorCode.PASSWORD_MISS_MATCH_ERROR);
         }
     }
 

@@ -2,6 +2,6 @@ package com.realworld.feature.auth.mail.mock.mail;
 
 public class MockMailData {
 
-    public static String userEmailMockData1 = "test@naver.com";
+    public static final String TEST_EMAIL_MOCK_DATA_1 = "test@naver.com";
 
 }

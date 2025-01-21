@@ -13,10 +13,10 @@ class AuthMailTest {
 
     @Test
     void 메일_인증번호_생성_성공_테스트() {
-        AuthMail authMail = AuthMail.createMail(MockMailData.userEmailMockData1, () -> "testMail", () -> LocalDateTime.of(2025, 1, 2, 12, 8, 0));
+        AuthMail authMail = AuthMail.createMail(MockMailData.TEST_EMAIL_MOCK_DATA_1, () -> "testMail", () -> LocalDateTime.of(2025, 1, 2, 12, 8, 0));
         assertThat(authMail).isEqualTo(
                 AuthMail.builder()
-                        .userEmail(MockMailData.userEmailMockData1)
+                        .userEmail(MockMailData.TEST_EMAIL_MOCK_DATA_1)
                         .authNumber("testMail")
                         .registerDate(LocalDateTime.of(2025, 1, 2, 12, 8, 0))
                         .build()
@@ -25,7 +25,7 @@ class AuthMailTest {
 
     @Test
     void 메일_인증번호_체크_성공_테스트() {
-        AuthMail authMail = AuthMail.createMail(MockMailData.userEmailMockData1, () -> "otirj109",  () -> LocalDateTime.of(2025, 1, 2, 12, 8, 0));
+        AuthMail authMail = AuthMail.createMail(MockMailData.TEST_EMAIL_MOCK_DATA_1, () -> "otirj109",  () -> LocalDateTime.of(2025, 1, 2, 12, 8, 0));
 
         assertThatCode(() -> authMail.authCheck("otirj109"))
                 .doesNotThrowAnyException();
@@ -34,7 +34,7 @@ class AuthMailTest {
 
     @Test
     void 메일_인증번호_체크_실패_코드() {
-        AuthMail authMail = AuthMail.createMail(MockMailData.userEmailMockData1, () -> "otirj109", () -> LocalDateTime.of(2025, 1, 2, 12, 8, 0));
+        AuthMail authMail = AuthMail.createMail(MockMailData.TEST_EMAIL_MOCK_DATA_1, () -> "otirj109", () -> LocalDateTime.of(2025, 1, 2, 12, 8, 0));
 
         assertThatThrownBy(() -> authMail.authCheck("otirj109dd"))
                 .isInstanceOf(CustomAuthMailExceptionHandler.class);
@@ -42,7 +42,7 @@ class AuthMailTest {
 
     @Test
     void 메일_인증번호_보내기_성공_테스트() {
-        AuthMail authMail = AuthMail.createMail(MockMailData.userEmailMockData1, () -> "testMail", () -> LocalDateTime.of(2025, 1, 2, 12, 8, 0));
+        AuthMail authMail = AuthMail.createMail(MockMailData.TEST_EMAIL_MOCK_DATA_1, () -> "testMail", () -> LocalDateTime.of(2025, 1, 2, 12, 8, 0));
 
         String message = authMail.send((message1, userEmail) -> {
             return;

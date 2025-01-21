@@ -28,4 +28,9 @@ public class MemberRepositoryImpl implements MemberRepository {
         return repository.findById(userId);
     }
 
+    @Override
+    public void delete(Member member) {
+        repository.delete(member);
+    }
+
 }

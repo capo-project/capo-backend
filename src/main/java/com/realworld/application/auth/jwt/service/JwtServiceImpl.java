@@ -29,21 +29,18 @@ public class JwtServiceImpl implements JwtService{
     private final UserDetailServiceImpl userDetailService;
     private final TokenRepository tokenRepository;
     private final JwtProviderHolder jwtProviderHolder;
-    private final JwtTokenHandler jwtTokenHandler;
     private final Key accessSecretKey;
     private final long accessExpiration;
 
     public JwtServiceImpl(UserDetailServiceImpl userDetailService,
                           TokenRepository tokenRepository,
                           JwtProviderHolder jwtProviderHolder,
-                          JwtTokenHandler jwtTokenHandler,
                           @Value("${jwt.access-secret}") String accessSecretKey,
                           @Value("${jwt.access-expiration}") long accessExpiration
                           ) {
         this.userDetailService = userDetailService;
         this.tokenRepository = tokenRepository;
         this.jwtProviderHolder = jwtProviderHolder;
-        this.jwtTokenHandler = jwtTokenHandler;
         this.accessSecretKey = Keys.hmacShaKeyFor(accessSecretKey.getBytes(StandardCharsets.UTF_8));
         this.accessExpiration = accessExpiration;
     }
@@ -63,7 +60,7 @@ public class JwtServiceImpl implements JwtService{
     }
 
     @Override
-    public boolean validateAccessToken(String token) {
+    public boolean validateAccessToken(String token, JwtTokenHandler jwtTokenHandler) {
         TokenStatus tokenStatus = jwtTokenHandler.getTokenStatus(token, accessSecretKey);
         log.info(tokenStatus.toString());
         return  tokenStatus == TokenStatus.AUTHENTICATED && tokenRepository.findById(getUserId(token, accessSecretKey)).isPresent();

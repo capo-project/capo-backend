@@ -136,7 +136,7 @@ clean.doLast {
 
 sonar {
     properties {
-        property "sonar.projectKey", "capo-project_capo-backend_89d062f5-c979-4114-b0c5-9f3797033f98"
+        property "sonar.projectKey", "capo-project_capo-backend_9c8ca8d4-60b4-4f51-b018-261f74c69a56"
         property "sonar.projectName", "capo-backend"
     }
 }

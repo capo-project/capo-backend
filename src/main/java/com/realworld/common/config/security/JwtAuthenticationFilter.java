@@ -27,13 +27,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String accessToken = jwtService.resolveAccessToken(request);
         if(jwtService.validateAccessToken(accessToken, new JwtTokenHandlerImpl())) {
-            log.info("accessToken");
             setAuthenticationToContext(accessToken);
             filterChain.doFilter(request, response);
             return ;
         }
 
-        log.info("unaccessToken");
         filterChain.doFilter(request, response);
     }
 

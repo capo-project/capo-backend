@@ -2,7 +2,7 @@ package com.realworld.web.member.controller;
 
 import com.realworld.application.member.service.member.MemberService;
 import com.realworld.common.response.SuccessResponse;
-import com.realworld.common.response.code.SuccessResponseCode;
+import com.realworld.common.response.code.SuccessCode;
 import com.realworld.feature.member.entity.Member;
 import com.realworld.web.member.payload.response.MemberFindResponse;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class MemberController {
                 .userId(member.getUserId())
                 .build();
 
-        return ResponseEntity.ok(new SuccessResponse<>(memberFindResponse, SuccessResponseCode.SUCCESS.getResultCode(), SuccessResponseCode.SUCCESS.getHttpStatus(), SuccessResponseCode.SUCCESS.getMessage()));
+        return ResponseEntity.ok(new SuccessResponse<>(memberFindResponse, SuccessCode.SUCCESS.getResultCode(), SuccessCode.SUCCESS.getHttpStatus(), SuccessCode.SUCCESS.getMessage()));
     }
 
 }

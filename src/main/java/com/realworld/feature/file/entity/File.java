@@ -12,19 +12,19 @@ public class File {
     private final FileDetails details;
     private final String url;
 
-    private File(FileDetails details, String url) {
+    private File(final FileDetails details, final String url) {
         this.details = details;
         this.url = url;
         notNullParameters(details, url);
     }
 
-    private void notNullParameters(FileDetails details, String url) {
+    private void notNullParameters(final FileDetails details, final String url) {
         if (Objects.isNull(details) || Objects.isNull(url)) {
             throw new CustomFileExceptionHandler(ErrorCode.FILE_PROCESSING_ERROR);
         }
     }
 
-    public static File create(FileDetails details, String url) {
+    public static File create(final FileDetails details, final String url) {
         return new File(details, url);
     }
 

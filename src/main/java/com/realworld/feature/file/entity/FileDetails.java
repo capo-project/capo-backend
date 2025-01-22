@@ -13,20 +13,20 @@ public class FileDetails {
     private final String contentType;
     private final long size;
 
-    private FileDetails(String name, String contentType, long size) {
+    private FileDetails(final String name, final String contentType, final long size) {
         this.name = name;
         this.contentType = contentType;
         this.size = size;
         notNullParameters(name, contentType, size);
     }
 
-    private void notNullParameters(String name, String contentType, long size) {
+    private void notNullParameters(final String name, final String contentType, final long size) {
         if (Objects.isNull(name) || Objects.isNull(contentType) || size <= 0) {
             throw new CustomFileExceptionHandler(ErrorCode.FILE_PROCESSING_ERROR);
         }
     }
 
-    public static FileDetails of(String name, String contentType, long size) {
+    public static FileDetails of(final String name, final String contentType, final long size) {
         return new FileDetails(name, contentType, size);
     }
 

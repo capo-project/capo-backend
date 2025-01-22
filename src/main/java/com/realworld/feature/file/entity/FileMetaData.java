@@ -19,12 +19,12 @@ public class FileMetaData {
     private final FileDetails details;
 
     @Builder
-    private FileMetaData(String directory, FileDetails details) {
+    private FileMetaData(final String directory, final FileDetails details) {
         this.directory = directory;
         this.details = details;
     }
 
-    public static FileMetaData fromResizedImage(String targetDir, ResizedImage resizedImage, UUIDHolder uuidHolder) {
+    public static FileMetaData fromResizedImage(final String targetDir, final ResizedImage resizedImage, final UUIDHolder uuidHolder) {
         notNullParameters(resizedImage, targetDir, uuidHolder);
 
         String generatedName = FileFormat.IMAGE.generateFileName(uuidHolder.generate(), resizedImage.getImageFormat());
@@ -39,13 +39,13 @@ public class FileMetaData {
                 .build();
     }
 
-    private static void notNullParameters(ResizedImage resizedImage, String targetDir, UUIDHolder uuidHolder) {
+    private static void notNullParameters(final ResizedImage resizedImage, final String targetDir, final UUIDHolder uuidHolder) {
         if (Objects.isNull(targetDir) || Objects.isNull(uuidHolder) || Objects.isNull(resizedImage) || resizedImage.getSize() <= 0) {
             throw new CustomFileExceptionHandler(ErrorCode.FILE_PROCESSING_ERROR);
         }
     }
 
-    public static FileMetaData fromMultipartFile(String targetDir, MultipartFile file, UUIDHolder uuidHolder) {
+    public static FileMetaData fromMultipartFile(final String targetDir, final MultipartFile file, final UUIDHolder uuidHolder) {
         notNullParameters(file, targetDir, uuidHolder);
 
         String originalFilename = FilenameUtils.getName(file.getOriginalFilename());
@@ -62,7 +62,7 @@ public class FileMetaData {
                 .build();
     }
 
-    private static void notNullParameters(MultipartFile file, String targetDir, UUIDHolder uuidHolder) {
+    private static void notNullParameters(final MultipartFile file, final String targetDir, final UUIDHolder uuidHolder) {
         if (Objects.isNull(targetDir) || Objects.isNull(uuidHolder) || Objects.isNull(file) || file.getSize() <= 0) {
             throw new CustomFileExceptionHandler(ErrorCode.FILE_PROCESSING_ERROR);
         }

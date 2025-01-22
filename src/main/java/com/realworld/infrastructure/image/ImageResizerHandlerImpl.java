@@ -18,7 +18,7 @@ public class ImageResizerHandlerImpl implements ImageResizer {
     public static final String IMAGE_FORMAT_JPEG = "jpeg";
 
     @Override
-    public ResizedImage resize(int width, int height, BufferedImage bufferedImage) {
+    public ResizedImage resize(final int width, final int height, final BufferedImage bufferedImage) {
         BufferedImage resizedImage = new BufferedImage(
                 width, height, BufferedImage.TYPE_3BYTE_BGR
         );

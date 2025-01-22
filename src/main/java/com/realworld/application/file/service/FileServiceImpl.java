@@ -26,7 +26,7 @@ public class FileServiceImpl implements FileService {
     private final FileStorage fileStorage;
 
     @Override
-    public File saveResizedImage(String targetDir, MultipartFile file, int width, int height) {
+    public File saveResizedImage(final String targetDir, final MultipartFile file, final int width, final int height) {
         validateImageFileType(file);
         try (InputStream inputStream = file.getInputStream();
              ResizedImage resizedImage = imageResizer.resize(width, height, ImageIO.read(inputStream))
@@ -42,7 +42,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public File saveImage(String targetDir, MultipartFile file) {
+    public File saveImage(final String targetDir, final MultipartFile file) {
         validateImageFileType(file);
         try (InputStream inputStream = file.getInputStream()) {
             FileMetaData metaData = FileMetaData.fromMultipartFile(targetDir, file, new UUIDHolderImpl());
@@ -53,7 +53,7 @@ public class FileServiceImpl implements FileService {
         }
     }
 
-    private void validateImageFileType(MultipartFile file) {
+    private void validateImageFileType(final MultipartFile file) {
         String contentType = file.getContentType();
         if (contentType == null || !contentType.startsWith(FileFormat.IMAGE.getPrefix())) {
             throw new CustomFileExceptionHandler(ErrorCode.UNSUPPORTED_FILE_IMAGE_TYPE_ERROR);
@@ -61,12 +61,12 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public String move(String sourcePath, String targetDir) {
+    public String move(final String sourcePath, final String targetDir) {
         return fileStorage.move(sourcePath, targetDir);
     }
 
     @Override
-    public void delete(String sourcePath) {
+    public void delete(final String sourcePath) {
         fileStorage.delete(sourcePath);
     }
 

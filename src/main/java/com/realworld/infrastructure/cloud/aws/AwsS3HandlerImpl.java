@@ -24,9 +24,9 @@ public class AwsS3HandlerImpl implements AwsS3Handler {
     private final AmazonS3 s3Client;
 
     public AwsS3HandlerImpl(
-            @NotNull @Value("${cloud.aws.cloudfront}") String cloudFrontBaseUri,
-            @NotNull @Value("${cloud.aws.s3.bucket}") String bucketName,
-            AmazonS3 s3Client
+            @NotNull @Value("${cloud.aws.cloudfront}") final String cloudFrontBaseUri,
+            @NotNull @Value("${cloud.aws.s3.bucket}") final String bucketName,
+            final AmazonS3 s3Client
 
     ) {
         this.cloudFrontBaseUri = cloudFrontBaseUri;
@@ -35,7 +35,7 @@ public class AwsS3HandlerImpl implements AwsS3Handler {
     }
 
     @Override
-    public String save(FileMetaData metaData, InputStream stream) {
+    public String save(final FileMetaData metaData, final InputStream stream) {
         String bucketPath = bucketName + File.separator + metaData.getDirectory();
         String fileName = metaData.getDetails().getName();
         ObjectMetadata metadata = getObjectMetadata(metaData.getDetails().getContentType(), metaData.getDetails().getSize());
@@ -52,7 +52,7 @@ public class AwsS3HandlerImpl implements AwsS3Handler {
         return cloudFrontBaseUri + metaData.getDirectory() + File.separator + metaData.getDetails().getName();
     }
 
-    private ObjectMetadata getObjectMetadata(String contentType, long size) {
+    private ObjectMetadata getObjectMetadata(final String contentType, final long size) {
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(contentType);
         metadata.setContentLength(size);
@@ -60,12 +60,12 @@ public class AwsS3HandlerImpl implements AwsS3Handler {
     }
 
     @Override
-    public boolean isFileExist(String sourcePath, String fileName) {
+    public boolean isFileExist(final String sourcePath, final String fileName) {
         return s3Client.doesObjectExist(sourcePath, fileName);
     }
 
     @Override
-    public String move(String sourcePath, String targetDirectory) {
+    public String move(final String sourcePath, final String targetDirectory) {
         String fileName = extractFileName(sourcePath);
         String sourceDirectory = extractDirectoryName(sourcePath);
 
@@ -82,7 +82,7 @@ public class AwsS3HandlerImpl implements AwsS3Handler {
     }
 
     @Override
-    public void delete(String sourcePath) {
+    public void delete(final String sourcePath) {
         String fileName = extractFileName(sourcePath);
         String sourceDirectory = extractDirectoryName(sourcePath);
         String targetFullPath = bucketName + File.separator + sourceDirectory;
@@ -94,12 +94,12 @@ public class AwsS3HandlerImpl implements AwsS3Handler {
         }
     }
 
-    private String extractDirectoryName(String sourcePath) {
+    private String extractDirectoryName(final String sourcePath) {
         int nextPathSlashIndex = sourcePath.indexOf('/', cloudFrontBaseUri.length());
         return sourcePath.substring(cloudFrontBaseUri.length(), nextPathSlashIndex);
     }
 
-    private String extractFileName(String sourcePath) {
+    private String extractFileName(final String sourcePath) {
         int lastSlashIndex = sourcePath.lastIndexOf('/');
         return sourcePath.substring(lastSlashIndex + 1);
     }

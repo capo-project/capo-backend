@@ -15,17 +15,17 @@ public class CloudFileStorage implements FileStorage {
     private final AwsS3Handler awsS3Handler;
 
     @Override
-    public String save(FileMetaData metaData, InputStream stream) {
+    public String save(final FileMetaData metaData, final InputStream stream) {
         return awsS3Handler.save(metaData, stream);
     }
 
     @Override
-    public String move(String sourcePath, String destinationPath) {
+    public String move(final String sourcePath, final String destinationPath) {
         return awsS3Handler.move(sourcePath, destinationPath);
     }
 
     @Override
-    public void delete(String sourcePath) {
+    public void delete(final String sourcePath) {
         awsS3Handler.delete(sourcePath);
     }
 

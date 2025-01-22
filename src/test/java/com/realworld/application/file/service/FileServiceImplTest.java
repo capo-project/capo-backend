@@ -9,6 +9,7 @@ import com.realworld.application.file.port.ImageResizer;
 import com.realworld.common.exception.custom.CustomFileExceptionHandler;
 import com.realworld.common.response.code.ErrorCode;
 import com.realworld.feature.file.entity.File;
+import com.realworld.feature.file.mock.MockFileData;
 import com.realworld.infrastructure.cloud.CloudFileStorage;
 import com.realworld.infrastructure.cloud.aws.AwsS3Handler;
 import com.realworld.infrastructure.cloud.aws.AwsS3HandlerImpl;
@@ -32,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class FileServiceImplTest {
 
     private static final DockerImageName LOCALSTACK_IMAGE_NAME = DockerImageName.parse("localstack/localstack:latest");
-    private static final String localFrontBaseUri = "http://localhost:4566/";
+    private static final String LOCALHOST_BASE_URI = "http://localhost:4566/";
     private static final String BUCKET_NAME = "photocardsite";
 
     @Container
@@ -64,7 +65,7 @@ class FileServiceImplTest {
                 .build();
 
         s3Client.createBucket(BUCKET_NAME);
-        awsS3Handler = new AwsS3HandlerImpl(localFrontBaseUri, BUCKET_NAME, s3Client);
+        awsS3Handler = new AwsS3HandlerImpl(LOCALHOST_BASE_URI, BUCKET_NAME, s3Client);
         cloudFileStorage = new CloudFileStorage(awsS3Handler);
         fileService = new FileServiceImpl(imageResizer, cloudFileStorage);
     }
@@ -73,12 +74,7 @@ class FileServiceImplTest {
     void 이미지를_리사이징_후_저장한다() {
         // Given
         String destinationDirectory = "test";
-        MockMultipartFile multipartFile = new MockMultipartFile(
-                "file",
-                "test-image.jpeg",
-                "image/jpeg",
-                new byte[] {1, 2, 3, 4}
-        );
+        MockMultipartFile multipartFile = MockFileData.multipartFile;
         int width = 200;
         int height = 200;
 
@@ -115,12 +111,7 @@ class FileServiceImplTest {
     void 이미지를_저장한다() {
         // Given
         String destinationDirectory = "test";
-        MockMultipartFile multipartFile = new MockMultipartFile(
-                "file",
-                "test-image.jpeg",
-                "image/jpeg",
-                new byte[] {1, 2, 3, 4}
-        );
+        MockMultipartFile multipartFile = MockFileData.multipartFile;
 
         // When
         File result = fileService.saveImage(destinationDirectory, multipartFile);

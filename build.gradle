@@ -9,7 +9,7 @@ plugins {
 // SonarQube 설정
 sonar {
     properties {
-        property "sonar.projectKey", "capo-project_capo-backend_9c8ca8d4-60b4-4f51-b018-261f74c69a56"
+        property "sonar.projectKey", "capo-project_capo-backend_b464bedf-6e35-4231-9175-5e9321895293"
         property "sonar.projectName", "capo-backend"
         property "sonar.language", "java"
         property "sonar.sourceEncoding", "UTF-8"
@@ -132,15 +132,8 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                    '**/dto/**',
-                    '**/event/**',
-                    '**/*InitData*',
-                    '**/*Application*',
-                    '**/exception/**',
-                    '**/service/alarm/**',
-                    '**/aop/**',
-                    '**/config/**',
-                    '**/MemberRole*'
+                    '**/common/**',
+                    '**/*Application*'
             ] + QDomainList)
         }))
     }
@@ -174,15 +167,8 @@ jacocoTestCoverageVerification {
             }
 
             excludes = [
-                    '**.dto.**',
-                    '**.event.**',
-                    '**.*InitData*',
-                    '**.*Application*',
-                    '**.exception.**',
-                    '**.service.alarm.**',
-                    '**.aop.**',
-                    '**.config.**',
-                    '**.MemberRole*'
+                    '**/common/**',
+                    '**/*Application*'
             ] + QDomainList
         }
     }

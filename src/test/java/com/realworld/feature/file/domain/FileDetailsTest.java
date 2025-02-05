@@ -14,12 +14,12 @@ class FileDetailsTest {
     @Test
     void 파일_상세_정보를_생성한다() {
         // Given
-        String name = MockFileData.FILE_NAME;
-        String contentType = MockFileData.FILE_CONTENT_TYPE;
-        long size = 1024L;
+        final String name = MockFileData.FILE_NAME;
+        final String contentType = MockFileData.FILE_CONTENT_TYPE;
+        final long size = 1024L;
 
         // When
-        FileDetails result = FileDetails.of(name, contentType, size);
+        final FileDetails result = FileDetails.of(name, contentType, size);
 
         // Then
         assertThat(result).isNotNull();
@@ -31,9 +31,9 @@ class FileDetailsTest {
     @Test
     void 파일_이름이_NULL이면_예외를_던진다() {
         // Given
-        String name = null;
-        String contentType = MockFileData.FILE_CONTENT_TYPE;
-        long size = 1024L;
+        final String name = null;
+        final String contentType = MockFileData.FILE_CONTENT_TYPE;
+        final long size = 1024L;
 
         // When & Then
         assertThatThrownBy(() -> FileDetails.of(name, contentType, size))
@@ -46,9 +46,9 @@ class FileDetailsTest {
     @Test
     void 콘텐츠_타입이_NULL이면_예외를_던진다() {
         // Given
-        String name = MockFileData.FILE_NAME;
-        String contentType = null;
-        long size = 1024L;
+        final String name = MockFileData.FILE_NAME;
+        final String contentType = null;
+        final long size = 1024L;
 
         // When & Then
         assertThatThrownBy(() -> FileDetails.of(name, contentType, size))
@@ -61,9 +61,9 @@ class FileDetailsTest {
     @Test
     void 파일_사이즈가_0이면_예외를_던진다() {
         // Given
-        String name = MockFileData.FILE_NAME;
-        String contentType = MockFileData.FILE_CONTENT_TYPE;
-        long size = 0L;
+        final String name = MockFileData.FILE_NAME;
+        final String contentType = MockFileData.FILE_CONTENT_TYPE;
+        final long size = 0L;
 
         // When & Then
         assertThatThrownBy(() -> FileDetails.of(name, contentType, size))

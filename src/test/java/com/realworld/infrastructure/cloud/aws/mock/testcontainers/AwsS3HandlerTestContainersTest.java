@@ -78,17 +78,13 @@ class AwsS3HandlerTestContainersTest {
         }
     }
 
-    private String getBucketPath(String directory) {
-        return bucket + "/" + directory;
-    }
-
     @Test
     void 파일을_S3에_업로드하면_정상적으로_업로드된_URL을_반환한다() {
         // given
-        FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
+        final FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
 
         // when
-        String result = awsS3Handler.save(metaData, inputStream);
+        final String result = awsS3Handler.save(metaData, inputStream);
 
         // then
         assertThat(result).isNotNull();
@@ -98,11 +94,11 @@ class AwsS3HandlerTestContainersTest {
     @Test
     void S3에_업로드된_파일이_존재하는지_확인한다() {
         // given
-        FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
+        final FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
         awsS3Handler.save(metaData, inputStream);
 
         // when
-        Boolean result = awsS3Handler.isFileExist(getBucketPath(TEST_DIRECTORY), metaData.getDetails().getName());
+        final boolean result = awsS3Handler.isFileExist(getBucketPath(TEST_DIRECTORY), metaData.getDetails().getName());
 
         // then
         assertThat(result).isTrue();
@@ -111,11 +107,11 @@ class AwsS3HandlerTestContainersTest {
     @Test
     void S3_파일을_다른_디렉토리로_이동하면_정상적으로_이동된다() {
         // given
-        FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
-        String savedFileUrl = awsS3Handler.save(metaData, inputStream);
+        final FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
+        final String savedFileUrl = awsS3Handler.save(metaData, inputStream);
 
         // when
-        String result = awsS3Handler.move(savedFileUrl, "test");
+        final String result = awsS3Handler.move(savedFileUrl, "test");
 
         // then
         assertThat(result).isNotNull();
@@ -124,11 +120,8 @@ class AwsS3HandlerTestContainersTest {
 
     @Test
     void 존재하지_않는_S3_파일을_이동하려고_하면_예외를_발생시킨다() {
-        //given
-        String nonExistentFileUrl = "https://xxxxxxxxxxxxxx.cloudfront.net/test/test.jpeg";
-
         // when & then
-        assertThatThrownBy(() -> awsS3Handler.move(nonExistentFileUrl, TEST_DIRECTORY))
+        assertThatThrownBy(() -> awsS3Handler.move("https://xxxxxxxxxxxxxx.cloudfront.net/test/test.jpeg", TEST_DIRECTORY))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
                         ErrorCode.FILE_NOT_FOUND_ERROR.getMessage()
@@ -138,8 +131,8 @@ class AwsS3HandlerTestContainersTest {
     @Test
     void S3에서_파일을_삭제하면_정상적으로_삭제된다() {
         // given
-        FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
-        String savedFileUrl = awsS3Handler.save(metaData, inputStream);
+        final FileMetaData metaData = MockFileData.create(TEST_DIRECTORY);
+        final String savedFileUrl = awsS3Handler.save(metaData, inputStream);
 
         // when
         awsS3Handler.delete(savedFileUrl);
@@ -150,15 +143,16 @@ class AwsS3HandlerTestContainersTest {
 
     @Test
     void 존재하지_않는_S3_파일을_삭제하려고_하면_예외를_발생시킨다() {
-        //given
-        String nonExistentFileUrl = "https://xxxxxxxxxxxxxx.cloudfront.net/test/test.jpeg";
-
         // when & then
-        assertThatThrownBy(() -> awsS3Handler.delete(nonExistentFileUrl))
+        assertThatThrownBy(() -> awsS3Handler.delete("https://xxxxxxxxxxxxxx.cloudfront.net/test/test.jpeg"))
                 .isInstanceOf(CustomFileExceptionHandler.class)
                 .hasMessageContaining(
                         ErrorCode.FILE_NOT_FOUND_ERROR.getMessage()
                 );
+    }
+
+    private String getBucketPath(String directory) {
+        return bucket + "/" + directory;
     }
 
 }

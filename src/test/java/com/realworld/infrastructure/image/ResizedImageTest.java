@@ -39,11 +39,11 @@ class ResizedImageTest {
     @Test
     void 리사이즈된_이미지를_생성한다() {
         // Given
-        String imageFormat = "jpeg";
-        long size = testFileImage.length();
+        final String imageFormat = "jpeg";
+        final long size = testFileImage.length();
 
         // When
-        ResizedImage result = ResizedImage.of(inputStream, imageFormat, size);
+        final ResizedImage result = ResizedImage.of(inputStream, imageFormat, size);
 
         // Then
         assertThat(result.getInputStream()).isEqualTo(inputStream);
@@ -54,9 +54,9 @@ class ResizedImageTest {
     @Test
     void 리사이즈된_이미지_반환_시_InputStream이_닫힌다() throws Exception {
         // Given
-        String imageFormat = "jpeg";
-        long size = testFileImage.length();
-        ResizedImage result = ResizedImage.of(inputStream, imageFormat, size);
+        final String imageFormat = "jpeg";
+        final long size = testFileImage.length();
+        final ResizedImage result = ResizedImage.of(inputStream, imageFormat, size);
 
         // When
         result.close();
@@ -70,8 +70,8 @@ class ResizedImageTest {
     @Test
     void 파일_생성_시_테스트_이미지_파일이_존재하지_않으면_예외를_던진다() {
         // Given
-        String imageFormat = "jpeg";
-        long size = testFileImage.length();
+        final String imageFormat = "jpeg";
+        final long size = testFileImage.length();
 
         // when & Then
         assertThatThrownBy(() -> ResizedImage.of(null, imageFormat, size))

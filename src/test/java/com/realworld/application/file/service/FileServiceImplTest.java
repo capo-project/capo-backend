@@ -73,13 +73,13 @@ class FileServiceImplTest {
     @Test
     void 이미지를_리사이징_후_저장한다() {
         // Given
-        String destinationDirectory = "test";
-        MockMultipartFile multipartFile = MockFileData.multipartFile;
-        int width = 200;
-        int height = 200;
+        final String destinationDirectory = "test";
+        final MockMultipartFile multipartFile = MockFileData.multipartFile;
+        final int width = 200;
+        final int height = 200;
 
         // When
-        File result = fileService.saveResizedImage(destinationDirectory, multipartFile, width, height);
+        final File result = fileService.saveResizedImage(destinationDirectory, multipartFile, width, height);
 
         // Then
         assertThat(result).isNotNull();
@@ -89,15 +89,15 @@ class FileServiceImplTest {
     @Test
     void 잘못된_이미지_파일을_저장하려고_하면_예외를_던진다() {
         // Given
-        String destinationDirectory = "temporary";
-        MockMultipartFile multipartFile = new MockMultipartFile(
+        final String destinationDirectory = "temporary";
+        final MockMultipartFile multipartFile = new MockMultipartFile(
                 "file",
                 "test.txt",
                 "test/plain",
                 new byte[] {1, 2, 3, 4}
         );
-        int width = 200;
-        int height = 200;
+        final int width = 200;
+        final int height = 200;
 
         // When & Then
         assertThatThrownBy(() -> fileService.saveResizedImage(destinationDirectory, multipartFile, width, height))
@@ -110,11 +110,11 @@ class FileServiceImplTest {
     @Test
     void 이미지를_저장한다() {
         // Given
-        String destinationDirectory = "test";
-        MockMultipartFile multipartFile = MockFileData.multipartFile;
+        final String destinationDirectory = "test";
+        final MockMultipartFile multipartFile = MockFileData.multipartFile;
 
         // When
-        File result = fileService.saveImage(destinationDirectory, multipartFile);
+        final File result = fileService.saveImage(destinationDirectory, multipartFile);
 
         // Then
         assertThat(result).isNotNull();

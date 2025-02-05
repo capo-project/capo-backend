@@ -50,12 +50,12 @@ class ImageResizerHandlerImplTest {
     @Test
     void 이미지_리사이징이_정상적으로_수행된다() throws Exception {
         // Given
-        BufferedImage originalImage = ImageIO.read(inputStream);
-        int width = 200;
-        int height = 200;
+        final BufferedImage originalImage = ImageIO.read(inputStream);
+        final int width = 200;
+        final int height = 200;
 
         // When
-        ResizedImage result = imageResizerHandler.resize(width, height, originalImage);
+        final ResizedImage result = imageResizerHandler.resize(width, height, originalImage);
 
         // Then
         assertThat(result.getImageFormat()).isEqualTo(ImageResizerHandlerImpl.IMAGE_FORMAT_JPEG);
@@ -68,9 +68,9 @@ class ImageResizerHandlerImplTest {
     @Test
     void 이미지_리사이징_중_IO예외가_발생하면_예외를_던진다() throws Exception {
         // Given
-        BufferedImage originalImage = ImageIO.read(inputStream);
-        int width = 200;
-        int height = 200;
+        final BufferedImage originalImage = ImageIO.read(inputStream);
+        final int width = 200;
+        final int height = 200;
 
         imageIOMockStatic = Mockito.mockStatic(ImageIO.class);
         imageIOMockStatic.when(() -> ImageIO.write(

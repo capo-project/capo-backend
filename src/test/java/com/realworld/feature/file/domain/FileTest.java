@@ -16,11 +16,11 @@ class FileTest {
     @Test
     void 파일을_생성한다() {
         // Given
-        FileDetails details = MockFileData.fileDetails;
-        String testUrl = TEST_URL;
+        final FileDetails details = MockFileData.fileDetails;
+        final String testUrl = TEST_URL;
 
         // When
-        File result = File.create(details, testUrl);
+        final File result = File.create(details, testUrl);
 
         assertThat(result).isNotNull();
         assertThat(result.getDetails()).isEqualTo(details);

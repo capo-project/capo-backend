@@ -24,13 +24,13 @@ class FileMetaDataTest {
     @Test
     void 리사이즈된_이미지로_파일_메타데이터를_생성한다() {
         // Given
-        String targetDir = TEST_DIRECTORY;
-        ResizedImage resizedImage = mock(ResizedImage.class);
+        final String targetDir = TEST_DIRECTORY;
+        final ResizedImage resizedImage = mock(ResizedImage.class);
         when(resizedImage.getImageFormat()).thenReturn(TEST_EXTENSION);
         when(resizedImage.getSize()).thenReturn(MockFileData.FILE_SIZE);
 
         // When
-        FileMetaData result = FileMetaData.fromResizedImage(
+        final FileMetaData result = FileMetaData.fromResizedImage(
                 targetDir,
                 resizedImage,
                 () -> TEST_UUID
@@ -48,9 +48,9 @@ class FileMetaDataTest {
     @Test
     void 리사이즈된_이미지가_NULL이면_예외를_던진다() {
         // Given
-        String targetDir = TEST_DIRECTORY;
-        UUIDHolder uuidHolder = () -> TEST_UUID;
-        ResizedImage invalidImage = null;
+        final String targetDir = TEST_DIRECTORY;
+        final UUIDHolder uuidHolder = () -> TEST_UUID;
+        final ResizedImage invalidImage = null;
 
         // When & Then
         assertThatThrownBy(() -> FileMetaData.fromResizedImage(targetDir, invalidImage, uuidHolder))
@@ -63,9 +63,9 @@ class FileMetaDataTest {
     @Test
     void 저장_디렉토리가_NULL이면_리사이즈된_이미지로_예외를_던진다() {
         // Given
-        String emptyDir = null;
-        UUIDHolder uuidHolder = () -> TEST_UUID;
-        ResizedImage resizedImage = mock(ResizedImage.class);
+        final String emptyDir = null;
+        final UUIDHolder uuidHolder = () -> TEST_UUID;
+        final ResizedImage resizedImage = mock(ResizedImage.class);
         when(resizedImage.getImageFormat()).thenReturn(TEST_EXTENSION);
         when(resizedImage.getSize()).thenReturn(MockFileData.FILE_SIZE);
 
@@ -80,9 +80,9 @@ class FileMetaDataTest {
     @Test
     void UUIDHolder가_NULL이면_리사이즈된_이미지로_예외를_던진다() {
         // Given
-        String targetDir = TEST_DIRECTORY;
-        UUIDHolder uuidHolder = null;
-        ResizedImage resizedImage = mock(ResizedImage.class);
+        final String targetDir = TEST_DIRECTORY;
+        final UUIDHolder uuidHolder = null;
+        final ResizedImage resizedImage = mock(ResizedImage.class);
         when(resizedImage.getImageFormat()).thenReturn(TEST_EXTENSION);
         when(resizedImage.getSize()).thenReturn(MockFileData.FILE_SIZE);
 
@@ -97,19 +97,19 @@ class FileMetaDataTest {
     @Test
     void MultipartFile로_파일_메타데이터를_생성한다() {
         // Given
-        String targetDir = TEST_DIRECTORY;
-        MockMultipartFile multipartFile = MockFileData.multipartFile;
+        final String targetDir = TEST_DIRECTORY;
+        final MockMultipartFile multipartFile = MockFileData.multipartFile;
 
         // When
-        FileMetaData result = FileMetaData.fromMultipartFile(
+        final FileMetaData result = FileMetaData.fromMultipartFile(
                 targetDir,
                 multipartFile,
                 () -> TEST_UUID
         );
 
         // Then
-        String originalFileName = FilenameUtils.getName(multipartFile.getOriginalFilename());
-        String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+        final String originalFileName = FilenameUtils.getName(multipartFile.getOriginalFilename());
+        final String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
 
         assertThat(result).isNotNull();
         assertThat(result.getDirectory()).isEqualTo(targetDir);
@@ -125,9 +125,9 @@ class FileMetaDataTest {
     @Test
     void MultipartFile이_NULL이면_예외를_던진다() {
         // Given
-        String targetDir = TEST_DIRECTORY;
-        UUIDHolder uuidHolder = () -> TEST_UUID;
-        MockMultipartFile invalidFile = null;
+        final String targetDir = TEST_DIRECTORY;
+        final UUIDHolder uuidHolder = () -> TEST_UUID;
+        final MockMultipartFile invalidFile = null;
 
         // When & Then
         assertThatThrownBy(() -> FileMetaData.fromMultipartFile(targetDir, invalidFile, uuidHolder))
@@ -140,11 +140,11 @@ class FileMetaDataTest {
     @Test
     void 저장_디렉토리가_NULL이면_MultiptargetDirartFile로_예외를_던진다() {
         // Given
-        String emptyDir = null;
-        MockMultipartFile multipartFile = MockFileData.multipartFile;
-        UUIDHolder uuidHolder = () -> TEST_UUID;
+        final String emptyDir = null;
+        final MockMultipartFile multipartFile = MockFileData.multipartFile;
+        final UUIDHolder uuidHolder = () -> TEST_UUID;
 
-        ResizedImage resizedImage = mock(ResizedImage.class);
+        final ResizedImage resizedImage = mock(ResizedImage.class);
         when(resizedImage.getImageFormat()).thenReturn(TEST_EXTENSION);
         when(resizedImage.getSize()).thenReturn(MockFileData.FILE_SIZE);
 
@@ -159,9 +159,9 @@ class FileMetaDataTest {
     @Test
     void UUIDHolder가_NULL_이면_MultipartFile로_예외를_던진다() {
         // Given
-        String emptyDir = TEST_DIRECTORY;
-        UUIDHolder uuidHolder = null;
-        MockMultipartFile multipartFile = MockFileData.multipartFile;
+        final String emptyDir = TEST_DIRECTORY;
+        final UUIDHolder uuidHolder = null;
+        final MockMultipartFile multipartFile = MockFileData.multipartFile;
 
         // When & Then
         assertThatThrownBy(() -> FileMetaData.fromMultipartFile(emptyDir, multipartFile, uuidHolder))
